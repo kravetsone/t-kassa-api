@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import type { paths } from "./api-types";
 import type { servers } from "./generated";
 
 export function generateSignature(
@@ -21,6 +22,58 @@ export function generateSignature(
 
 export type Servers = (typeof servers)[number]["url"];
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type Require<O extends Record<any, any>, K extends keyof O> = {
 	[P in keyof O]-?: P extends K ? NonNullable<O[P]> : O[P];
 };
+
+export type Expand<T> = T extends (...args: infer A) => infer R
+	? (...args: A) => R
+	: T extends object
+		? T extends infer O
+			? { [K in keyof O]: O[K] }
+			: never
+		: T;
+
+export type ExpandRecursively<T> = T extends (...args: infer A) => infer R
+	? (...args: ExpandRecursively<A>) => ExpandRecursively<R>
+	: T extends object
+		? T extends infer O
+			? { [K in keyof O]: ExpandRecursively<O[K]> }
+			: never
+		: T;
+
+function a(
+	b: Expand<
+		paths["/v2/TinkoffPay/terminals/{TerminalKey}/status"]["get"]["parameters"]["path"]["TerminalKey"]
+	>,
+) {}
+
+type A = Expand<
+	paths["/v2/TinkoffPay/terminals/{TerminalKey}/status"]["get"]["parameters"]["path"]["TerminalKey"]
+>;
+
+type Prettify<T> = T extends object ? {} & { [P in keyof T]: T[P] } : {} & T;
+
+type B =
+	paths["/v2/TinkoffPay/terminals/{TerminalKey}/status"]["get"]["parameters"]["path"]["TerminalKey"];
+
+type AA = NonNullable<
+	paths["/v2/getConfirmOperation"]["post"]["requestBody"]
+>["content"]["application/json"];
+
+type BB = paths["/v2/getConfirmOperation"]["post"] extends { requestBody?: any }
+	? 1
+	: 2;
+
+export type GetRequestBody<
+	Path extends keyof paths,
+	Method extends "get" | "post",
+> = paths[Path][Method] extends { requestBody?: { content: any } }
+	? NonNullable<
+			paths[Path][Method]["requestBody"]
+		>["content"]["application/json"]
+	: 22;
+//  paths[Path][Method]["requestBody"] extends undefined
+// 		? paths[Path][Method]["requestBody"]["content"]["application/json"]
+// 		:

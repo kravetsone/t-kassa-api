@@ -41,15 +41,35 @@ indexSource = indexSource.replace(
 					.map((method) => {
 						const operation = value![method]!;
 
+						const pathParameters =
+							operation.parameters?.filter((x) => x.in === "path") || [];
+
+						const body = (operation.requestBody?.content["application/json"] ||
+							[]) as OpenAPIV3_1.MediaTypeObject;
+
+						const parameters = pathParameters
+							.map(
+								(x) =>
+									`/** ${x.description} */ ${x.name}: paths["${path}"]["${method}"]["parameters"]["path"]["${x.name}"]`,
+							)
+							.concat(
+								body?.schema
+									? [
+											`body${body.schema.required ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
+										]
+									: [],
+							)
+							.join(", ");
+
 						return dedent /* js */`
                             /**
                              * ${operation.description ? insertMultilineJSDoc(operation.description) : ""}
                              * 
                              * @tags ${operation.tags?.join(", ")}
-                             * @summary ${operation.summary}
+                             * @summary ${operation.summary} 
                              */
-                            ${fromPascalToCamelCase(operation.operationId!)}() {
-                                return 1
+                            ${fromPascalToCamelCase(operation.operationId!)}(${parameters}) {
+                                return this.request(\`${path.replace(/{(.*)}/gi, "${$1}")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
                             }
                         `;
 					})
@@ -61,4 +81,4 @@ indexSource = indexSource.replace(
 
 await Bun.write("./src/index.ts", indexSource);
 
-await $`bun x @biomejs/biome check ./src/index.ts --write`;
+await $`bun x @biomejs/biome check ./src/index.ts --write --unsafe`;

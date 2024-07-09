@@ -1,4 +1,10 @@
-import { type Require, type Servers, generateSignature } from "./utils";
+import type { paths } from "./api-types";
+import {
+	type GetRequestBody,
+	type Require,
+	type Servers,
+	generateSignature,
+} from "./utils";
 
 export interface TKassaOptions {
 	/**
@@ -29,10 +35,9 @@ export class TKassa {
 
 	private async request<T>(
 		url: string,
-		data: Record<string, unknown>,
+		data?: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
 	) {
-		const signature = generateSignature(data, this.password);
 		const options: RequestInit & {
 			headers: Record<string, string>;
 		} = {
@@ -42,9 +47,11 @@ export class TKassa {
 					"Т-Касса SDK для Node.js (https://github.com/kravetsone/t-kassa-api)",
 			},
 		};
-		if (method === "POST") {
+		if (method === "POST" && data) {
+			const signature = generateSignature(data, this.password);
 			options.headers["content-type"] = "application/json";
 			options.body = JSON.stringify({
+				...data,
 				Token: signature,
 			});
 		}
@@ -61,8 +68,8 @@ export class TKassa {
 	 * @tags Стандартный платеж, Оплата через YandexPay
 	 * @summary Инициализация платежа
 	 */
-	init() {
-		return 1;
+	init(body?: GetRequestBody<"/v2/Init", "post">) {
+		return this.request("/v2/Init", body, "POST");
 	}
 	/**
 	 *
@@ -70,8 +77,8 @@ export class TKassa {
 	 * @tags Оплата через T‑Pay, Оплата через СБП
 	 * @summary Инициировать платеж в виджете
 	 */
-	initPayments() {
-		return 1;
+	initPayments(body?: GetRequestBody<"/v2/InitPayments", "post">) {
+		return this.request("/v2/InitPayments", body, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -87,8 +94,8 @@ export class TKassa {
 	 * @tags Стандартный платеж
 	 * @summary Проверка версии 3DS
 	 */
-	check3dsVersion() {
-		return 1;
+	check3dsVersion(body: GetRequestBody<"/v2/Check3dsVersion", "post">) {
+		return this.request("/v2/Check3dsVersion", body, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -101,8 +108,8 @@ export class TKassa {
 	 * @tags Стандартный платеж
 	 * @summary Подтверждение платежа
 	 */
-	finishAuthorize() {
-		return 1;
+	finishAuthorize(body?: GetRequestBody<"/v2/FinishAuthorize", "post">) {
+		return this.request("/v2/FinishAuthorize", body, "POST");
 	}
 	/**
 	 * * Метод для списания заблокированных денежных средств. Используется при двухстадийном проведении платежа. Применим только к платежам в статусе **AUTHORIZED**. Статус транзакции перед разблокировкой
@@ -113,8 +120,8 @@ export class TKassa {
 	 * @tags Двухстадийный платеж
 	 * @summary Подтверждение платежа
 	 */
-	confirm() {
-		return 1;
+	confirm(body?: GetRequestBody<"/v2/Confirm", "post">) {
+		return this.request("/v2/Confirm", body, "POST");
 	}
 	/**
 	 * * Отменяет платежную сессию. В зависимости от статуса платежа переводит его в следующие состояния:
@@ -133,8 +140,8 @@ export class TKassa {
 	 * @tags Отмена платежа
 	 * @summary Отмена платежа
 	 */
-	cancel() {
-		return 1;
+	cancel(body?: GetRequestBody<"/v2/Cancel", "post">) {
+		return this.request("/v2/Cancel", body, "POST");
 	}
 	/**
 	 * * # Схема проведения рекуррентного платежа
@@ -189,8 +196,8 @@ export class TKassa {
 	 * @tags Рекуррентный платеж
 	 * @summary Автоплатеж
 	 */
-	chargePCI() {
-		return 1;
+	chargePCI(body?: GetRequestBody<"/v2/Charge", "post">) {
+		return this.request("/v2/Charge", body, "POST");
 	}
 	/**
 	 * * Метод возвращает статус платежа
@@ -199,8 +206,8 @@ export class TKassa {
 	 * @tags Стандартный платеж
 	 * @summary Получение статуса платежа
 	 */
-	getState() {
-		return 1;
+	getState(body?: GetRequestBody<"/v2/GetState", "post">) {
+		return this.request("/v2/GetState", body, "POST");
 	}
 	/**
 	 * * Регистрирует клиента в связке с терминалом
@@ -214,8 +221,8 @@ export class TKassa {
 	 * @tags Методы работы с клиентами
 	 * @summary Регистрация клиента
 	 */
-	addCustomer() {
-		return 1;
+	addCustomer(body?: GetRequestBody<"/v2/AddCustomer", "post">) {
+		return this.request("/v2/AddCustomer", body, "POST");
 	}
 	/**
 	 * * Возвращает данные клиента, сохраненные в связке с терминалом
@@ -224,8 +231,8 @@ export class TKassa {
 	 * @tags Методы работы с клиентами
 	 * @summary Получение данных клиента
 	 */
-	getCustomer() {
-		return 1;
+	getCustomer(body?: GetRequestBody<"/v2/GetCustomer", "post">) {
+		return this.request("/v2/GetCustomer", body, "POST");
 	}
 	/**
 	 * * Удаляет сохраненные данные клиента
@@ -234,8 +241,8 @@ export class TKassa {
 	 * @tags Методы работы с клиентами
 	 * @summary Удаление данных клиента
 	 */
-	removeCustomer() {
-		return 1;
+	removeCustomer(body?: GetRequestBody<"/v2/RemoveCustomer", "post">) {
+		return this.request("/v2/RemoveCustomer", body, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -248,8 +255,8 @@ export class TKassa {
 	 * @tags Методы работы с картами
 	 * @summary Инициализация привязки карты к клиенту
 	 */
-	addCard() {
-		return 1;
+	addCard(body?: GetRequestBody<"/v2/AddCard", "post">) {
+		return this.request("/v2/AddCard", body, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -264,8 +271,8 @@ export class TKassa {
 	 * @tags Методы работы с картами
 	 * @summary Привязка карты
 	 */
-	attachCard() {
-		return 1;
+	attachCard(body?: GetRequestBody<"/v2/AttachCard", "post">) {
+		return this.request("/v2/AttachCard", body, "POST");
 	}
 	/**
 	 * * `Для мерчантов с PCI DSS`
@@ -275,8 +282,8 @@ export class TKassa {
 	 * @tags Методы работы с картами
 	 * @summary Статус привязки карты
 	 */
-	getAddCardState() {
-		return 1;
+	getAddCardState(body?: GetRequestBody<"/v2/GetAddCardState", "post">) {
+		return this.request("/v2/GetAddCardState", body, "POST");
 	}
 	/**
 	 * * Возвращает список всех привязанных карт клиента, включая удаленные
@@ -285,8 +292,8 @@ export class TKassa {
 	 * @tags Методы работы с картами
 	 * @summary Список карт клиента
 	 */
-	getCardList() {
-		return 1;
+	getCardList(body?: GetRequestBody<"/v2/GetCardList", "post">) {
+		return this.request("/v2/GetCardList", body, "POST");
 	}
 	/**
 	 * * Метод удаляет привязанную карту клиента
@@ -295,8 +302,8 @@ export class TKassa {
 	 * @tags Методы работы с картами
 	 * @summary Удаление привязанной карты клиента
 	 */
-	removeCard() {
-		return 1;
+	removeCard(body?: GetRequestBody<"/v2/RemoveCard", "post">) {
+		return this.request("/v2/RemoveCard", body, "POST");
 	}
 	/**
 	 * * Метод регистрирует QR и возвращает информацию о нем.
@@ -306,8 +313,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Формирование QR
 	 */
-	getQr() {
-		return 1;
+	getQr(body?: GetRequestBody<"/v2/GetQr", "post">) {
+		return this.request("/v2/GetQr", body, "POST");
 	}
 	/**
 	 * * Метод предназначен для подтверждения карты путем блокировки случайной суммы
@@ -315,8 +322,8 @@ export class TKassa {
 	 * @tags Методы работы с привязанными картами и клиентами
 	 * @summary SubmitRandomAmount
 	 */
-	submitRandomAmount() {
-		return 1;
+	submitRandomAmount(body: GetRequestBody<"/v2/SubmitRandomAmount", "post">) {
+		return this.request("/v2/SubmitRandomAmount", body, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -336,7 +343,7 @@ export class TKassa {
 	 * @summary Подтверждение прохождения 3DS v1.0
 	 */
 	submit3DSAuthorization() {
-		return 1;
+		return this.request("/v2/Submit3DSAuthorization", undefined, "POST");
 	}
 	/**
 	 * * `Для Мерчантов с PCI DSS`
@@ -356,7 +363,7 @@ export class TKassa {
 	 * @summary Подтверждение прохождения 3DS v2.1
 	 */
 	submit3DSAuthorizationV2() {
-		return 1;
+		return this.request("/v2/Submit3DSAuthorizationV2", undefined, "POST");
 	}
 	/**
 	 * * Метод определения возможности проведения платежа T‑Pay на терминале и устройстве
@@ -365,8 +372,16 @@ export class TKassa {
 	 * @tags Оплата через T‑Pay
 	 * @summary Статус
 	 */
-	status() {
-		return 1;
+	status(
+		/** Платежный ключ, выдается Мерчанту при заведении
+   терминала
+    */ TerminalKey: paths["/v2/TinkoffPay/terminals/{TerminalKey}/status"]["get"]["parameters"]["path"]["TerminalKey"],
+	) {
+		return this.request(
+			`/v2/TinkoffPay/terminals/${TerminalKey}/status`,
+			undefined,
+			"GET",
+		);
 	}
 	/**
 	 * * Метод получения Link для безусловного редиректа на мобильных устройствах
@@ -375,8 +390,18 @@ export class TKassa {
 	 * @tags Оплата через T‑Pay
 	 * @summary Получение ссылки
 	 */
-	link() {
-		return 1;
+	link(
+		/** Идентификатор платежа в системе Т‑Кассы
+		 */ paymentId: paths["/v2/TinkoffPay/transactions/{paymentId}/versions/{version}/link"]["get"]["parameters"]["path"]["paymentId"],
+		/** Версия T‑Pay, доступная на терминале:
+		 * 2.0 (T‑Pay)
+		 */ version: paths["/v2/TinkoffPay/transactions/{paymentId}/versions/{version}/link"]["get"]["parameters"]["path"]["version"],
+	) {
+		return this.request(
+			`/v2/TinkoffPay/transactions/${paymentId}/versions/{version}/link`,
+			undefined,
+			"GET",
+		);
 	}
 	/**
 	 * * Метод получения QR для десктопов
@@ -385,8 +410,12 @@ export class TKassa {
 	 * @tags Оплата через T‑Pay
 	 * @summary Получение QR
 	 */
-	qR() {
-		return 1;
+	qR(
+		/** Уникальный идентификатор транзакции в
+   системе Т‑Кассы
+    */ paymentId: paths["/v2/TinkoffPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
+	) {
+		return this.request(`/v2/TinkoffPay/${paymentId}/QR`, undefined, "GET");
 	}
 	/**
 	 * * Метод получения QR для десктопов
@@ -395,8 +424,12 @@ export class TKassa {
 	 * @tags Оплата через SberPay
 	 * @summary Получение QR
 	 */
-	sberPayQR() {
-		return 1;
+	sberPayQR(
+		/** Уникальный идентификатор транзакции в
+   системе Т‑Кассы
+    */ paymentId: paths["/v2/SberPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
+	) {
+		return this.request(`/v2/SberPay/${paymentId}/QR`, undefined, "GET");
 	}
 	/**
 	 * * Получение ссылки
@@ -405,8 +438,16 @@ export class TKassa {
 	 * @tags Оплата через SberPay
 	 * @summary Получение ссылки
 	 */
-	sberPaylink() {
-		return 1;
+	sberPaylink(
+		/** Уникальный идентификатор транзакции в
+   системе Т‑Кассы
+    */ paymentId: paths["/v2/SberPay/transactions/{paymentId}/link"]["get"]["parameters"]["path"]["paymentId"],
+	) {
+		return this.request(
+			`/v2/SberPay/transactions/${paymentId}/link`,
+			undefined,
+			"GET",
+		);
 	}
 	/**
 	 * * Передача уведомления о событии платежного виджета T‑Pay + T‑ID
@@ -414,8 +455,8 @@ export class TKassa {
 	 * @tags Оплата через T‑Pay
 	 * @summary Передача уведомления о событии
 	 */
-	tPayEvent() {
-		return 1;
+	tPayEvent(body?: GetRequestBody<"/v2/TinkoffPayEvent", "post">) {
+		return this.request("/v2/TinkoffPayEvent", body, "POST");
 	}
 	/**
 	 * * Метод возвращает список участников куда может быть осуществлен возврат платежа, совершенного
@@ -425,8 +466,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Список банков-пользователей QR
 	 */
-	qrMembersList() {
-		return 1;
+	qrMembersList(body: GetRequestBody<"/v2/QrMembersList", "post">) {
+		return this.request("/v2/QrMembersList", body, "POST");
 	}
 	/**
 	 * * Метод инициирует привязку счета клиента к магазину
@@ -436,8 +477,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Привязка счёта к магазину
 	 */
-	addAccountQr() {
-		return 1;
+	addAccountQr(body?: GetRequestBody<"/v2/AddAccountQr", "post">) {
+		return this.request("/v2/AddAccountQr", body, "POST");
 	}
 	/**
 	 * * Метод возвращает статус привязки счета клиента по магазину
@@ -446,8 +487,10 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Получение статуса привязки счета к магазину
 	 */
-	getAddAccountQrState() {
-		return 1;
+	getAddAccountQrState(
+		body?: GetRequestBody<"/v2/GetAddAccountQrState", "post">,
+	) {
+		return this.request("/v2/GetAddAccountQrState", body, "POST");
 	}
 	/**
 	 * * Метод возвращает список привязанных счетов клиента по магазину
@@ -455,8 +498,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Получение списка счетов, привязанных к магазину
 	 */
-	getAccountQrList() {
-		return 1;
+	getAccountQrList(body?: GetRequestBody<"/v2/GetAccountQrList", "post">) {
+		return this.request("/v2/GetAccountQrList", body, "POST");
 	}
 	/**
 	 * * Проведение платежа по привязанному счету по QR через СБП.
@@ -472,8 +515,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Автоплатеж по QR
 	 */
-	chargeQr() {
-		return 1;
+	chargeQr(body?: GetRequestBody<"/v2/ChargeQr", "post">) {
+		return this.request("/v2/ChargeQr", body, "POST");
 	}
 	/**
 	 * * Тестовая платежная сессия с предопределенным статусом по СБП
@@ -481,8 +524,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Создание тестовой платежной сессии
 	 */
-	sbpPayTest() {
-		return 1;
+	sbpPayTest(body?: GetRequestBody<"/v2/SbpPayTest", "post">) {
+		return this.request("/v2/SbpPayTest", body, "POST");
 	}
 	/**
 	 * * Возвращает статус возврата платежа по СБП
@@ -491,8 +534,8 @@ export class TKassa {
 	 * @tags Оплата через СБП
 	 * @summary Получение статуса возврата
 	 */
-	getQRState() {
-		return 1;
+	getQRState(body: GetRequestBody<"/v2/GetQRState", "post">) {
+		return this.request("/v2/GetQRState", body, "POST");
 	}
 	/**
 	 * * Метод возвращает статус заказа
@@ -501,8 +544,8 @@ export class TKassa {
 	 * @tags Стандартный платеж
 	 * @summary Получение статуса заказа
 	 */
-	checkOrder() {
-		return 1;
+	checkOrder(body?: GetRequestBody<"/v2/CheckOrder", "post">) {
+		return this.request("/v2/CheckOrder", body, "POST");
 	}
 	/**
 	 * * Метод позволяет отправить закрывающий чек в кассу.
@@ -517,8 +560,10 @@ export class TKassa {
 	 * @tags Методы работы с чеками
 	 * @summary Закрывающий чек в кассу
 	 */
-	sendClosingReceipt() {
-		return 1;
+	sendClosingReceipt(
+		body?: GetRequestBody<"/cashbox/SendClosingReceipt", "post">,
+	) {
+		return this.request("/cashbox/SendClosingReceipt", body, "POST");
 	}
 	/**
 	 * * Метод реализуется на стороне Мерчанта для получения уведомлений об изменении статуса платежа
@@ -543,8 +588,8 @@ export class TKassa {
 	 * @tags Нотификации Мерчанта об операциях
 	 * @summary Нотификации
 	 */
-	notification() {
-		return 1;
+	notification(body?: GetRequestBody<"/v2/Notification", "post">) {
+		return this.request("/v2/Notification", body, "POST");
 	}
 	/**
 	 * * Получение deeplink с включенным подписанным JWT-токеном. Предназначен для запроса по API
@@ -552,8 +597,8 @@ export class TKassa {
 	 * @tags Оплата через MirPay
 	 * @summary Получить DeepLink
 	 */
-	getDeepLink() {
-		return 1;
+	getDeepLink(body?: GetRequestBody<"/v2/GetDeepLink", "post">) {
+		return this.request("/v2/GetDeepLink", body, "POST");
 	}
 	/**
 	 * * Метод определяет доступность методов оплаты на терминале для SDK и API. Запрос не шифруется токеном
@@ -561,8 +606,10 @@ export class TKassa {
 	 * @tags Оплата через MirPay
 	 * @summary Проверить доступность методов на SDK
 	 */
-	getTerminalPayMethods() {
-		return 1;
+	getTerminalPayMethods(
+		body?: GetRequestBody<"/v2/GetTerminalPayMethods", "get">,
+	) {
+		return this.request("/v2/GetTerminalPayMethods", body, "GET");
 	}
 	/**
 	 * * Справку по конкретной операции можно получить на: <br> 1. URL-сервиса, развернутого на своей стороне. <br> 2. Электронную почту. <br> Для формирования токена необходимо использовать только <b>PASSWORD<\/b> и <b>TERMINAL_KEY<\/b>
@@ -570,8 +617,10 @@ export class TKassa {
 	 * @tags Стандартный платеж
 	 * @summary Получение справки по операции
 	 */
-	getConfirmOperation() {
-		return 1;
+	getConfirmOperation(
+		body?: GetRequestBody<"/v2/getConfirmOperation", "post">,
+	) {
+		return this.request("/v2/getConfirmOperation", body, "POST");
 	}
 	/** @generated stop-generate-methods */
 }
