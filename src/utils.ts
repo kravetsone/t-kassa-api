@@ -21,4 +21,6 @@ export function generateSignature(
 
 export type Servers = (typeof servers)[number]["url"];
 
-export type Require<O, K extends keyof O> = { [P in K]-?: NonNullable<O[P]> };
+export type Require<O extends Record<any, any>, K extends keyof O> = {
+	[P in keyof O]-?: P extends K ? NonNullable<O[P]> : O[P];
+};

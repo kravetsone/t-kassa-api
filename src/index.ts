@@ -27,28 +27,30 @@ export class TKassa {
 		};
 	}
 
-	private async request(
+	private async request<T>(
 		url: string,
 		data: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
 	) {
 		const signature = generateSignature(data, this.password);
-
-		const response = await fetch(this.options.server + url, {
+		const options: RequestInit & {
+			headers: Record<string, string>;
+		} = {
 			method,
-			...(method === "POST"
-				? {
-						headers: {
-							"content-type": "application/json",
-							"user-agent":
-								"Т-Касса SDK for Node.js (https://github.com/kravetsone/t-kassa-api)",
-						},
-						body: JSON.stringify({
-							Token: signature,
-						}),
-					}
-				: {}),
-		});
+			headers: {
+				"user-agent":
+					"Т-Касса SDK для Node.js (https://github.com/kravetsone/t-kassa-api)",
+			},
+		};
+		if (method === "POST") {
+			options.headers["content-type"] = "application/json";
+			options.body = JSON.stringify({
+				Token: signature,
+			});
+		}
+		const response = await fetch(this.options.server + url, options);
+
+		return response.json() as T;
 	}
 
 	/** @generated start-generate-methods */
