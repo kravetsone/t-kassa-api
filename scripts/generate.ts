@@ -55,7 +55,7 @@ indexSource = indexSource.replace(
 							.concat(
 								body?.schema
 									? [
-											`body${operation.requestBody?.required || body.schema.required ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
+											`body${operation.requestBody?.required || (typeof body.schema === "object" && body.schema.required) ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
 										]
 									: [],
 							)
