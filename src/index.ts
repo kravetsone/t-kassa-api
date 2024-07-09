@@ -1,3 +1,9 @@
+/**
+ * @module
+ *
+ * Библиотека для взаимодействия с [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
+ */
+
 import type { paths } from "./api-types";
 import {
 	type GetRequestBody,
