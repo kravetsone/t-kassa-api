@@ -22,6 +22,7 @@ console.log(result);
 -   Генерируется исходя из **OpenAPI** спецификации
 -   Отличная документация кода с помощью **JSDoc** (сгенерировано из **OpenAPI**)
 -   Современная и **type-safe**
+-   0 зависимостей
 -   Берёт работу с [подписью запроса](https://www.tbank.ru/kassa/dev/payments/index.html#section/Podpis-zaprosa) на себя
 
 ### TODO:
