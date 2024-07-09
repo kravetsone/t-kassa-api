@@ -3,7 +3,9 @@
   "module": "src/index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@scalar/openapi-parser": "^0.7.2",
+    "@types/bun": "latest",
+    "ts-dedent": "^2.2.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

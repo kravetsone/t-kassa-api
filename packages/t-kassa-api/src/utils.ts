@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import type { servers } from "./generated";
 
 export function generateSignature(
 	data: Record<string, unknown>,
@@ -17,3 +18,7 @@ export function generateSignature(
 
 	return createHash("sha256").update(sign).digest("hex");
 }
+
+export type Servers = (typeof servers)[number]["url"];
+
+export type Require<O, K extends keyof O> = { [P in K]-?: NonNullable<O[P]> };
