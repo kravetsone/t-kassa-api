@@ -4,10 +4,12 @@ import type { servers } from "./generated";
 
 export function generateSignature(
 	data: Record<string, unknown>,
+	terminalKey: string,
 	password: string,
 ) {
 	const signData: Record<string, unknown> = {
 		...data,
+		TerminalKey: terminalKey,
 		Password: password,
 	};
 
@@ -15,7 +17,7 @@ export function generateSignature(
 		.filter((key) => typeof signData[key] !== "object")
 		.sort()
 		.map((key) => signData[key])
-		.join();
+		.join("");
 
 	return createHash("sha256").update(sign).digest("hex");
 }
