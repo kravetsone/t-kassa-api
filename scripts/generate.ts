@@ -55,7 +55,7 @@ indexSource = indexSource.replace(
 							.concat(
 								body?.schema
 									? [
-											`body${body.schema.required ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
+											`body${operation.requestBody?.required || body.schema.required ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
 										]
 									: [],
 							)
@@ -69,7 +69,7 @@ indexSource = indexSource.replace(
                              * @summary ${operation.summary} 
                              */
                             ${fromPascalToCamelCase(operation.operationId!)}(${parameters}) {
-                                return this.request(\`${path.replace(/{(.*)}/gi, "${$1}")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
+                                return this.request<GetResponse<"${path}", "${method}">>(\`${path.replace(/{(.*)}/gi, "${$1}")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
                             }
                         `;
 					})

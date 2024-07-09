@@ -62,18 +62,31 @@ type AA = NonNullable<
 	paths["/v2/getConfirmOperation"]["post"]["requestBody"]
 >["content"]["application/json"];
 
-type BB = paths["/v2/getConfirmOperation"]["post"] extends { requestBody?: any }
-	? 1
-	: 2;
+type BB = paths["/v2/getConfirmOperation"]["post"]["responses"];
 
 export type GetRequestBody<
 	Path extends keyof paths,
 	Method extends "get" | "post",
 > = paths[Path][Method] extends { requestBody?: { content: any } }
-	? NonNullable<
-			paths[Path][Method]["requestBody"]
-		>["content"]["application/json"]
-	: 22;
-//  paths[Path][Method]["requestBody"] extends undefined
-// 		? paths[Path][Method]["requestBody"]["content"]["application/json"]
-// 		:
+	? Omit<
+			NonNullable<
+				paths[Path][Method]["requestBody"]
+			>["content"]["application/json"],
+			"Token" | "TerminalKey"
+		>
+	: never;
+
+export type GetResponse<
+	Path extends keyof paths,
+	Method extends "get" | "post",
+> = paths[Path][Method] extends {
+	responses: {
+		200: {
+			content: {
+				"application/json": any;
+			};
+		};
+	};
+}
+	? paths[Path][Method]["responses"][200]["content"]["application/json"]
+	: never;
