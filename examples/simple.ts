@@ -1,7 +1,16 @@
 import { TKassa } from "../src";
 
-const tkassa = new TKassa("", "", {
-	server: "https://rest-api-test.tinkoff.ru",
+const ткасса = new TKassa(
+	process.env.TERMINAL_KEY as string,
+	process.env.PASSWORD as string,
+	{
+		server: "https://rest-api-test.tinkoff.ru",
+	},
+);
+
+const result = await ткасса.init({
+	Amount: 1000,
+	OrderId: "12",
 });
 
-const a = await tkassa.init();
+console.log(result);

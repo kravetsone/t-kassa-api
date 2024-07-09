@@ -45,11 +45,15 @@ export class TKassa {
 			method,
 			headers: {
 				"user-agent":
-					"Т-Касса SDK для Node.js (https://github.com/kravetsone/t-kassa-api)",
+					"T-Kassa SDK for Node.js (https://github.com/kravetsone/t-kassa-api)",
 			},
 		};
 		if (method === "POST" && data) {
-			const signature = generateSignature(data, this.password);
+			const signature = generateSignature(
+				data,
+				this.terminalKey,
+				this.password,
+			);
 			options.headers["content-type"] = "application/json";
 			options.body = JSON.stringify({
 				...data,
@@ -57,7 +61,10 @@ export class TKassa {
 				TerminalKey: this.terminalKey,
 			});
 		}
+
 		const response = await fetch(this.options.server + url, options);
+
+		if (!response.ok) throw new Error(`error${await response.text()}`);
 
 		return response.json() as T;
 	}
