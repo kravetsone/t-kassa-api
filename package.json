@@ -5,6 +5,9 @@
     "main": "./dist/index.cjs",
     "types": "./dist/index.d.ts",
     "description": "SDK для Т-Кассы (тинькофф платежи)",
+    "scripts": {
+        "prepublishOnly": "bunx pkgroll"
+    },
     "author": {
         "name": "kravets",
         "url": "https://github.com/kravetsone"
