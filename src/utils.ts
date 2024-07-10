@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { paths } from "./api-types";
+import type { paths, webhooks } from "./api-types";
 import type { servers } from "./generated";
 
 export function generateSignature(
@@ -23,11 +23,28 @@ export function generateSignature(
 }
 
 export type Servers = (typeof servers)[number]["url"];
+export type WebhookBody = NonNullable<
+	webhooks["Notification"]["post"]["requestBody"]
+>["content"]["application/json"];
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type Require<O extends Record<any, any>, K extends keyof O> = {
 	[P in keyof O]-?: P extends K ? NonNullable<O[P]> : O[P];
 };
+
+type UnionToIntersectionHelper<U> = (
+	U extends unknown
+		? (k: U) => void
+		: never
+) extends (k: infer I) => void
+	? I
+	: never;
+
+export type UnionToIntersection<U> = boolean extends U
+	? UnionToIntersectionHelper<Exclude<U, boolean>> & boolean
+	: UnionToIntersectionHelper<U>;
+
+export type Modify<Base, Mod> = Omit<Base, keyof Mod> & Mod;
 
 export type GetRequestBody<
 	Path extends keyof paths,

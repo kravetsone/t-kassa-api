@@ -5,13 +5,18 @@
  */
 
 import type { paths } from "./api-types";
+import type { UpdateFilter } from "./filters";
 import {
 	type GetRequestBody,
 	type GetResponse,
+	type Modify,
 	type Require,
 	type Servers,
+	type WebhookBody,
 	generateSignature,
 } from "./utils";
+
+export * as filters from "./filters";
 
 export interface TKassaOptions {
 	/**
@@ -74,6 +79,17 @@ export class TKassa {
 
 		return response.json() as T;
 	}
+
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	on<const Filter extends UpdateFilter<any>>(
+		filters: Filter,
+		handler: (
+			context: Modify<
+				WebhookBody,
+				Filter extends UpdateFilter<infer Mod> ? Mod : never
+			>,
+		) => unknown,
+	) {}
 
 	/** @generated start-generate-methods */
 	/**
