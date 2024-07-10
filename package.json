@@ -1,56 +1,56 @@
 {
-  "name": "t-kassa-api",
-  "version": "0.0.1",
-  "module": "./dist/index.js",
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
-  "description": "SDK для Т-Кассы (тинькофф платежи)",
-  "scripts": {
-    "prepublishOnly": "bunx pkgroll"
-  },
-  "author": {
-    "name": "kravets",
-    "url": "https://github.com/kravetsone"
-  },
-  "keywords": [
-    "tinkoff",
-    "payments",
-    "payment",
-    "api",
-    "bank",
-    "sdk"
-  ],
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+    "name": "t-kassa-api",
+    "version": "0.0.2",
+    "module": "./dist/index.js",
+    "main": "./dist/index.cjs",
+    "types": "./dist/index.d.ts",
+    "description": "SDK для Т-Кассы (тинькофф платежи)",
+    "scripts": {
+        "prepublishOnly": "bunx pkgroll"
     },
-    "./openapi": {
-      "import": {
-        "types": "./dist/api-types.d.ts"
-      },
-      "require": {
-        "types": "./dist/api-types.d.cts"
-      }
-    }
-  },
-  "type": "module",
-  "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@scalar/openapi-parser": "^0.7.2",
-    "@types/bun": "latest",
-    "openapi-typescript": "^7.0.2",
-    "pkgroll": "^2.1.1",
-    "ts-dedent": "^2.2.0",
-    "typescript": "^5.5.3"
-  },
-  "files": [
-    "dist"
-  ]
+    "author": {
+        "name": "kravets",
+        "url": "https://github.com/kravetsone"
+    },
+    "keywords": [
+        "tinkoff",
+        "payments",
+        "payment",
+        "api",
+        "bank",
+        "sdk"
+    ],
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        },
+        "./openapi": {
+            "import": {
+                "types": "./dist/api-types.d.ts"
+            },
+            "require": {
+                "types": "./dist/api-types.d.cts"
+            }
+        }
+    },
+    "type": "module",
+    "devDependencies": {
+        "@biomejs/biome": "^1.8.3",
+        "@scalar/openapi-parser": "^0.7.2",
+        "@types/bun": "latest",
+        "openapi-typescript": "^7.0.2",
+        "pkgroll": "^2.1.1",
+        "ts-dedent": "^2.2.0",
+        "typescript": "^5.5.3"
+    },
+    "files": [
+        "dist"
+    ]
 }
