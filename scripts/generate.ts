@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { type OpenAPIV3_1, openapi } from "@scalar/openapi-parser";
 import { $ } from "bun";
+import openapiTS, { astToString } from "openapi-typescript";
 import dedent from "ts-dedent";
 import {
 	fromPascalToCamelCase,
@@ -8,16 +9,53 @@ import {
 	insertMultilineJSDoc,
 } from "./utils";
 
-const tKassaSchema = JSON.parse(String(readFileSync("./openapi.json")));
+const tKassaSchema = JSON.parse(
+	String(readFileSync("./openapi.json")),
+) as OpenAPIV3_1.Document;
+
+// Приколы потому что Т-Банк имеет OpenAPI 3.0.3, а вебхуки заехали только в 3.1.0
+
+if (!tKassaSchema.webhooks) tKassaSchema.webhooks = {};
+
+// @ts-expect-error
+tKassaSchema.webhooks.Notification = tKassaSchema.paths["/v2/Notification"];
+
+// @ts-expect-error
+tKassaSchema.paths["/v2/Notification"] = undefined;
 
 const result = await openapi().load(tKassaSchema).upgrade().get();
 
 Bun.write("modern-openapi.json", JSON.stringify(result.specification));
 
-// biome-ignore lint/complexity/noBannedTypes: <explanation>
-const schema = result.specification as OpenAPIV3_1.Document<{}>;
+await $`bun x @biomejs/biome check ./modern-openapi.json --write --unsafe`;
 
-if (!schema.paths || !schema.servers) throw new Error("missed");
+const schema = result.specification as OpenAPIV3_1.Document;
+
+if (!schema.paths || !schema.servers || !schema.openapi)
+	throw new Error("missed");
+
+// @ts-ignore
+const ast = await openapiTS(schema, {
+	transform(schemaObject) {
+		// @ts-expect-error Какие-то пиколы у генератора типов с экзамплами по 3.1 спекеююю
+		if ("examples" in schemaObject && "default" in schemaObject.examples)
+			schemaObject.example = schemaObject?.examples?.default;
+	},
+});
+const contents = astToString(ast);
+
+Bun.write(
+	"./src/api-types.ts",
+	dedent /* js */`
+	/**
+	 * @module
+	 * 
+	 * Сгенерированные TypeScript типы для [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
+	 */
+
+	${contents.replace(/(.*): never;/gi, "").replace(/(.*): {(\s*)};/gim, "")}`,
+);
+await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 
 const file = dedent`export const servers = ${JSON.stringify(schema.servers)} as const;`;
 
