@@ -1,4 +1,4 @@
-import { TKassa, filters } from "../src";
+import { TKassa, filters, webhookHandler } from "../src";
 
 const ткасса = new TKassa(
 	process.env.TERMINAL_KEY as string,
@@ -25,3 +25,5 @@ const result = await ткасса.init({
 });
 
 console.log(result);
+
+const a = webhookHandler(ткасса, "elysia");

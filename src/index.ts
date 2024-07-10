@@ -17,6 +17,7 @@ import {
 } from "./utils";
 
 export * as filters from "./filters";
+export * from "./webhook";
 
 export interface TKassaOptions {
 	/**
@@ -34,6 +35,8 @@ export class TKassa {
 	terminalKey: string;
 	password: string;
 	options: Require<TKassaOptions, "server">;
+
+	private listeners: ((context: WebhookBody) => unknown)[] = [];
 
 	constructor(terminalKey: string, password: string, options?: TKassaOptions) {
 		this.terminalKey = terminalKey;
@@ -89,7 +92,23 @@ export class TKassa {
 				Filter extends UpdateFilter<infer Mod> ? Mod : never
 			>,
 		) => unknown,
-	) {}
+	) {
+		this.listeners.push((context) => {
+			// @ts-expect-error
+			if (filters(context) === true) return handler(context);
+		});
+
+		return this;
+	}
+
+	async emit(data: WebhookBody) {
+		const signature = generateSignature(data, this.terminalKey, this.password);
+		if (signature !== data.Token) throw Error("token mismatch");
+
+		for (const run of this.listeners) {
+			await run(data);
+		}
+	}
 
 	/** @generated start-generate-methods */
 	/**
