@@ -11,8 +11,7 @@ const ткасса = new TKassa(
 ткасса.on(
 	filters.and(
 		filters.equal("Status", "SUCCESS"),
-		filters.equal("ErrorCode", "1"),
-		filters.notNullable("FnNumber"),
+		filters.notNullable("RebillId"),
 	),
 	(context) => {
 		// ^?
