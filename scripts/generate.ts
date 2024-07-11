@@ -112,10 +112,11 @@ indexSource = indexSource.replace(
 
 						return dedent /* js */`
                             /**
-                             * ${operation.description ? insertMultilineJSDoc(operation.description) : ""}
+                            ${operation.description ? insertMultilineJSDoc(operation.description) : ""}
                              * 
                              * @tags ${operation.tags?.join(", ")}
                              * @summary ${operation.summary} 
+							 * ${operation.deprecated ? "@deprecated" : ""} 
                              */
                             ${fromPascalToCamelCase(operation.operationId!)}(${parameters}) {
                                 return this.request<GetResponse<"${path}", "${method}">>(\`${path.replace(/{(.*)}/gi, "${$1}")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
