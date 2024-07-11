@@ -4,6 +4,9 @@
  * Сгенерированные TypeScript типы для [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
  */
 
+/**
+ * Сгенерированные из OpenAPI типы для `paths`
+ */
 export interface paths {
 	"/v2/Init": {
 		/**
@@ -421,6 +424,9 @@ export interface paths {
 		post: operations["GetConfirmOperation"];
 	};
 }
+/**
+ * Сгенерированные из OpenAPI типы для `webhooks`
+ */
 export interface webhooks {
 	Notification: {
 		/**
@@ -447,6 +453,9 @@ export interface webhooks {
 		post: operations["Notification"];
 	};
 }
+/**
+ * Сгенерированные из OpenAPI типы для `components`
+ */
 export interface components {
 	schemas: {
 		Common: {
@@ -5389,7 +5398,10 @@ export interface components {
 		};
 	};
 }
-export type $defs = Record<string, never>;
+
+/**
+ * Сгенерированные из OpenAPI типы для `operations`
+ */
 export interface operations {
 	Init: {
 		requestBody: {

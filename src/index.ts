@@ -16,9 +16,15 @@ import {
 	generateSignature,
 } from "./utils";
 
+/**
+ * Фильтры
+ */
 export * as filters from "./filters";
 export * from "./webhook";
 
+/**
+ * Параметры для настройки поведения {@link TKassa}
+ */
 export interface TKassaOptions {
 	/**
 	 * Сервер, куда будут отправляться запросы.
@@ -31,6 +37,21 @@ export interface TKassaOptions {
 	server?: Servers;
 }
 
+/**
+ * Главный класс библиотеки.
+ *
+ * @example
+ * ```ts
+ * const ткасса = new TKassa(process.env.TERMINAL_KEY, process.env.PASSWORD, {
+ *     server: "https://rest-api-test.tinkoff.ru",
+ * });
+ *
+ * const result = await ткасса.init({
+ *     Amount: 1000,
+ *     OrderId: "12",
+ * });
+ * ```
+ */
 export class TKassa {
 	terminalKey: string;
 	password: string;
@@ -38,6 +59,7 @@ export class TKassa {
 
 	private listeners: ((context: WebhookBody) => unknown)[] = [];
 
+	/** Создание инстанса Т-Кассы */
 	constructor(terminalKey: string, password: string, options?: TKassaOptions) {
 		this.terminalKey = terminalKey;
 		this.password = password;
@@ -83,6 +105,24 @@ export class TKassa {
 		return response.json() as T;
 	}
 
+	/**
+	 * Слушатель webhook события (нотификации)
+	 *
+	 * @example
+	 * ```ts
+	 * ткасса.on(
+	 *     filters.and(
+	 *         filters.equal("Status", "SUCCESS"),
+	 *         filters.notNullable("RebillId")
+	 *     ),
+	 *     (context) => {
+	 *         // при этом типы понимают фильтры
+	 *     }
+	 * );
+	 * ```
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Notifikacii-Merchanta-ob-operaciyah)
+	 */
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	on<const Filter extends UpdateFilter<any>>(
 		filters: Filter,
@@ -101,6 +141,9 @@ export class TKassa {
 		return this;
 	}
 
+	/**
+	 * Рассказать о пришедшем событии
+	 */
 	async emit(data: WebhookBody) {
 		const signature = generateSignature(data, this.terminalKey, this.password);
 		if (signature !== data.Token) throw Error("token mismatch");

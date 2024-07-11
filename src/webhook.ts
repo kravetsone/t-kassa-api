@@ -3,14 +3,14 @@ import type { WebhookBody } from "./utils";
 
 const responseOK = new Response("OK");
 
-export interface FrameworkHandler {
+interface FrameworkHandler {
 	body: Promise<WebhookBody> | WebhookBody;
 	response?: () => unknown;
 }
 
-export type FrameworkAdapter = (...args: any[]) => FrameworkHandler;
+type FrameworkAdapter = (...args: any[]) => FrameworkHandler;
 
-export const frameworks = {
+const frameworks = {
 	elysia: ({ body }) => ({ body, response: () => responseOK }),
 	fastify: (request, reply) => ({
 		body: request.body,
@@ -40,6 +40,31 @@ export const frameworks = {
 	"Bun.serve": (req) => ({ body: req.json(), response: () => responseOK }),
 } satisfies Record<string, FrameworkAdapter>;
 
+/**
+ * Функция, которая помогает зарегистрировать обработчик событий для подходящего вам фреймворка
+ *
+ * @example
+ * ```ts
+ * import { Hono } from "hono";
+ * import { TKassa, webhookHandler, filters } from "t-kassa-api";
+ *
+ * const ткасса = new TKassa(process.env.TERMINAL_KEY, process.env.PASSWORD);
+ *
+ * ткасса.on(
+ *     filters.and(
+ *         filters.equal("Status", "SUCCESS"),
+ *         filters.notNullable("RebillId")
+ *     ),
+ *     (context) => {
+ *         // при этом типы понимают фильтры
+ *     }
+ * );
+ *
+ * const app = new Hono();
+ *
+ * app.get("/", webhookHandler("hono"));
+ * ```
+ */
 export function webhookHandler<Framework extends keyof typeof frameworks>(
 	tKassa: TKassa,
 	framework: Framework,

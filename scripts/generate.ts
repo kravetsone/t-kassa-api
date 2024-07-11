@@ -53,7 +53,18 @@ Bun.write(
 	 * Сгенерированные TypeScript типы для [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
 	 */
 
-	${contents.replace(/(.*): never;/gi, "").replace(/(.*): {(\s*)};/gim, "")}`,
+	${contents
+		.replace(/(.*): never;/gi, "")
+		.replace(/(.*): {(\s*)};/gim, "")
+		.replace(/export type (.*) = Record<string, never>;/, "")
+		.replace(
+			/export interface (.*) {/gi,
+			dedent /* js */`
+		/**
+		 * Сгенерированные из OpenAPI типы для \`$1\`
+		 */
+		 export interface $1 {`,
+		)}`,
 );
 await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 
