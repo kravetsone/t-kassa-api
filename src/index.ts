@@ -10,7 +10,6 @@ import {
 	type GetRequestBody,
 	type GetResponse,
 	type Modify,
-	type Prettify,
 	type Require,
 	type Servers,
 	type WebhookBody,
@@ -95,7 +94,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	private async request<T>(
 		url: string,
 		data?: TerminalKey extends ""
-			? { [key: string]: unknown; TerminalKey: string }
+			? { [key: string]: unknown; TerminalKey: string; Password: string }
 			: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
 	) {
@@ -113,12 +112,19 @@ export class TKassa<TerminalKey extends string = ""> {
 				typeof data.TerminalKey === "string"
 					? data.TerminalKey
 					: this.terminalKey;
-			if (!terminalKey) throw new Error("");
+			const password =
+				typeof data.Password === "string" ? data.Password : this.password;
 
-			const signature = generateSignature(data, terminalKey, this.password);
+			if (!terminalKey || !password)
+				throw new Error(
+					`Не указан пароль или ключ терминала. Значения: TerminalKey = ${terminalKey}, Password = ${password}`,
+				);
+
+			const signature = generateSignature(data, terminalKey, password);
 			options.headers["content-type"] = "application/json";
 			options.body = JSON.stringify({
 				...data,
+				Password: undefined,
 				Token: signature,
 				TerminalKey: this.terminalKey,
 			});
@@ -171,8 +177,12 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * Рассказать о пришедшем событии
 	 */
 	async emit(data: WebhookBody) {
-		const signature = generateSignature(data, this.terminalKey, this.password);
-		if (signature !== data.Token) throw Error("token mismatch");
+		const terminalKey = this.terminalKey || data.TerminalKey;
+		if (!terminalKey)
+			throw Error("Ключ терминала не передан. Нотификация невозможна");
+
+		const signature = generateSignature(data, terminalKey, this.password);
+		if (signature !== data.Token) throw Error("Токены не равны");
 
 		for (const run of this.listeners) {
 			await run(data);
@@ -188,7 +198,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Инициализация платежа
 	 *
 	 */
-	init(body: GetRequestBody<"/v2/Init", "post">) {
+	init(body: GetRequestBody<"/v2/Init", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/Init", "post">>(
 			"/v2/Init",
 			body,
@@ -202,7 +212,7 @@ export class TKassa<TerminalKey extends string = ""> {
                         * @summary Инициировать платеж в виджете 
    *  
                         */
-	initPayments(body: GetRequestBody<"/v2/InitPayments", "post">) {
+	initPayments(body: GetRequestBody<"/v2/InitPayments", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/InitPayments", "post">>(
 			"/v2/InitPayments",
 			body,
@@ -224,7 +234,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Проверка версии 3DS
 	 *
 	 */
-	check3dsVersion(body: GetRequestBody<"/v2/Check3dsVersion", "post">) {
+	check3dsVersion(
+		body: GetRequestBody<"/v2/Check3dsVersion", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/Check3dsVersion", "post">>(
 			"/v2/Check3dsVersion",
 			body,
@@ -243,7 +255,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Подтверждение платежа
 	 *
 	 */
-	finishAuthorize(body: GetRequestBody<"/v2/FinishAuthorize", "post">) {
+	finishAuthorize(
+		body: GetRequestBody<"/v2/FinishAuthorize", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/FinishAuthorize", "post">>(
 			"/v2/FinishAuthorize",
 			body,
@@ -260,7 +274,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Подтверждение платежа
 	 *
 	 */
-	confirm(body: GetRequestBody<"/v2/Confirm", "post">) {
+	confirm(body: GetRequestBody<"/v2/Confirm", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/Confirm", "post">>(
 			"/v2/Confirm",
 			body,
@@ -285,7 +299,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Отмена платежа
 	 *
 	 */
-	cancel(body: GetRequestBody<"/v2/Cancel", "post">) {
+	cancel(body: GetRequestBody<"/v2/Cancel", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/Cancel", "post">>(
 			"/v2/Cancel",
 			body,
@@ -346,7 +360,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Автоплатеж
 	 *
 	 */
-	chargePCI(body: GetRequestBody<"/v2/Charge", "post">) {
+	chargePCI(body: GetRequestBody<"/v2/Charge", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/Charge", "post">>(
 			"/v2/Charge",
 			body,
@@ -361,7 +375,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение статуса платежа
 	 *
 	 */
-	getState(body: GetRequestBody<"/v2/GetState", "post">) {
+	getState(body: GetRequestBody<"/v2/GetState", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetState", "post">>(
 			"/v2/GetState",
 			body,
@@ -381,7 +395,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Регистрация клиента
 	 *
 	 */
-	addCustomer(body: GetRequestBody<"/v2/AddCustomer", "post">) {
+	addCustomer(body: GetRequestBody<"/v2/AddCustomer", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/AddCustomer", "post">>(
 			"/v2/AddCustomer",
 			body,
@@ -396,7 +410,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение данных клиента
 	 *
 	 */
-	getCustomer(body: GetRequestBody<"/v2/GetCustomer", "post">) {
+	getCustomer(body: GetRequestBody<"/v2/GetCustomer", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetCustomer", "post">>(
 			"/v2/GetCustomer",
 			body,
@@ -411,7 +425,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Удаление данных клиента
 	 *
 	 */
-	removeCustomer(body: GetRequestBody<"/v2/RemoveCustomer", "post">) {
+	removeCustomer(
+		body: GetRequestBody<"/v2/RemoveCustomer", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/RemoveCustomer", "post">>(
 			"/v2/RemoveCustomer",
 			body,
@@ -430,7 +446,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Инициализация привязки карты к клиенту
 	 *
 	 */
-	addCard(body: GetRequestBody<"/v2/AddCard", "post">) {
+	addCard(body: GetRequestBody<"/v2/AddCard", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/AddCard", "post">>(
 			"/v2/AddCard",
 			body,
@@ -451,7 +467,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Привязка карты
 	 *
 	 */
-	attachCard(body: GetRequestBody<"/v2/AttachCard", "post">) {
+	attachCard(body: GetRequestBody<"/v2/AttachCard", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/AttachCard", "post">>(
 			"/v2/AttachCard",
 			body,
@@ -467,7 +483,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Статус привязки карты
 	 *
 	 */
-	getAddCardState(body: GetRequestBody<"/v2/GetAddCardState", "post">) {
+	getAddCardState(
+		body: GetRequestBody<"/v2/GetAddCardState", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/GetAddCardState", "post">>(
 			"/v2/GetAddCardState",
 			body,
@@ -482,7 +500,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Список карт клиента
 	 *
 	 */
-	getCardList(body: GetRequestBody<"/v2/GetCardList", "post">) {
+	getCardList(body: GetRequestBody<"/v2/GetCardList", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetCardList", "post">>(
 			"/v2/GetCardList",
 			body,
@@ -497,7 +515,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Удаление привязанной карты клиента
 	 *
 	 */
-	removeCard(body: GetRequestBody<"/v2/RemoveCard", "post">) {
+	removeCard(body: GetRequestBody<"/v2/RemoveCard", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/RemoveCard", "post">>(
 			"/v2/RemoveCard",
 			body,
@@ -513,7 +531,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Формирование QR
 	 *
 	 */
-	getQr(body: GetRequestBody<"/v2/GetQr", "post">) {
+	getQr(body: GetRequestBody<"/v2/GetQr", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetQr", "post">>(
 			"/v2/GetQr",
 			body,
@@ -527,7 +545,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary SubmitRandomAmount
 	 * @deprecated
 	 */
-	submitRandomAmount(body: GetRequestBody<"/v2/SubmitRandomAmount", "post">) {
+	submitRandomAmount(
+		body: GetRequestBody<"/v2/SubmitRandomAmount", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/SubmitRandomAmount", "post">>(
 			"/v2/SubmitRandomAmount",
 			body,
@@ -689,7 +709,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Передача уведомления о событии
 	 *
 	 */
-	tPayEvent(body: GetRequestBody<"/v2/TinkoffPayEvent", "post">) {
+	tPayEvent(body: GetRequestBody<"/v2/TinkoffPayEvent", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/TinkoffPayEvent", "post">>(
 			"/v2/TinkoffPayEvent",
 			body,
@@ -705,7 +725,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Список банков-пользователей QR
 	 *
 	 */
-	qrMembersList(body: GetRequestBody<"/v2/QrMembersList", "post">) {
+	qrMembersList(
+		body: GetRequestBody<"/v2/QrMembersList", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/QrMembersList", "post">>(
 			"/v2/QrMembersList",
 			body,
@@ -721,7 +743,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Привязка счёта к магазину
 	 *
 	 */
-	addAccountQr(body: GetRequestBody<"/v2/AddAccountQr", "post">) {
+	addAccountQr(body: GetRequestBody<"/v2/AddAccountQr", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/AddAccountQr", "post">>(
 			"/v2/AddAccountQr",
 			body,
@@ -737,7 +759,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 *
 	 */
 	getAddAccountQrState(
-		body: GetRequestBody<"/v2/GetAddAccountQrState", "post">,
+		body: GetRequestBody<"/v2/GetAddAccountQrState", "post", TerminalKey>,
 	) {
 		return this.request<GetResponse<"/v2/GetAddAccountQrState", "post">>(
 			"/v2/GetAddAccountQrState",
@@ -752,7 +774,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение списка счетов, привязанных к магазину
 	 *
 	 */
-	getAccountQrList(body: GetRequestBody<"/v2/GetAccountQrList", "post">) {
+	getAccountQrList(
+		body: GetRequestBody<"/v2/GetAccountQrList", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/GetAccountQrList", "post">>(
 			"/v2/GetAccountQrList",
 			body,
@@ -774,7 +798,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Автоплатеж по QR
 	 *
 	 */
-	chargeQr(body: GetRequestBody<"/v2/ChargeQr", "post">) {
+	chargeQr(body: GetRequestBody<"/v2/ChargeQr", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/ChargeQr", "post">>(
 			"/v2/ChargeQr",
 			body,
@@ -788,7 +812,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Создание тестовой платежной сессии
 	 *
 	 */
-	sbpPayTest(body: GetRequestBody<"/v2/SbpPayTest", "post">) {
+	sbpPayTest(body: GetRequestBody<"/v2/SbpPayTest", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/SbpPayTest", "post">>(
 			"/v2/SbpPayTest",
 			body,
@@ -803,7 +827,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение статуса возврата
 	 *
 	 */
-	getQRState(body: GetRequestBody<"/v2/GetQRState", "post">) {
+	getQRState(body: GetRequestBody<"/v2/GetQRState", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetQRState", "post">>(
 			"/v2/GetQRState",
 			body,
@@ -818,7 +842,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение статуса заказа
 	 *
 	 */
-	checkOrder(body: GetRequestBody<"/v2/CheckOrder", "post">) {
+	checkOrder(body: GetRequestBody<"/v2/CheckOrder", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/CheckOrder", "post">>(
 			"/v2/CheckOrder",
 			body,
@@ -840,7 +864,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 *
 	 */
 	sendClosingReceipt(
-		body: GetRequestBody<"/cashbox/SendClosingReceipt", "post">,
+		body: GetRequestBody<"/cashbox/SendClosingReceipt", "post", TerminalKey>,
 	) {
 		return this.request<GetResponse<"/cashbox/SendClosingReceipt", "post">>(
 			"/cashbox/SendClosingReceipt",
@@ -855,7 +879,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получить DeepLink
 	 *
 	 */
-	getDeepLink(body: GetRequestBody<"/v2/GetDeepLink", "post">) {
+	getDeepLink(body: GetRequestBody<"/v2/GetDeepLink", "post", TerminalKey>) {
 		return this.request<GetResponse<"/v2/GetDeepLink", "post">>(
 			"/v2/GetDeepLink",
 			body,
@@ -870,7 +894,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 *
 	 */
 	getTerminalPayMethods(
-		body: GetRequestBody<"/v2/GetTerminalPayMethods", "get">,
+		body: GetRequestBody<"/v2/GetTerminalPayMethods", "get", TerminalKey>,
 	) {
 		return this.request<GetResponse<"/v2/GetTerminalPayMethods", "get">>(
 			"/v2/GetTerminalPayMethods",
@@ -885,7 +909,9 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение справки по операции
 	 *
 	 */
-	getConfirmOperation(body: GetRequestBody<"/v2/getConfirmOperation", "post">) {
+	getConfirmOperation(
+		body: GetRequestBody<"/v2/getConfirmOperation", "post", TerminalKey>,
+	) {
 		return this.request<GetResponse<"/v2/getConfirmOperation", "post">>(
 			"/v2/getConfirmOperation",
 			body,

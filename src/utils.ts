@@ -49,14 +49,31 @@ export type Modify<Base, Mod> = Omit<Base, keyof Mod> & Mod;
 export type GetRequestBody<
 	Path extends keyof paths,
 	Method extends "get" | "post",
+	TerminalKey extends string = "",
 > = paths[Path] extends { [K in Method]: any }
 	? paths[Path][Method] extends { requestBody?: { content: any } }
-		? Omit<
-				NonNullable<
-					paths[Path][Method]["requestBody"]
-				>["content"]["application/json"],
-				"Token" | "TerminalKey"
-			>
+		? TerminalKey extends ""
+			? Modify<
+					Omit<
+						NonNullable<
+							paths[Path][Method]["requestBody"]
+						>["content"]["application/json"],
+						"Token"
+					>,
+					{
+						/**
+						 * Пароль, который используется для генерации подписи запроса (он не попадёт в body запроса)
+						 * @example 12312312
+						 */
+						Password: string;
+					}
+				>
+			: Omit<
+					NonNullable<
+						paths[Path][Method]["requestBody"]
+					>["content"]["application/json"],
+					"Token" | "TerminalKey"
+				>
 		: never
 	: never;
 

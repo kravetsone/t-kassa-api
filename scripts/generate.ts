@@ -112,7 +112,7 @@ indexSource = indexSource.replace(
 												// 	body.schema.required)
 												// 	? ""
 												// 	: "?"
-											}: GetRequestBody<"${path}", "${method}">`,
+											}: GetRequestBody<"${path}", "${method}", TerminalKey>`,
 										]
 									: [],
 							)

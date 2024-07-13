@@ -2,6 +2,15 @@ import { TKassa, filters, webhookHandler } from "../src";
 
 const тк = new TKassa();
 
+const result1 = await тк.init({
+	TerminalKey: "",
+	Amount: 0,
+	OrderId: "",
+	Password: "",
+});
+
+console.log(result1);
+
 const ткасса = new TKassa(
 	process.env.TERMINAL_KEY as string,
 	process.env.PASSWORD as string,
@@ -9,6 +18,15 @@ const ткасса = new TKassa(
 		// server: "https://rest-api-test.tinkoff.ru",
 	},
 );
+
+const result = await ткасса.init({
+	TerminalKey: "",
+	Amount: 0,
+	OrderId: "",
+	Password: "",
+});
+
+console.log(result);
 
 ткасса.on(
 	filters.and(
@@ -19,9 +37,5 @@ const ткасса = new TKassa(
 		// ^?
 	},
 );
-
-const result = await ткасса.getAddAccountQrState();
-
-console.log(result);
 
 const a = webhookHandler(ткасса, "elysia");
