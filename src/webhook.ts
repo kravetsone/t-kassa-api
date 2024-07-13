@@ -77,7 +77,7 @@ const frameworks: Record<
  * ```
  */
 export function webhookHandler<Framework extends keyof typeof frameworks>(
-	tKassa: TKassa,
+	tKassa: TKassa<any, any>,
 	framework: Framework,
 ) {
 	const frameworkAdapter = frameworks[framework];
