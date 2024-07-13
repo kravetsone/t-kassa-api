@@ -1,10 +1,10 @@
 import type { TKassa } from "./index";
-import type { WebhookBody } from "./utils";
+import type { MaybePromise, WebhookBody } from "./utils";
 
 const responseOK = new Response("OK");
 
 interface FrameworkHandler {
-	body: Promise<WebhookBody> | WebhookBody;
+	body: MaybePromise<WebhookBody>;
 	response?: () => unknown;
 }
 

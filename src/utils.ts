@@ -97,3 +97,5 @@ export type GetResponse<
 export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
+
+export type MaybePromise<T> = Promise<T> | T;
