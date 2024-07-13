@@ -6,7 +6,7 @@
 
 </div>
 
-WIP. Библиотека для взаимодействия с [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
+Библиотека для взаимодействия с [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
 
 ```ts
 import { TKassa } from "t-kassa-api";
@@ -23,13 +23,16 @@ const result = await ткасса.init({
 console.log(result);
 ```
 
+[API Reference](https://jsr.io/@kravets/t-kassa-api/doc)
+
 ### Фичи
 
 -   Генерируется исходя из **OpenAPI** спецификации
 -   Очень удобная работа с нотификацией (webhook) с умными фильтрами
 -   Имеет в себе [webhook адаптеры для самых популярных фреймворков](#поддерживаемые-webhook-адаптеры)
+-   Удобна и для [нескольких касс](#режим-мульти-кассы)
 -   Отличная документация кода с помощью **JSDoc** (сгенерировано из **OpenAPI**)
--   Современная и **type-safe**
+-   Современная и с **умнейшими** типами
 -   0 зависимостей
 -   Берёт работу с [подписью запроса](https://www.tbank.ru/kassa/dev/payments/index.html#section/Podpis-zaprosa) на себя
 -   [Есть на JSR](https://jsr.io/@kravets/t-kassa-api)
@@ -88,6 +91,61 @@ const app = new App().post("/t-kassa", async (req) => {
 
 app.listen(80);
 ```
+
+### Режим мульти-кассы
+
+Не всегда бывает удобным передача параметров одной кассы в конструктор класса, поэтому и появился режим мульти-кассы. Он позволяет вам не указывать `TerminalKey` и `Password`.
+
+```ts
+import { TKassa } from "t-kassa-api";
+
+const ткасса = new TKassa();
+
+const result = await ткасса.init({
+    Amount: 1000,
+    OrderId: "12",
+    TerminalKey: "12312sf",
+    Password: "123123231",
+});
+
+console.log(result);
+```
+
+И как вы можете заметить, теперь требуется указывать `TerminalKey` и `Password` в теле запроса. И в типах это тоже выражено! Магия? Не иначе.
+
+Но как тогда получать webhook события? (нотификацию)
+
+Для этого вам понадобится указать функцию первым аргументом конструктора.
+
+```ts
+import { TKassa } from "t-kassa-api";
+
+const ткасса = new TKassa((body) => {
+    const [kassa] = await db
+        .select()
+        .from(kassaTable)
+        .where(eq(kassaTable.terminalKey, body.TerminalKey));
+
+    if (!kassa) throw new Error("Касса не найдена");
+
+    return {
+        Password: kassa.password,
+        custom: { kassa },
+    };
+});
+
+ткасса.on(
+    filters.and(
+        filters.equal("Status", "SUCCESS"),
+        filters.notNullable("RebillId")
+    ),
+    (context, { kassa }) => {
+        // и тут появляется вторым аргументов переданное вами значение в custom
+    }
+);
+```
+
+И типы опять же совсем не глупы и делают вам благое дело, указывая верный путь.
 
 ### TODO:
 
