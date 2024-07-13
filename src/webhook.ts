@@ -10,7 +10,18 @@ interface FrameworkHandler {
 
 type FrameworkAdapter = (...args: any[]) => FrameworkHandler;
 
-const frameworks = {
+// !Temporally fix slow types on JSR
+const frameworks: Record<
+	| "http"
+	| "std/http"
+	| "Bun.serve"
+	| "elysia"
+	| "fastify"
+	| "hono"
+	| "express"
+	| "koa",
+	FrameworkAdapter
+> = {
 	elysia: ({ body }) => ({ body, response: () => responseOK }),
 	fastify: (request, reply) => ({
 		body: request.body,
@@ -72,10 +83,7 @@ export function webhookHandler<Framework extends keyof typeof frameworks>(
 	const frameworkAdapter = frameworks[framework];
 
 	return (async (...args: any[]) => {
-		const { body, response } = frameworkAdapter(
-			// @ts-expect-error
-			...args,
-		);
+		const { body, response } = frameworkAdapter(...args);
 
 		await tKassa.emit(await body);
 
