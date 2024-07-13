@@ -192,9 +192,9 @@ export class TKassa<
 			throw new Error(
 				"Чтобы принимать нотификацию вам необходимо добавить функцию первым аргументов конструктора (читайте README)",
 			);
-		this.listeners.push((context) => {
+		this.listeners.push(async (context) => {
 			// @ts-expect-error
-			if (filters(context) === true) return handler(context);
+			if ((await filters(context)) === true) return handler(context);
 		});
 
 		return this;

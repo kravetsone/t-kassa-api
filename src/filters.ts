@@ -39,18 +39,20 @@ export function equal<
  */
 export function notNullable<Key extends keyof UnionToIntersection<WebhookBody>>(
 	key: Key,
-) {
-	return ((context) =>
-		context[key] !== null && context[key] !== undefined) as UpdateFilter<{
-		[K in Key]: NonNullable<UnionToIntersection<WebhookBody>[K]>;
-	}>;
+): UpdateFilter<{
+	[K in Key]: NonNullable<UnionToIntersection<WebhookBody>[K]>;
+}> {
+	return (context) => context[key] !== null && context[key] !== undefined;
 }
 
 /**
  * Фильтр - логическое `И`. Помогает объединить условия
  */
-export function and<const Fns extends UpdateFilter<any>[]>(...fns: Fns) {
-	return (() => {}) as unknown as UpdateFilter<
-		UnionToIntersection<ExtractModFromArray<Fns>[number]>
-	>;
+export function and<const Fns extends UpdateFilter<any>[]>(
+	...fns: Fns
+): UpdateFilter<UnionToIntersection<ExtractModFromArray<Fns>[number]>> {
+	return async (context) => {
+		const results = await Promise.all(fns.map((fn) => fn(context)));
+		return results.every(Boolean);
+	};
 }
