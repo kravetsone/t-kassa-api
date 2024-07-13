@@ -1,6 +1,6 @@
+import type { Buffer } from "node:buffer";
 import type { TKassa } from "./index";
 import type { MaybePromise, WebhookBody } from "./utils";
-
 const responseOK = new Response("OK");
 
 interface FrameworkHandler {
@@ -80,7 +80,7 @@ export function webhookHandler<Framework extends keyof typeof frameworks>(
 		await tKassa.emit(await body);
 
 		if (response) return response();
-	}) as ReturnType<(typeof frameworks)[Framework]> extends {
+	}) as unknown as ReturnType<(typeof frameworks)[Framework]> extends {
 		response: () => any;
 	}
 		? (
