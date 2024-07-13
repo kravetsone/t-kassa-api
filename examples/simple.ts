@@ -1,6 +1,13 @@
 import { TKassa, filters, webhookHandler } from "../src";
 
-const тк = new TKassa();
+const тк = new TKassa(() => {
+	return {
+		Password: "",
+		custom: {
+			ok: true,
+		},
+	};
+});
 
 const result1 = await тк.init({
 	TerminalKey: "",
@@ -28,11 +35,8 @@ const result = await ткасса.init({
 
 console.log(result);
 
-ткасса.on(
-	filters.and(
-		filters.equal("Status", "SUCCESS"),
-		filters.notNullable("RebillId"),
-	),
+тк.on(
+	filters.and(filters.equal("Status", "SUCCESS"), filters.notNullable("DATA")),
 	(context) => {
 		// ^?
 	},

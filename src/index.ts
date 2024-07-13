@@ -9,6 +9,7 @@ import type { UpdateFilter } from "./filters";
 import {
 	type GetRequestBody,
 	type GetResponse,
+	type MaybePromise,
 	type Modify,
 	type Require,
 	type Servers,
@@ -52,11 +53,17 @@ export interface TKassaOptions {
  * });
  * ```
  */
-export class TKassa<TerminalKey extends string = ""> {
+export class TKassa<
+	TerminalKey extends string = "",
+	EventInject extends { Password: string; custom?: any } = never,
+> {
 	terminalKey!: TerminalKey extends "" ? string | undefined : string;
 	password!: TerminalKey extends "" ? string | undefined : string;
 	options: Require<TKassaOptions, "server">;
 
+	private inject:
+		| ((body: WebhookBody) => MaybePromise<EventInject>)
+		| undefined;
 	private listeners: ((context: WebhookBody) => unknown)[] = [];
 
 	constructor(
@@ -65,25 +72,37 @@ export class TKassa<TerminalKey extends string = ""> {
 		password: string,
 		options?: TKassaOptions,
 	);
+	constructor(
+		inject?: (body: WebhookBody) => MaybePromise<EventInject>,
+		options?: TKassaOptions,
+	);
 	constructor(options?: TKassaOptions);
 	/** Создание инстанса Т-Кассы */
 	constructor(
-		terminalKeyOrOptions?: string | TKassaOptions,
-		password?: string,
+		terminalKeyOrOptionsOrInject?:
+			| string
+			| TKassaOptions
+			| ((body: WebhookBody) => MaybePromise<EventInject>),
+		passwordOrOptions?: string | TKassaOptions,
 		kassaOptions?: TKassaOptions,
 	) {
 		const options =
-			typeof terminalKeyOrOptions === "object"
-				? terminalKeyOrOptions
-				: kassaOptions;
+			typeof terminalKeyOrOptionsOrInject === "object"
+				? terminalKeyOrOptionsOrInject
+				: typeof passwordOrOptions === "object"
+					? passwordOrOptions
+					: kassaOptions;
 
 		if (
-			typeof terminalKeyOrOptions === "string" &&
-			typeof password === "string"
+			typeof terminalKeyOrOptionsOrInject === "string" &&
+			typeof passwordOrOptions === "string"
 		) {
-			this.terminalKey = terminalKeyOrOptions;
-			this.password = password;
+			this.terminalKey = terminalKeyOrOptionsOrInject;
+			this.password = passwordOrOptions;
 		}
+
+		if (typeof terminalKeyOrOptionsOrInject === "function")
+			this.inject = terminalKeyOrOptionsOrInject;
 
 		this.options = {
 			server: "https://securepay.tinkoff.ru",
@@ -160,11 +179,17 @@ export class TKassa<TerminalKey extends string = ""> {
 		filters: Filter,
 		handler: (
 			context: Modify<
-				WebhookBody,
+				[EventInject["custom"]] extends [never]
+					? WebhookBody
+					: WebhookBody & EventInject["custom"],
 				Filter extends UpdateFilter<infer Mod> ? Mod : never
 			>,
 		) => unknown,
 	) {
+		if (!this.inject && !this.password)
+			throw new Error(
+				"Чтобы принимать нотификацию вам необходимо добавить функцию первым аргументов конструктора (читайте README)",
+			);
 		this.listeners.push((context) => {
 			// @ts-expect-error
 			if (filters(context) === true) return handler(context);
@@ -181,11 +206,20 @@ export class TKassa<TerminalKey extends string = ""> {
 		if (!terminalKey)
 			throw Error("Ключ терминала не передан. Нотификация невозможна");
 
-		const signature = generateSignature(data, terminalKey, this.password);
+		const { Password, custom } = this.inject
+			? await this.inject(data)
+			: { Password: this.password, custom: undefined };
+
+		if (!Password)
+			throw new Error(
+				"Чтобы принимать нотификацию вам необходимо добавить функцию первым аргументов конструктора (читайте README)",
+			);
+
+		const signature = generateSignature(data, terminalKey, Password);
 		if (signature !== data.Token) throw Error("Токены не равны");
 
 		for (const run of this.listeners) {
-			await run(data);
+			await run({ ...data, ...custom });
 		}
 	}
 
