@@ -36,7 +36,7 @@ jobs:
               run: tsc --noEmit
 
             - name: Publish package to JSR
-              run: bunx jsr publish --allow-dirty --allow-slow-types --unstable-sloppy-imports
+              run: bunx jsr publish --allow-dirty --allow-slow-types
 
             - name: Install Node
               uses: actions/setup-node@v4
