@@ -119,7 +119,7 @@ indexSource = indexSource.replace(
 							 * ${operation.deprecated ? "@deprecated" : ""} 
                              */
                             ${fromPascalToCamelCase(operation.operationId!)}(${parameters}) {
-                                return this.request<GetResponse<"${path}", "${method}">>(\`${path.replace(/{(.*)}/gi, "${$1}")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
+                                return this.request<GetResponse<"${path}", "${method}">>(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
                             }
                         `;
 					})

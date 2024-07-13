@@ -622,7 +622,7 @@ export class TKassa<TerminalKey extends string = ""> {
 				"get"
 			>
 		>(
-			`/v2/TinkoffPay/transactions/${paymentId}/versions/{version}/link`,
+			`/v2/TinkoffPay/transactions/${paymentId}/versions/${version}/link`,
 			undefined,
 			"GET",
 		);
