@@ -64,7 +64,10 @@ export class TKassa<
 	private inject:
 		| ((body: WebhookBody) => MaybePromise<EventInject>)
 		| undefined;
-	private listeners: ((context: WebhookBody) => unknown)[] = [];
+	private listeners: ((
+		context: WebhookBody,
+		custom: EventInject["custom"],
+	) => unknown)[] = [];
 
 	constructor(
 		// https://github.com/microsoft/TypeScript/issues/27594#issuecomment-2226888043 использую дженерик тут ибо TypeScript не умеет в ReturnType у конструкторов
@@ -179,11 +182,10 @@ export class TKassa<
 		filters: Filter,
 		handler: (
 			context: Modify<
-				[EventInject["custom"]] extends [never]
-					? WebhookBody
-					: WebhookBody & EventInject["custom"],
+				WebhookBody,
 				Filter extends UpdateFilter<infer Mod> ? Mod : never
 			>,
+			custom: EventInject["custom"],
 		) => unknown,
 	) {
 		if (!this.inject && !this.password)
@@ -219,7 +221,7 @@ export class TKassa<
 		if (signature !== data.Token) throw Error("Токены не равны");
 
 		for (const run of this.listeners) {
-			await run({ ...data, ...custom });
+			await run(data, custom);
 		}
 	}
 
