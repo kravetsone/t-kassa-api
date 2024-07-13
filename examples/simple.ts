@@ -6,7 +6,7 @@ const ткасса = new TKassa(
 	process.env.TERMINAL_KEY as string,
 	process.env.PASSWORD as string,
 	{
-		server: "https://rest-api-test.tinkoff.ru",
+		// server: "https://rest-api-test.tinkoff.ru",
 	},
 );
 
@@ -20,10 +20,7 @@ const ткасса = new TKassa(
 	},
 );
 
-const result = await ткасса.init({
-	Amount: 1000,
-	OrderId: "12",
-});
+const result = await ткасса.getAddAccountQrState();
 
 console.log(result);
 

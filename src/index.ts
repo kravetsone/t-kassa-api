@@ -737,7 +737,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 *
 	 */
 	getAddAccountQrState(
-		body?: GetRequestBody<"/v2/GetAddAccountQrState", "post">,
+		body: GetRequestBody<"/v2/GetAddAccountQrState", "post">,
 	) {
 		return this.request<GetResponse<"/v2/GetAddAccountQrState", "post">>(
 			"/v2/GetAddAccountQrState",
@@ -752,7 +752,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение списка счетов, привязанных к магазину
 	 *
 	 */
-	getAccountQrList(body?: GetRequestBody<"/v2/GetAccountQrList", "post">) {
+	getAccountQrList(body: GetRequestBody<"/v2/GetAccountQrList", "post">) {
 		return this.request<GetResponse<"/v2/GetAccountQrList", "post">>(
 			"/v2/GetAccountQrList",
 			body,
@@ -885,9 +885,7 @@ export class TKassa<TerminalKey extends string = ""> {
 	 * @summary Получение справки по операции
 	 *
 	 */
-	getConfirmOperation(
-		body?: GetRequestBody<"/v2/getConfirmOperation", "post">,
-	) {
+	getConfirmOperation(body: GetRequestBody<"/v2/getConfirmOperation", "post">) {
 		return this.request<GetResponse<"/v2/getConfirmOperation", "post">>(
 			"/v2/getConfirmOperation",
 			body,

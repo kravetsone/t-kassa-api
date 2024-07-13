@@ -104,7 +104,15 @@ indexSource = indexSource.replace(
 							.concat(
 								body?.schema
 									? [
-											`body${operation.requestBody?.required || (typeof body.schema === "object" && body.schema.required) ? "" : "?"}: GetRequestBody<"${path}", "${method}">`,
+											`body${
+												// 	3 метода у тинькофф без required хотя там токен...
+												""
+												// operation.requestBody?.required ||
+												// (typeof body.schema === "object" &&
+												// 	body.schema.required)
+												// 	? ""
+												// 	: "?"
+											}: GetRequestBody<"${path}", "${method}">`,
 										]
 									: [],
 							)
