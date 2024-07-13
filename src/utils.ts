@@ -76,3 +76,7 @@ export type GetResponse<
 		? paths[Path][Method]["responses"][200]["content"]["application/json"]
 		: never
 	: never;
+
+export type Prettify<T> = {
+	[K in keyof T]: T[K];
+} & {};

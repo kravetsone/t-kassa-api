@@ -10,6 +10,7 @@ import {
 	type GetRequestBody,
 	type GetResponse,
 	type Modify,
+	type Prettify,
 	type Require,
 	type Servers,
 	type WebhookBody,
@@ -52,17 +53,38 @@ export interface TKassaOptions {
  * });
  * ```
  */
-export class TKassa {
-	terminalKey: string;
-	password: string;
+export class TKassa<TerminalKey extends string = ""> {
+	terminalKey!: TerminalKey extends "" ? string | undefined : string;
+	password!: TerminalKey extends "" ? string | undefined : string;
 	options: Require<TKassaOptions, "server">;
 
 	private listeners: ((context: WebhookBody) => unknown)[] = [];
 
+	constructor(
+		// https://github.com/microsoft/TypeScript/issues/27594#issuecomment-2226888043 использую дженерик тут ибо TypeScript не умеет в ReturnType у конструкторов
+		terminalKey: TerminalKey,
+		password: string,
+		options?: TKassaOptions,
+	);
+	constructor(options?: TKassaOptions);
 	/** Создание инстанса Т-Кассы */
-	constructor(terminalKey: string, password: string, options?: TKassaOptions) {
-		this.terminalKey = terminalKey;
-		this.password = password;
+	constructor(
+		terminalKeyOrOptions?: string | TKassaOptions,
+		password?: string,
+		kassaOptions?: TKassaOptions,
+	) {
+		const options =
+			typeof terminalKeyOrOptions === "object"
+				? terminalKeyOrOptions
+				: kassaOptions;
+
+		if (
+			typeof terminalKeyOrOptions === "string" &&
+			typeof password === "string"
+		) {
+			this.terminalKey = terminalKeyOrOptions;
+			this.password = password;
+		}
 
 		this.options = {
 			server: "https://securepay.tinkoff.ru",
@@ -72,7 +94,9 @@ export class TKassa {
 
 	private async request<T>(
 		url: string,
-		data?: Record<string, unknown>,
+		data?: TerminalKey extends ""
+			? { [key: string]: unknown; TerminalKey: string }
+			: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
 	) {
 		const options: RequestInit & {
@@ -85,11 +109,13 @@ export class TKassa {
 			},
 		};
 		if (method === "POST" && data) {
-			const signature = generateSignature(
-				data,
-				this.terminalKey,
-				this.password,
-			);
+			const terminalKey =
+				typeof data.TerminalKey === "string"
+					? data.TerminalKey
+					: this.terminalKey;
+			if (!terminalKey) throw new Error("");
+
+			const signature = generateSignature(data, terminalKey, this.password);
 			options.headers["content-type"] = "application/json";
 			options.body = JSON.stringify({
 				...data,

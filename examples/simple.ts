@@ -1,5 +1,7 @@
 import { TKassa, filters, webhookHandler } from "../src";
 
+const тк = new TKassa();
+
 const ткасса = new TKassa(
 	process.env.TERMINAL_KEY as string,
 	process.env.PASSWORD as string,
