@@ -27,10 +27,8 @@ const ткасса = new TKassa(
 );
 
 const result = await ткасса.init({
-	TerminalKey: "",
 	Amount: 0,
 	OrderId: "",
-	Password: "",
 });
 
 console.log(result);
