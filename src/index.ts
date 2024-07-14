@@ -65,10 +65,8 @@ export class TKassa<
 	private inject:
 		| ((body: WebhookBody) => MaybePromise<EventInject>)
 		| undefined;
-	private listeners: ((
-		context: WebhookBody,
-		custom: EventInject["custom"],
-	) => unknown)[] = [];
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	private listeners: ((context: WebhookBody, custom: any) => unknown)[] = [];
 
 	constructor(
 		// https://github.com/microsoft/TypeScript/issues/27594#issuecomment-2226888043 использую дженерик тут ибо TypeScript не умеет в ReturnType у конструкторов
