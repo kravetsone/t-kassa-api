@@ -55,6 +55,7 @@ export interface TKassaOptions {
  */
 export class TKassa<
 	TerminalKey extends string = "",
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	EventInject extends { Password: string; custom?: any } = never,
 > {
 	terminalKey!: TerminalKey extends "" ? string | undefined : string;

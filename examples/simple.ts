@@ -15,6 +15,7 @@ const result1 = await тк.init({
 	OrderId: "",
 	Password: "",
 });
+result1.Amount;
 
 console.log(result1);
 

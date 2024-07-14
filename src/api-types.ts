@@ -1950,7 +1950,7 @@ export interface components {
 		/** @description Информация о платеже */
 		PaymentData: {
 			/**
-			 * @description Идентификатор терминала, выдается Мерчанту Т‑Кассой
+			 * @description Идентификатор терминала, выдается Мерчанту Т-Кассой
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -2098,7 +2098,7 @@ export interface components {
 			 *
 			 * @example 700001702044
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 *
@@ -2339,7 +2339,7 @@ export interface components {
 			 *
 			 * @example 700001702044
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 *
@@ -2658,10 +2658,10 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 * @example 2304882
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса (хэш SHA-256)
 			 * @example c0ad1dfc4e94ed44715c5ed0e84f8ec439695b9ac219a7a19555a075a3c3ed24
@@ -2832,10 +2832,10 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 * @example 2304882
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса (хэш `SHA-256`)
 			 * @example c0ad1dfc4e94ed44715c5ed0e84f8ec439695b9ac219a7a19555a075a3c3ed24
@@ -2957,11 +2957,11 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы
+			 *     системе Т-Кассы
 			 *
 			 * @example 700001702044
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Идентификатор рекуррентного платежа. Значение зависимо от атрибутов:
 			 *       * OperationInitiatorType в методе /init,
@@ -3010,7 +3010,7 @@ export interface components {
 			 *
 			 * @example 700001702044
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Идентификатор рекуррентного платежа
 			 *
@@ -3033,11 +3033,11 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 *
@@ -3060,11 +3060,11 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 *
@@ -3833,16 +3833,14 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе
-			 *     Т‑Кассы
+			 * @description Уникальный идентификатор транзакции в системе Т-Кассы
 			 *
 			 * @example 10063
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Тип возвращаемых данных:
-			 *     * PAYLOAD – В ответе возвращается только Payload
-			 *     (по-умолчанию);
+			 *     * PAYLOAD – В ответе возвращается только Payload (по-умолчанию);
 			 *     * IMAGE – В ответе возвращается SVG изображение QR.
 			 *
 			 * @default PAYLOAD
@@ -3992,7 +3990,7 @@ export interface components {
 			/** @description Данные события. Объект EventData собирается в виде списка «ключ=значение» (разделитель «;»), зашифровывается открытым ключом (X509 RSA 2048), получившееся бинарное значение кодируется в Base64. Открытый ключ генерируется Банком и выдается при регистрации терминала. Все поля обязательны. */
 			EventData: components["schemas"]["EventData"];
 			/** @description Идентификатор платежа */
-			PaymentId?: number;
+			PaymentId?: string;
 			/** @description Подпись запроса */
 			Token: string;
 		};
@@ -4296,11 +4294,11 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы
+			 *     системе Т-Кассы
 			 *
 			 * @example 700001702044
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Идентификатор привязки счета,
 			 *     назначаемый банком-эмитентом
@@ -4407,11 +4405,11 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 *
@@ -4590,7 +4588,7 @@ export interface components {
 			 *
 			 * @example 124671934
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Сумма операции в копейках
 			 *
@@ -4668,10 +4666,10 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 * @example 2304882
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/** @description Объект с данными чека */
 			Receipt:
 				| components["schemas"]["Receipt_FFD_12"]
@@ -4717,7 +4715,7 @@ export interface components {
 			 *
 			 * @example 10000
 			 */
-			CreditAmount?: string;
+			CreditAmount?: number;
 		};
 		/** @description **Нотификация о платеже**
 		 *      */
@@ -4751,11 +4749,11 @@ export interface components {
 			 *      */
 			Status?: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
+			 * @description Уникальный идентификатор транзакции в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: number;
+			PaymentId?: string;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -4842,11 +4840,11 @@ export interface components {
 			 */
 			Status?: "COMPLETED" | "REJECTED";
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: number;
+			PaymentId?: string;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -5030,11 +5028,11 @@ export interface components {
 			 */
 			Status: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы
+			 * @description Идентификатор платежа в системе Т-Кассы
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: number;
+			PaymentId?: string;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -5173,7 +5171,7 @@ export interface components {
 			 * @description Уникальный идентификатор транзакции в системе Банка
 			 * @example 2559680770
 			 */
-			PaymentId: number;
+			PaymentId: string;
 			/**
 			 * @description Подпись запроса
 			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
@@ -5450,7 +5448,7 @@ export interface operations {
 					 *
 					 * @example 13660
 					 */
-					PaymentId: number;
+					PaymentId: string;
 					/**
 					 * @description Идентификатор терминала, выдается Мерчанту Т‑Кассой
 					 *
@@ -5721,12 +5719,11 @@ export interface operations {
 						 */
 						Success: boolean;
 						/**
-						 * @description Статус платежа
+						 * @description Статус платежа. Подробнее см. в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha)
 						 *
 						 * @example NEW
-						 * @enum {string}
 						 */
-						Status: "NEW" | "CANCELED" | "PREAUTHORIZING" | "FORM_SHOWED";
+						Status: string;
 						/**
 						 * @description Идентификатор платежа в системе Т‑Кассы
 						 *
@@ -6088,11 +6085,11 @@ export interface operations {
 					 */
 					PaRes: string;
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
+					 * @description Уникальный идентификатор транзакции в системе Т-Кассы
 					 *
 					 * @example 10063
 					 */
-					PaymentId?: number;
+					PaymentId?: string;
 					/**
 					 * @description Идентификатор терминала, выдается Мерчанту Т‑Кассой
 					 *
@@ -6171,11 +6168,11 @@ export interface operations {
 			content: {
 				"application/x-www-form-urlencoded": {
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
+					 * @description Уникальный идентификатор транзакции в системе Т-Кассы
 					 *
 					 * @example 10063
 					 */
-					PaymentId: number;
+					PaymentId: string;
 					/**
 					 * @description Идентификатор терминала, выдается Мерчанту Т‑Кассой
 					 *
@@ -6396,7 +6393,7 @@ export interface operations {
 				/** @description Уникальный идентификатор транзакции в
 				 *     системе Т‑Кассы
 				 *      */
-				paymentId: number;
+				paymentId: string;
 			};
 		};
 
@@ -6510,11 +6507,11 @@ export interface operations {
 					TerminalKey: string;
 					/**
 					 * @description Уникальный идентификатор транзакции в системе
-					 *     Т‑Кассы
+					 *     Т-Кассы
 					 *
 					 * @example 10063
 					 */
-					PaymentId: number;
+					PaymentId: string;
 					/**
 					 * @description Подпись запроса
 					 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
@@ -6666,11 +6663,11 @@ export interface operations {
 					TerminalKey: string;
 					/**
 					 * @description Уникальный идентификатор транзакции в системе
-					 *     Т‑Кассы, полученный в ответе на вызов метода Init
+					 *     Т-Кассы, полученный в ответе на вызов метода Init
 					 *
 					 * @example 700031849
 					 */
-					PaymentId: number;
+					PaymentId: string;
 					/**
 					 * @description Подпись запроса
 					 *

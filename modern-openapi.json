@@ -159,7 +159,7 @@
 									"summary": "Пример запроса (SDK)",
 									"value": {
 										"TerminalKey": "TinkoffBankTest",
-										"Amount": "140000",
+										"Amount": 140000,
 										"OrderId": "21090",
 										"Token": "c744b9711d978c152fb4546c6cdcec24ebd9870678f9f325a9713ca56d6a6826",
 										"Description": "Подарочная карта на 1400.00 рублей",
@@ -211,7 +211,7 @@
 									"summary": "Пример рекуррентного платежа по СБП",
 									"value": {
 										"TerminalKey": "TinkoffBankTest",
-										"Amount": "140000",
+										"Amount": 140000,
 										"OrderId": "21090",
 										"Token": "c744b9711d978c152fb4546c6cdcec24ebd9870678f9f325a9713ca56d6a6826",
 										"Description": "Подписка на 1400.00 рублей",
@@ -222,7 +222,7 @@
 										"NotificationURL": "http://example.com",
 										"SuccessURL": "http://example.com",
 										"FailURL": "http://example.com",
-										"DATA": { "QR": "true", "key": "value" },
+										"DATA": { "QR": true, "key": "value" },
 										"Receipt": {
 											"Items": {
 												"Name": "Наименование товара 1",
@@ -333,7 +333,7 @@
 								"properties": {
 									"PaymentId": {
 										"description": "Идентификатор платежа в системе Т‑Кассы\n",
-										"type": "number",
+										"type": "string",
 										"maxLength": 20,
 										"examples": { "default": 13660 }
 									},
@@ -672,15 +672,9 @@
 											"examples": { "default": true }
 										},
 										"Status": {
-											"description": "Статус платежа\n",
+											"description": "Статус платежа. Подробнее см. в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha)\n",
 											"type": "string",
 											"maxLength": 20,
-											"enum": [
-												"NEW",
-												"CANCELED",
-												"PREAUTHORIZING",
-												"FORM_SHOWED"
-											],
 											"examples": { "default": "NEW" }
 										},
 										"PaymentId": {
@@ -1170,9 +1164,9 @@
 										}
 									},
 									"PaymentId": {
-										"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-										"type": "number",
-										"examples": { "default": 10063 }
+										"description": "Уникальный идентификатор транзакции в системе Т-Кассы\n",
+										"type": "string",
+										"examples": { "default": "10063" }
 									},
 									"TerminalKey": {
 										"description": "Идентификатор терминала, выдается Мерчанту Т‑Кассой\n",
@@ -1276,9 +1270,9 @@
 								"required": ["PaymentId", "TerminalKey", "Token"],
 								"properties": {
 									"PaymentId": {
-										"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-										"type": "number",
-										"examples": { "default": 10063 }
+										"description": "Уникальный идентификатор транзакции в системе Т-Кассы\n",
+										"type": "string",
+										"examples": { "default": "10063" }
 									},
 									"TerminalKey": {
 										"description": "Идентификатор терминала, выдается Мерчанту Т‑Кассой\n",
@@ -1557,8 +1551,8 @@
 						"in": "path",
 						"name": "paymentId",
 						"schema": {
-							"type": "number",
-							"examples": { "default": 700001702044 }
+							"type": "string",
+							"examples": { "default": "700001702044" }
 						},
 						"required": true,
 						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n"
@@ -1715,9 +1709,9 @@
 										"examples": { "default": "TinkoffBankTest" }
 									},
 									"PaymentId": {
-										"type": "number",
-										"description": "Уникальный идентификатор транзакции в системе\nТ‑Кассы\n",
-										"examples": { "default": 10063 }
+										"type": "string",
+										"description": "Уникальный идентификатор транзакции в системе\nТ-Кассы\n",
+										"examples": { "default": "10063" }
 									},
 									"Token": {
 										"type": "string",
@@ -1947,9 +1941,9 @@
 										"examples": { "default": "TinkoffBankTest" }
 									},
 									"PaymentId": {
-										"type": "number",
-										"description": "Уникальный идентификатор транзакции в системе\nТ‑Кассы, полученный в ответе на вызов метода Init\n",
-										"examples": { "default": 700031849 }
+										"type": "string",
+										"description": "Уникальный идентификатор транзакции в системе\nТ-Кассы, полученный в ответе на вызов метода Init\n",
+										"examples": { "default": "700031849" }
 									},
 									"Token": {
 										"type": "string",
@@ -3170,7 +3164,7 @@
 				"properties": {
 					"TerminalKey": {
 						"type": "string",
-						"description": "Идентификатор терминала, выдается Мерчанту Т‑Кассой",
+						"description": "Идентификатор терминала, выдается Мерчанту Т-Кассой",
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"Amount": {
@@ -3347,10 +3341,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
+						"type": "string",
 						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n",
 						"maxLength": 20,
-						"examples": { "default": 700001702044 }
+						"examples": { "default": "700001702044" }
 					},
 					"Token": {
 						"type": "string",
@@ -3499,10 +3493,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
+						"type": "string",
 						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n",
 						"maxLength": 20,
-						"examples": { "default": 700001702044 }
+						"examples": { "default": "700001702044" }
 					},
 					"Token": {
 						"type": "string",
@@ -3791,10 +3785,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
-						"description": "Идентификатор платежа в системе Т‑Кассы",
+						"type": "string",
+						"description": "Идентификатор платежа в системе Т-Кассы",
 						"maxLength": 20,
-						"examples": { "default": 2304882 }
+						"examples": { "default": "2304882" }
 					},
 					"Token": {
 						"type": "string",
@@ -3990,9 +3984,9 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
-						"description": "Идентификатор платежа в системе Т‑Кассы",
-						"examples": { "default": 2304882 }
+						"type": "string",
+						"description": "Идентификатор платежа в системе Т-Кассы",
+						"examples": { "default": "2304882" }
 					},
 					"Token": {
 						"type": "string",
@@ -4130,10 +4124,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
+						"type": "string",
 						"maxLength": 20,
-						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n",
-						"examples": { "default": 700001702044 }
+						"description": "Уникальный идентификатор транзакции в\nсистеме Т-Кассы\n",
+						"examples": { "default": "700001702044" }
 					},
 					"RebillId": {
 						"description": "Идентификатор рекуррентного платежа. Значение зависимо от атрибутов:\n  * OperationInitiatorType в методе /init,\n  * Recurrent в методе /Init. <br>\nДетальная информация представлена в описании [Рекуррентный платёж](#tag/Rekurrentnyj-platyozh) и [Инициализация платежа](#tag/Standartnyj-platyozh/paths/~1Init/post)\n",
@@ -4175,10 +4169,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
+						"type": "string",
 						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n",
 						"maxLength": 20,
-						"examples": { "default": 700001702044 }
+						"examples": { "default": "700001702044" }
 					},
 					"RebillId": {
 						"description": "Идентификатор рекуррентного платежа\n",
@@ -4205,10 +4199,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Идентификатор платежа в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"Token": {
 						"description": "Подпись запроса\n",
@@ -4235,10 +4229,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Идентификатор платежа в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"Token": {
 						"description": "Подпись запроса\n",
@@ -5057,13 +5051,13 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
-						"description": "Уникальный идентификатор транзакции в системе\nТ‑Кассы\n",
-						"examples": { "default": 10063 }
+						"type": "string",
+						"description": "Уникальный идентификатор транзакции в системе Т-Кассы\n",
+						"examples": { "default": "10063" }
 					},
 					"DataType": {
 						"type": "string",
-						"description": "Тип возвращаемых данных:\n* PAYLOAD – В ответе возвращается только Payload\n(по-умолчанию);\n* IMAGE – В ответе возвращается SVG изображение QR.\n",
+						"description": "Тип возвращаемых данных:\n* PAYLOAD – В ответе возвращается только Payload (по-умолчанию);\n* IMAGE – В ответе возвращается SVG изображение QR.\n",
 						"default": "PAYLOAD",
 						"enum": ["PAYLOAD", "IMAGE"],
 						"examples": { "default": "PAYLOAD" }
@@ -5241,7 +5235,7 @@
 						"$ref": "#/components/schemas/EventData"
 					},
 					"PaymentId": {
-						"type": "number",
+						"type": "string",
 						"description": "Идентификатор платежа"
 					},
 					"Token": { "type": "string", "description": "Подпись запроса" }
@@ -5542,9 +5536,9 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
-						"description": "Уникальный идентификатор транзакции в\nсистеме Т‑Кассы\n",
-						"examples": { "default": 700001702044 }
+						"type": "string",
+						"description": "Уникальный идентификатор транзакции в\nсистеме Т-Кассы\n",
+						"examples": { "default": "700001702044" }
 					},
 					"AccountToken": {
 						"type": "string",
@@ -5655,10 +5649,10 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Идентификатор платежа в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"Token": {
 						"description": "Подпись запроса\n",
@@ -5835,7 +5829,7 @@
 				"properties": {
 					"PaymentId": {
 						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-						"type": "number",
+						"type": "string",
 						"examples": { "default": 124671934 }
 					},
 					"Amount": {
@@ -5927,9 +5921,9 @@
 						"examples": { "default": "TinkoffBankTest" }
 					},
 					"PaymentId": {
-						"type": "number",
-						"description": "Идентификатор платежа в системе Т‑Кассы",
-						"examples": { "default": 2304882 }
+						"type": "string",
+						"description": "Идентификатор платежа в системе Т-Кассы",
+						"examples": { "default": "2304882" }
 					},
 					"Receipt": {
 						"type": "object",
@@ -5982,8 +5976,8 @@
 					},
 					"CreditAmount": {
 						"description": "Сумма выданного кредита в копейках\n",
-						"type": "string",
-						"examples": { "default": "10000" }
+						"type": "number",
+						"examples": { "default": 10000 }
 					}
 				}
 			},
@@ -6020,10 +6014,10 @@
 						"maxLength": 20
 					},
 					"PaymentId": {
-						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Уникальный идентификатор транзакции в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"ErrorCode": {
 						"description": "Код ошибки. «0» в случае успеха\n",
@@ -6106,10 +6100,10 @@
 						"enum": ["COMPLETED", "REJECTED"]
 					},
 					"PaymentId": {
-						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Идентификатор платежа в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"ErrorCode": {
 						"description": "Код ошибки. «0» в случае успеха\n",
@@ -6276,10 +6270,10 @@
 						"default": "RECEIPT"
 					},
 					"PaymentId": {
-						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "number",
+						"description": "Идентификатор платежа в системе Т-Кассы\n",
+						"type": "string",
 						"maxLength": 20,
-						"examples": { "default": 13660 }
+						"examples": { "default": "13660" }
 					},
 					"ErrorCode": {
 						"description": "Код ошибки. «0» в случае успеха\n",
@@ -6438,9 +6432,9 @@
 						"examples": { "default": "bestforu" }
 					},
 					"PaymentId": {
-						"type": "integer",
+						"type": "string",
 						"description": "Уникальный идентификатор транзакции в системе Банка",
-						"examples": { "default": 2559680770 }
+						"examples": { "default": "2559680770" }
 					},
 					"Token": {
 						"type": "string",
