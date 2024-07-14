@@ -5,10 +5,16 @@
     "main": "./dist/index.cjs",
     "types": "./dist/index.d.ts",
     "description": "SDK для Т-Кассы (тинькофф платежи)",
+    "readme": "https://github.com/kravetsone/t-kassa-api.git",
+    "homepage": "https://github.com/kravetsone/t-kassa-api.git",
     "scripts": {},
     "author": {
         "name": "kravets",
         "url": "https://github.com/kravetsone"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kravetsone/t-kassa-api.git"
     },
     "keywords": [
         "tinkoff",
