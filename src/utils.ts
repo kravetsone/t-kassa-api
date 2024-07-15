@@ -2,6 +2,13 @@ import { createHash } from "node:crypto";
 import type { paths, webhooks } from "./api-types";
 import type { servers } from "./generated";
 
+export interface CardData {
+	PAN: number | string;
+	ExpDate: number | string;
+	CardHolder: string;
+	CVV: string | number;
+}
+
 export function generateSignature(
 	data: Record<string, unknown>,
 	terminalKey: string,
@@ -20,6 +27,14 @@ export function generateSignature(
 		.join("");
 
 	return createHash("sha256").update(sign).digest("hex");
+}
+
+export function encryptCardData(cardData: CardData) {
+	return btoa(
+		Object.entries(cardData)
+			.map(([key, data]) => `${key}=${data}`)
+			.join("\n"),
+	);
 }
 
 export type Servers = (typeof servers)[number]["url"];
