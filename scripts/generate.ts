@@ -126,8 +126,8 @@ indexSource = indexSource.replace(
                              * @summary ${operation.summary} 
 							 * ${operation.deprecated ? "@deprecated" : ""} 
                              */
-                            ${fromPascalToCamelCase(operation.operationId!)}(${parameters}) {
-                                return this.request<GetResponse<"${path}", "${method}">>(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
+                            ${fromPascalToCamelCase(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
+                                return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
                             }
                         `;
 					})
