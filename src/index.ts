@@ -4,6 +4,7 @@
  * Библиотека для взаимодействия с [API Т-Кассы](https://www.tbank.ru/kassa/dev/payments/index.html).
  */
 
+import { type KeyObject, createPublicKey } from "node:crypto";
 import type { paths } from "./api-types";
 import type { UpdateFilter } from "./filters";
 import {
@@ -36,6 +37,8 @@ export interface TKassaOptions {
 	 * @default "https://securepay.tinkoff.ru"
 	 */
 	server?: Servers;
+
+	x509Key?: string;
 }
 
 /**
@@ -60,7 +63,8 @@ export class TKassa<
 > {
 	terminalKey!: TerminalKey extends "" ? string | undefined : string;
 	password!: TerminalKey extends "" ? string | undefined : string;
-	options: Require<TKassaOptions, "server">;
+	publicKey?: KeyObject;
+	options: TKassaOptions & { server: NonNullable<TKassaOptions["server"]> };
 
 	private inject:
 		| ((body: WebhookBody) => MaybePromise<EventInject>)
@@ -105,6 +109,8 @@ export class TKassa<
 
 		if (typeof terminalKeyOrOptionsOrInject === "function")
 			this.inject = terminalKeyOrOptionsOrInject;
+
+		if (options?.x509Key) this.publicKey = createPublicKey(options.x509Key);
 
 		this.options = {
 			server: "https://securepay.tinkoff.ru",

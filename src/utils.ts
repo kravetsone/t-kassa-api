@@ -1,12 +1,15 @@
-import { createHash } from "node:crypto";
+import { createHash, createPublicKey, publicEncrypt } from "node:crypto";
+import type { TKassa } from ".";
 import type { paths, webhooks } from "./api-types";
 import type { servers } from "./generated";
 
 export interface CardData {
 	PAN: number | string;
 	ExpDate: number | string;
-	CardHolder: string;
-	CVV: string | number;
+	CardHolder?: string;
+	CVV?: string | number;
+	ECI?: string;
+	CAVV?: string;
 }
 
 export function generateSignature(
@@ -29,12 +32,20 @@ export function generateSignature(
 	return createHash("sha256").update(sign).digest("hex");
 }
 
-export function encryptCardData(cardData: CardData) {
-	return btoa(
-		Object.entries(cardData)
-			.map(([key, data]) => `${key}=${data}`)
-			.join("\n"),
+export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
+	if (!tKassa.publicKey)
+		throw new Error("Не передан X509Key в настройки TKassa");
+
+	const encryptedBuffer = publicEncrypt(
+		tKassa.publicKey,
+		Buffer.from(
+			Object.entries(cardData)
+				.map(([key, data]) => `${key}=${data}`)
+				.join("\n"),
+		),
 	);
+
+	return encryptedBuffer.toString("base64");
 }
 
 export type Servers = (typeof servers)[number]["url"];
