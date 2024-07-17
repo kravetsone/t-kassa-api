@@ -41,7 +41,7 @@ export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
 		Buffer.from(
 			Object.entries(cardData)
 				.map(([key, data]) => `${key}=${data}`)
-				.join("\n"),
+				.join(";"),
 		),
 	);
 
