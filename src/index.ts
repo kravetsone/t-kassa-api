@@ -23,7 +23,7 @@ import {
  */
 export * as filters from "./filters";
 export * from "./webhook";
-
+export * from "./utils";
 /**
  * Параметры для настройки поведения {@link TKassa}
  */
@@ -110,7 +110,11 @@ export class TKassa<
 		if (typeof terminalKeyOrOptionsOrInject === "function")
 			this.inject = terminalKeyOrOptionsOrInject;
 
-		if (options?.x509Key) this.publicKey = createPublicKey(options.x509Key);
+		console.log(options?.x509Key);
+		if (options?.x509Key)
+			this.publicKey = createPublicKey(
+				`-----BEGIN PUBLIC KEY-----\n${options.x509Key}\n-----END PUBLIC KEY-----`,
+			);
 
 		this.options = {
 			server: "https://securepay.tinkoff.ru",
