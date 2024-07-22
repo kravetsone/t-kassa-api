@@ -5,6 +5,7 @@ import openapiTS, { astToString } from "openapi-typescript";
 import dedent from "ts-dedent";
 import {
 	fromPascalToCamelCase,
+	getLinkToMethod,
 	httpMethods,
 	insertMultilineJSDoc,
 } from "./utils";
@@ -120,11 +121,12 @@ indexSource = indexSource.replace(
 
 						return dedent /* js */`
                             /**
-                            ${operation.description ? insertMultilineJSDoc(operation.description) : ""}
+                            ${operation.description ? insertMultilineJSDoc(operation.description) : "*"}
                              * 
                              * @tags ${operation.tags?.join(", ")}
                              * @summary ${operation.summary} 
 							 * ${operation.deprecated ? "@deprecated" : ""} 
+							 * [Documentation](${getLinkToMethod(operation.tags || [], operation.operationId || "")})
                              */
                             ${fromPascalToCamelCase(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
                                 return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
