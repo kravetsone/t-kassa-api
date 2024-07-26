@@ -25,6 +25,9 @@ jobs:
               with:
                   bun-version: 1.1.20
 
+            - name: Install
+              run: bun i
+
             - id: generated
               name: Scrape OpenAPI and generate module
               run: bun scripts/generate.ts
