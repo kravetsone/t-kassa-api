@@ -58,7 +58,6 @@ export interface TKassaOptions {
  */
 export class TKassa<
 	TerminalKey extends string = "",
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	EventInject extends { Password: string; custom?: any } = never,
 > {
 	terminalKey!: TerminalKey extends "" ? string | undefined : string;
@@ -69,7 +68,6 @@ export class TKassa<
 	private inject:
 		| ((body: WebhookBody) => MaybePromise<EventInject>)
 		| undefined;
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	private listeners: ((context: WebhookBody, custom: any) => unknown)[] = [];
 
 	constructor(

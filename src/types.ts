@@ -54,7 +54,6 @@ export type WebhookBody = NonNullable<
 	webhooks["Notification"]["post"]["requestBody"]
 >["content"]["application/json"];
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export type Require<O extends Record<any, any>, K extends keyof O> = {
 	[P in keyof O]-?: P extends K ? NonNullable<O[P]> : O[P];
 };
