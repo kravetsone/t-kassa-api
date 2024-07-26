@@ -1,6 +1,6 @@
 import { constants, createHash, publicEncrypt } from "node:crypto";
 import type { KeyObject } from "node:crypto";
-import { TKassa } from ".";
+import { TKassa } from "./index";
 import type { CardData, ThreeDSMethodData } from "./types";
 
 export * from "./types";
