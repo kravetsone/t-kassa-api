@@ -12,7 +12,7 @@ import {
 
 const tKassaSchema = await parseRedocState();
 
-Bun.write("openapi.json", JSON.stringify(tKassaSchema, null, 2));
+await Bun.write("openapi.json", JSON.stringify(tKassaSchema, null, 2));
 // Приколы потому что Т-Банк имеет OpenAPI 3.0.3, а вебхуки заехали только в 3.1.0
 
 if (!tKassaSchema.webhooks) tKassaSchema.webhooks = {};
@@ -25,7 +25,10 @@ tKassaSchema.paths["/v2/Notification"] = undefined;
 
 const result = await openapi().load(tKassaSchema).upgrade().get();
 
-Bun.write("modern-openapi.json", JSON.stringify(result.specification, null, 2));
+await Bun.write(
+	"modern-openapi.json",
+	JSON.stringify(result.specification, null, 2),
+);
 
 const schema = result.specification as OpenAPIV3_1.Document;
 
@@ -42,7 +45,7 @@ const ast = await openapiTS(schema, {
 });
 const contents = astToString(ast);
 
-Bun.write(
+await Bun.write(
 	"./src/api-types.ts",
 	dedent /* js */`
 	/**
@@ -68,7 +71,7 @@ await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 
 const file = dedent`export const servers = ${JSON.stringify(schema.servers)} as const;`;
 
-Bun.write("./src/generated.ts", file);
+await Bun.write("./src/generated.ts", file);
 
 //! generate methods
 
@@ -136,4 +139,4 @@ indexSource = indexSource.replace(
 
 await Bun.write("./src/index.ts", indexSource);
 
-await $`bun x @biomejs/biome check ./src|*api.json --write --unsafe --changed`;
+await $`bunx @biomejs/biome check --write --unsafe`;
