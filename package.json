@@ -49,5 +49,6 @@
 		"ts-dedent": "^2.2.0",
 		"typescript": "^5.5.3"
 	},
+	"license": "MIT",
 	"files": ["dist"]
 }
