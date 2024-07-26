@@ -27,8 +27,6 @@ const result = await openapi().load(tKassaSchema).upgrade().get();
 
 Bun.write("modern-openapi.json", JSON.stringify(result.specification, null, 2));
 
-await $`bun x @biomejs/biome check ./modern-openapi.json --write --unsafe`;
-
 const schema = result.specification as OpenAPIV3_1.Document;
 
 if (!schema.paths || !schema.servers || !schema.openapi)
@@ -71,8 +69,6 @@ await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 const file = dedent`export const servers = ${JSON.stringify(schema.servers)} as const;`;
 
 Bun.write("./src/generated.ts", file);
-
-await $`bun x @biomejs/biome check ./src/generated.ts --write`;
 
 //! generate methods
 
@@ -140,4 +136,4 @@ indexSource = indexSource.replace(
 
 await Bun.write("./src/index.ts", indexSource);
 
-await $`bun x @biomejs/biome check ./src/index.ts --write --unsafe`;
+await $`bun x @biomejs/biome check ./src|*api.json --write --changed`;
