@@ -136,4 +136,4 @@ indexSource = indexSource.replace(
 
 await Bun.write("./src/index.ts", indexSource);
 
-await $`bun x @biomejs/biome check ./src|*api.json --write --changed`;
+await $`bun x @biomejs/biome check ./src|*api.json --write --unsafe --changed`;
