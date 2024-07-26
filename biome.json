@@ -1,15 +1,25 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"style": {
-				"noNonNullAssertion": "off"
-			},
-			"recommended": true
-		}
-	}
+    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true,
+        "defaultBranch": "main"
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "style": {
+                "noNonNullAssertion": "off"
+            },
+            "suspicious": {
+                "noImplicitAnyLet": "off",
+                "noExplicitAny": "off"
+            },
+            "recommended": true
+        }
+    }
 }
