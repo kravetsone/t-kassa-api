@@ -7,12 +7,12 @@
 import { type KeyObject, createPublicKey } from "node:crypto";
 import type { paths } from "./api-types";
 import type { UpdateFilter } from "./filters";
+import { servers } from "./generated";
 import {
 	type GetRequestBody,
 	type GetResponse,
 	type MaybePromise,
 	type Modify,
-	type Require,
 	type Servers,
 	type WebhookBody,
 	generateSignature,
@@ -117,7 +117,7 @@ export class TKassa<
 			);
 
 		this.options = {
-			server: "https://securepay.tinkoff.ru",
+			server: servers[0].url,
 			...options,
 		};
 	}
