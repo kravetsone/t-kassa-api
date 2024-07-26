@@ -1,4 +1,4 @@
-import { createHash, createPublicKey, publicEncrypt } from "node:crypto";
+import { constants, createHash, publicEncrypt } from "node:crypto";
 import type { TKassa } from ".";
 import type { paths, webhooks } from "./api-types";
 import type { servers } from "./generated";
@@ -36,16 +36,38 @@ export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
 	if (!tKassa.publicKey)
 		throw new Error("Не передан X509Key в настройки TKassa");
 
+	console.log(
+		Object.entries(cardData)
+			.map(([key, data]) => `${key}=${data}`)
+			.join(";"),
+	);
+
 	const encryptedBuffer = publicEncrypt(
-		tKassa.publicKey,
+		{ key: tKassa.publicKey, padding: constants.RSA_PKCS1_PADDING },
 		Buffer.from(
 			Object.entries(cardData)
 				.map(([key, data]) => `${key}=${data}`)
 				.join(";"),
+			"utf-8",
 		),
 	);
 
 	return encryptedBuffer.toString("base64");
+}
+
+export interface ThreeDSMethodData {
+	/**
+	 * Обратный адрес, на который будет отправлен запрос после прохождения `3DS Method`
+	 */
+	threeDSMethodNotificationURL: string;
+	/**
+	 * Идентификатор транзакции из ответа метода `Check3DSVersion`
+	 */
+	threeDSServerTransID: string;
+}
+
+export function encryptThreeDSMethodData(data: ThreeDSMethodData) {
+	return atob(JSON.stringify(data));
 }
 
 export type Servers = (typeof servers)[number]["url"];
