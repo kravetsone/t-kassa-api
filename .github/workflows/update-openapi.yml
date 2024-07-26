@@ -1,0 +1,35 @@
+name: Update OpenAPI
+
+on:
+    schedule:
+        - cron: "0 14 * * *"
+        - cron: "0 20 * * *"
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    id-token: write
+
+jobs:
+    update_types:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install Bun
+              uses: oven-sh/setup-bun@v1
+              with:
+                  bun-version: 1.1.20
+
+            - id: generated
+              name: Scrape OpenAPI and generate module
+              run: bun scripts/generate.ts
+
+            - name: Commit and Push changes
+              uses: EndBug/add-and-commit@v9
+              with:
+                  message: "chore: update t-kassa OpenAPI to v${{ steps.generated.outputs.version }}"

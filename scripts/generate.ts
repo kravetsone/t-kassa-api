@@ -1,3 +1,4 @@
+import { EOL } from "node:os";
 import { type OpenAPIV3_1, openapi } from "@scalar/openapi-parser";
 import { $ } from "bun";
 import openapiTS, { astToString } from "openapi-typescript";
@@ -147,3 +148,10 @@ indexSource = indexSource.replace(
 await Bun.write("./src/index.ts", indexSource);
 
 await $`bunx @biomejs/biome check --write --unsafe`;
+
+if (process.env.GITHUB_OUTPUT) {
+	await Bun.write(
+		process.env.GITHUB_OUTPUT!,
+		`version=${schema.info?.version?.replace(/"/gi, "")}${EOL}`,
+	);
+}
