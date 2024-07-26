@@ -67,7 +67,6 @@ await Bun.write(
 		 export interface $1 {`,
 		)}`,
 );
-await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 
 let utilsSource = await Bun.file("./src/utils.ts").text();
 
