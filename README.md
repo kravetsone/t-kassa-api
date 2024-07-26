@@ -147,6 +147,55 @@ const ткасса = new TKassa((body) => {
 
 И типы опять же совсем не глупы и делают вам благое дело, указывая верный путь.
 
+### Функции-хелперы
+
+##### [`generateSignature`](https://jsr.io/@kravets/t-kassa-api/doc/~/generateSignature)
+
+Генерирует подпись для запроса.
+
+```ts
+const signature = generateSignature(
+    { body: "OK" },
+    process.env.TERMINAL_KEY,
+    process.env.PASSWORD
+);
+```
+
+##### [`encryptCardData`](https://jsr.io/@kravets/t-kassa-api/doc/~/encryptCardData)
+
+Шифрует данные карты.
+
+```ts
+const cardData = encryptCardData(тк, {
+    PAN: "4000000000000101",
+    ExpDate: "1230",
+    CVV: "111",
+});
+
+const tds = await тк.check3dsVersion({
+    PaymentId: response.PaymentId,
+    CardData: cardData,
+});
+```
+
+##### [`encryptThreeDSMethodData`](https://jsr.io/@kravets/t-kassa-api/doc/~/encryptThreeDSMethodData)
+
+Функция для получения строкового представления `ThreeDSMethodData`
+
+```ts
+const tds = await тк.check3dsVersion({
+    PaymentId: response.PaymentId,
+    CardData: CardData,
+});
+
+if (tds.ThreeDSMethodURL && tds.TdsServerTransID) {
+    const data = encryptThreeDSMethodData({
+        threeDSMethodNotificationURL: tds.ThreeDSMethodURL,
+        threeDSServerTransID: tds.TdsServerTransID,
+    });
+}
+```
+
 ### TODO:
 
 -   поддержать `application/x-www-form-urlencoded`
