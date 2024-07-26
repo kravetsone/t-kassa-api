@@ -64,3 +64,10 @@ export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
 export function encryptThreeDSMethodData(data: ThreeDSMethodData) {
 	return atob(JSON.stringify(data));
 }
+
+/** @generated start-generate-utils */
+export const servers = [
+	{ url: "https://securepay.tinkoff.ru", description: "production" },
+	{ url: "https://rest-api-test.tinkoff.ru", description: "test" },
+] as const;
+/** @generated stop-generate-utils */

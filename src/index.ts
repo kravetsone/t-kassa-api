@@ -7,7 +7,6 @@
 import { type KeyObject, createPublicKey } from "node:crypto";
 import type { paths } from "./api-types";
 import type { UpdateFilter } from "./filters";
-import { servers } from "./generated";
 import {
 	type GetRequestBody,
 	type GetResponse,
@@ -16,6 +15,7 @@ import {
 	type Servers,
 	type WebhookBody,
 	generateSignature,
+	servers,
 } from "./utils";
 
 /**
@@ -186,7 +186,6 @@ export class TKassa<
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Notifikacii-Merchanta-ob-operaciyah)
 	 */
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	on<const Filter extends UpdateFilter<any>>(
 		filters: Filter,
 		handler: (

@@ -1,6 +1,9 @@
 import type { paths, webhooks } from "./api-types";
-import type { servers } from "./generated";
-import type { encryptCardData, encryptThreeDSMethodData } from "./utils";
+import type {
+	encryptCardData,
+	encryptThreeDSMethodData,
+	servers,
+} from "./utils";
 
 /**
  * `CardData` интерфейс для {@link encryptCardData} функции

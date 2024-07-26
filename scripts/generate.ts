@@ -69,9 +69,17 @@ await Bun.write(
 );
 await $`bun x @biomejs/biome check ./src/api-types.ts --write --unsafe`;
 
-const file = dedent`export const servers = ${JSON.stringify(schema.servers)} as const;`;
+let utilsSource = await Bun.file("./src/utils.ts").text();
 
-await Bun.write("./src/generated.ts", file);
+utilsSource = utilsSource.replace(
+	/\/\*\* @generated start-generate-utils \*\/\s?(.*)\s?\/\*\* @generated stop-generate-utils \*\//gis,
+	dedent`/** @generated start-generate-utils */
+	 export const servers = ${JSON.stringify(schema.servers)} as const;
+	 /** @generated stop-generate-utils */
+	 `,
+);
+
+await Bun.write("./src/utils.ts", utilsSource);
 
 //! generate methods
 
