@@ -1,5 +1,6 @@
 import { constants, createHash, publicEncrypt } from "node:crypto";
-import type { TKassa } from ".";
+import type { KeyObject } from "node:crypto";
+import { TKassa } from ".";
 import type { CardData, ThreeDSMethodData } from "./types";
 
 export * from "./types";
@@ -28,16 +29,31 @@ export function generateSignature(
 }
 
 /**
- * Функция которая шифрует данные карты. Первым аргументом необходимо передать инстанс TKassa с переданным в параметрах X509Key.
+ * Функция которая шифрует данные карты. Первым аргументом необходимо передать инстанс {@link TKassa} с переданным в параметрах X509Key.
+ *
+ * Или создать KeyObject с помощью `node:crypto`
+ *
+ * ```ts
+ * createPublicKey(
+ * 	 `-----BEGIN PUBLIC KEY-----\n${"Сюда сам ключ"}\n-----END PUBLIC KEY-----`,
+ * )
+ * ```
  *
  * Объект {@link CardData} собирается в виде списка `ключ`=`значение` c разделителем `;`.
  * Объект зашифровывается открытым ключом (X509 RSA 2048), получившееся бинарное значение кодируется в `Base64`.
  * Открытый ключ генерируется Т‑Кассой и выдается при регистрации терминала.
  *
  * */
-export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
-	if (!tKassa.publicKey)
-		throw new Error("Не передан X509Key в настройки TKassa");
+export function encryptCardData(
+	tKassaOrPublicKey: TKassa<any, any> | KeyObject,
+	cardData: CardData,
+) {
+	const publicKey =
+		tKassaOrPublicKey instanceof TKassa
+			? tKassaOrPublicKey.publicKey
+			: tKassaOrPublicKey;
+
+	if (!publicKey) throw new Error("Не передан X509Key в encryptCardData");
 
 	console.log(
 		Object.entries(cardData)
@@ -46,7 +62,7 @@ export function encryptCardData(tKassa: TKassa<any, any>, cardData: CardData) {
 	);
 
 	const encryptedBuffer = publicEncrypt(
-		{ key: tKassa.publicKey, padding: constants.RSA_PKCS1_PADDING },
+		{ key: publicKey, padding: constants.RSA_PKCS1_PADDING },
 		Buffer.from(
 			Object.entries(cardData)
 				.map(([key, data]) => `${key}=${data}`)
