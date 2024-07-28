@@ -17,6 +17,7 @@ export function generateSignature(
 		...data,
 		TerminalKey: terminalKey,
 		Password: password,
+		Token: undefined,
 	};
 
 	const sign = Object.keys(signData)
