@@ -1,7 +1,12 @@
 import { constants, createHash, publicEncrypt } from "node:crypto";
 import type { KeyObject } from "node:crypto";
 import { TKassa } from "./index";
-import type { CardData, ThreeDSMethodData } from "./types";
+import type {
+	CReq,
+	CardData,
+	ThreeDSMethodData,
+	ThreeDsPrepareDataV1,
+} from "./types";
 
 export * from "./types";
 
@@ -80,6 +85,47 @@ export function encryptCardData(
  */
 export function encryptThreeDSMethodData(data: ThreeDSMethodData) {
 	return atob(JSON.stringify(data));
+}
+
+/**
+ * Функция, для получения строкового значения `creq`
+ */
+export function encryptCReq(data: CReq) {
+	return atob(JSON.stringify(data));
+}
+
+/** Если в ответе метода FinishAuthorize вернулся статус платежа 3DS_CHECKING, то это означает, что требуется пройти проверку 3D-Secure. Для этого Мерчант должен сформировать запрос в сервис аутентификации банка, выпустившего карту. Адрес сервиса возвращается в ответе FinishAuthorize в параметре ACSUrl. Вместе с этим требуется перенаправить клиента на эту же страницу ACSUrl для прохождения 3DS.
+
+В заголовке запроса требуется передать параметр Content-Type со значением application/x-www-form-urlencoded. Набор параметров в теле запросе зависит от версии протокола 3DS по карте */
+export function prepareThreeDS(
+	acsURL: string,
+	version: string,
+	data: CReq | ThreeDsPrepareDataV1,
+) {
+	const params = new URLSearchParams();
+	if (version.startsWith("1") && "MD" in data) {
+		params.append("MD", data.MD);
+		params.append("PaReq", data.PaReq);
+		params.append("TermURL", data.TermURL);
+	} else if (version.startsWith("2") && "threeDSServerTransID" in data) {
+		params.append(
+			"creq",
+			encryptCReq({
+				threeDSServerTransID: data.threeDSServerTransID,
+				acsTransID: data.acsTransID,
+				challengeWindowSize: data.challengeWindowSize,
+				messageType: data.messageType,
+				messageVersion: data.messageVersion,
+			}),
+		);
+	}
+
+	return fetch(acsURL, {
+		body: params,
+		headers: {
+			"content-type": "application/x-www-form-urlencoded",
+		},
+	});
 }
 
 /** @generated start-generate-utils */

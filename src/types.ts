@@ -1,5 +1,6 @@
 import type { paths, webhooks } from "./api-types";
 import type {
+	encryptCReq,
 	encryptCardData,
 	encryptThreeDSMethodData,
 	servers,
@@ -47,6 +48,38 @@ export interface ThreeDSMethodData {
 	 * Идентификатор транзакции из ответа метода `Check3DSVersion`
 	 */
 	threeDSServerTransID: string;
+}
+
+/**
+ * Интерфейс для {@link encryptCReq} функции
+ */
+export interface CReq {
+	/** Идентификатор транзакции из ответа метода `FinishAuthorize` */
+	threeDSServerTransID: string;
+	/** Идентификатор транзакции, присвоенный ACS, полученный в ответе на FinishAuthorize */
+	acsTransID: string;
+	/**
+	 * Размер экрана, на котором открыта страница ACS.Допустимые значения:
+	 * - `01` = `250 x 400`
+	 * - `02` = `390 x 400`
+	 * - `03` = `500 x 600`
+	 * - `04` = `600 x 400`
+	 * - `05` = `Full screen`
+	 */
+	challengeWindowSize: "01" | "02" | "03" | "04" | "05";
+	/** Передается фиксированное значение «`CReq`» */
+	messageType: "CReq";
+	/** Версия 3DS, полученная из ответа метода `Check3dsVersion` */
+	messageVersion: string;
+}
+
+export interface ThreeDsPrepareDataV1 {
+	/** Информация для идентификации платежной сессии на стороне торговой точки. Придет в ответе метода `FinishAuthorize` */
+	MD: string;
+	/** Запрос на аутентификацию плательщика, который содержит разные детали транзакции. Придет в ответе метода `FinishAuthorize` */
+	PaReq: string;
+	/** Адрес перенаправления после аутентификации 3DS. Должен содержать ссылку на обработчик на стороне Мерчанта, принимающий результаты прохождения 3-D Secure */
+	TermURL: string;
 }
 
 export type Servers = (typeof servers)[number]["url"];
