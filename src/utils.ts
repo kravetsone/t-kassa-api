@@ -125,6 +125,7 @@ export function fetchACSUrl<Version extends string>(
 	}
 
 	return fetch(acsURL, {
+		method: "POST",
 		body: params,
 		headers: {
 			"content-type": "application/x-www-form-urlencoded",
