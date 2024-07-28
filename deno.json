@@ -6,6 +6,6 @@
 		"./openapi": "./src/api-types.ts"
 	},
 	"publish": {
-		"include": ["deno.json", "src", "README.md", "tsconfig.json"]
+		"include": ["deno.json", "src", "README.md", "LICENSE"]
 	}
 }
