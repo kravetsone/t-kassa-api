@@ -28,10 +28,13 @@ type ExtractModFromArray<Filters extends any[]> = Filters extends []
 export function equal<
 	Key extends keyof WebhookBody,
 	Value extends WebhookBody[Key],
->(key: Key, value: Value) {
-	return ((context) => context[key] === value) as UpdateFilter<{
-		[K in Key]: Value;
-	}>;
+>(
+	key: Key,
+	value: Value,
+): UpdateFilter<{
+	[K in Key]: Value;
+}> {
+	return (context) => context[key] === value;
 }
 
 /**
