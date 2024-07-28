@@ -126,7 +126,7 @@ export class TKassa<
 			? { [key: string]: unknown; TerminalKey: string; Password: string }
 			: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
-		type: "json" | "x-www-form-urlencoded" = "x-www-form-urlencoded",
+		type: "json" | "x-www-form-urlencoded" = "json",
 	): Promise<T> {
 		const options: RequestInit & {
 			headers: Record<string, string>;
