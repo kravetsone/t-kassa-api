@@ -175,7 +175,13 @@ export class TKassa<
 
 		return response.json() as T;
 	}
-
+	/**
+	 * Слушатель webhook события (нотификации)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Notifikacii-Merchanta-ob-operaciyah)
+	 * */
+	on(
+		handler: (context: WebhookBody, custom: EventInject["custom"]) => unknown,
+	): this;
 	/**
 	 * Слушатель webhook события (нотификации)
 	 *
@@ -203,15 +209,40 @@ export class TKassa<
 			>,
 			custom: EventInject["custom"],
 		) => unknown,
+	): this;
+
+	on<const Filter extends UpdateFilter<any>>(
+		filtersOrHandler:
+			| Filter
+			| ((
+					context: Modify<
+						WebhookBody,
+						Filter extends UpdateFilter<infer Mod> ? Mod : never
+					>,
+					custom: EventInject["custom"],
+			  ) => unknown),
+		handler?: (
+			context: Modify<
+				WebhookBody,
+				Filter extends UpdateFilter<infer Mod> ? Mod : never
+			>,
+			custom: EventInject["custom"],
+		) => unknown,
 	) {
 		if (!this.inject && !this.password)
 			throw new Error(
 				"Чтобы принимать нотификацию вам необходимо добавить функцию первым аргументов конструктора (читайте README)",
 			);
-		this.listeners.push(async (context, custom) => {
+
+		if (!handler && typeof filtersOrHandler === "function")
 			// @ts-expect-error
-			if ((await filters(context)) === true) return handler(context, custom);
-		});
+			this.listeners.push(handler);
+
+		if (typeof handler === "function" && typeof filtersOrHandler === "function")
+			this.listeners.push(async (context, custom) => {
+				// @ts-expect-error
+				if ((await filters(context)) === true) return handler(context, custom);
+			});
 
 		return this;
 	}

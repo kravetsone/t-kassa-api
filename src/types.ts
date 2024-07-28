@@ -137,10 +137,6 @@ export type GetRequestBody<
 		: never
 	: never;
 
-type A = NonNullable<
-	paths["/v2/Submit3DSAuthorization"]["post"]["requestBody"]
->["content"]["application/x-www-form-urlencoded"];
-
 export type GetResponse<
 	Path extends keyof paths,
 	Method extends "get" | "post",
