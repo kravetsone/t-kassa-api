@@ -61,12 +61,6 @@ export function encryptCardData(
 
 	if (!publicKey) throw new Error("Не передан X509Key в encryptCardData");
 
-	console.log(
-		Object.entries(cardData)
-			.map(([key, data]) => `${key}=${data}`)
-			.join(";"),
-	);
-
 	const encryptedBuffer = publicEncrypt(
 		{ key: publicKey, padding: constants.RSA_PKCS1_PADDING },
 		Buffer.from(
@@ -84,14 +78,14 @@ export function encryptCardData(
  * Функция, для получения строкового значения `ThreeDSMethodData`
  */
 export function encryptThreeDSMethodData(data: ThreeDSMethodData) {
-	return atob(JSON.stringify(data));
+	return Buffer.from(JSON.stringify(data)).toString("base64");
 }
 
 /**
  * Функция, для получения строкового значения `creq`
  */
 export function encryptCReq(data: CReq) {
-	return atob(JSON.stringify(data));
+	return Buffer.from(JSON.stringify(data)).toString("base64");
 }
 
 /** Если в ответе метода FinishAuthorize вернулся статус платежа 3DS_CHECKING, то это означает, что требуется пройти проверку 3D-Secure. Для этого Мерчант должен сформировать запрос в сервис аутентификации банка, выпустившего карту. Адрес сервиса возвращается в ответе FinishAuthorize в параметре ACSUrl. Вместе с этим требуется перенаправить клиента на эту же страницу ACSUrl для прохождения 3DS.

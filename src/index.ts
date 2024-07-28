@@ -107,8 +107,6 @@ export class TKassa<
 
 		if (typeof terminalKeyOrOptionsOrInject === "function")
 			this.inject = terminalKeyOrOptionsOrInject;
-
-		console.log(options?.x509Key);
 		if (options?.x509Key)
 			this.publicKey = createPublicKey(
 				`-----BEGIN PUBLIC KEY-----\n${options.x509Key}\n-----END PUBLIC KEY-----`,
