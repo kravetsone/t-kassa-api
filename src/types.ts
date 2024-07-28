@@ -109,6 +109,7 @@ export type GetRequestBody<
 	Path extends keyof paths,
 	Method extends "get" | "post",
 	TerminalKey extends string = "",
+	ContentType extends string = "application/json",
 > = paths[Path] extends { [K in Method]: any }
 	? paths[Path][Method] extends { requestBody?: { content: any } }
 		? TerminalKey extends ""
@@ -116,7 +117,7 @@ export type GetRequestBody<
 					Omit<
 						NonNullable<
 							paths[Path][Method]["requestBody"]
-						>["content"]["application/json"],
+						>["content"][ContentType],
 						"Token"
 					>,
 					{
@@ -130,11 +131,15 @@ export type GetRequestBody<
 			: Omit<
 					NonNullable<
 						paths[Path][Method]["requestBody"]
-					>["content"]["application/json"],
+					>["content"][ContentType],
 					"Token" | "TerminalKey"
 				>
 		: never
 	: never;
+
+type A = NonNullable<
+	paths["/v2/Submit3DSAuthorization"]["post"]["requestBody"]
+>["content"]["application/x-www-form-urlencoded"];
 
 export type GetResponse<
 	Path extends keyof paths,

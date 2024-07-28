@@ -224,7 +224,3 @@ if (tds.ThreeDSMethodURL && tds.TdsServerTransID) {
     });
 }
 ```
-
-### TODO:
-
--   поддержать `application/x-www-form-urlencoded`

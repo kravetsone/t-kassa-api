@@ -126,6 +126,7 @@ export class TKassa<
 			? { [key: string]: unknown; TerminalKey: string; Password: string }
 			: Record<string, unknown>,
 		method: "POST" | "GET" = "POST",
+		type: "json" | "x-www-form-urlencoded" = "x-www-form-urlencoded",
 	): Promise<T> {
 		const options: RequestInit & {
 			headers: Record<string, string>;
@@ -150,13 +151,22 @@ export class TKassa<
 				);
 
 			const signature = generateSignature(data, terminalKey, password);
-			options.headers["content-type"] = "application/json";
-			options.body = JSON.stringify({
-				...data,
-				Password: undefined,
-				Token: signature,
-				TerminalKey: terminalKey,
-			});
+			options.headers["content-type"] = `application/${type}`;
+			options.body =
+				type === "json"
+					? JSON.stringify({
+							...data,
+							Password: undefined,
+							Token: signature,
+							TerminalKey: terminalKey,
+						})
+					: new URLSearchParams({
+							...data,
+							// @ts-expect-error
+							Password: undefined,
+							Token: signature,
+							TerminalKey: terminalKey,
+						});
 		}
 
 		const response = await fetch(this.options.server + url, options);
@@ -587,10 +597,20 @@ export class TKassa<
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorization)
 	 */
-	submit3DSAuthorization(): Promise<
-		GetResponse<"/v2/Submit3DSAuthorization", "post">
-	> {
-		return this.request("/v2/Submit3DSAuthorization", undefined, "POST");
+	submit3DSAuthorization(
+		body: GetRequestBody<
+			"/v2/Submit3DSAuthorization",
+			"post",
+			TerminalKey,
+			"application/x-www-form-urlencoded"
+		>,
+	): Promise<GetResponse<"/v2/Submit3DSAuthorization", "post">> {
+		return this.request(
+			"/v2/Submit3DSAuthorization",
+			body,
+			"POST",
+			"x-www-form-urlencoded",
+		);
 	}
 	/**
 	 * `Для Мерчантов с PCI DSS`
@@ -611,10 +631,20 @@ export class TKassa<
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorizationV2)
 	 */
-	submit3DSAuthorizationV2(): Promise<
-		GetResponse<"/v2/Submit3DSAuthorizationV2", "post">
-	> {
-		return this.request("/v2/Submit3DSAuthorizationV2", undefined, "POST");
+	submit3DSAuthorizationV2(
+		body: GetRequestBody<
+			"/v2/Submit3DSAuthorizationV2",
+			"post",
+			TerminalKey,
+			"application/x-www-form-urlencoded"
+		>,
+	): Promise<GetResponse<"/v2/Submit3DSAuthorizationV2", "post">> {
+		return this.request(
+			"/v2/Submit3DSAuthorizationV2",
+			body,
+			"POST",
+			"x-www-form-urlencoded",
+		);
 	}
 	/**
 	 * Метод определения возможности проведения платежа T‑Pay на терминале и устройстве
