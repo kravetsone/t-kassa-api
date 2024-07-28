@@ -6088,7 +6088,7 @@ export interface operations {
 					 *
 					 * @example testRegressBank
 					 */
-					TerminalKey?: string;
+					TerminalKey: string;
 					/**
 					 * @description Подпись запроса
 					 *

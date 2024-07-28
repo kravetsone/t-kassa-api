@@ -36,6 +36,11 @@ const schema = result.specification as OpenAPIV3_1.Document;
 if (!schema.paths || !schema.servers || !schema.openapi)
 	throw new Error("missed");
 
+// @ts-expect-error
+schema.paths["/v2/Submit3DSAuthorization"].post.requestBody?.content[
+	"application/x-www-form-urlencoded"
+].schema.required.push("TerminalKey");
+
 // @ts-ignore
 const ast = await openapiTS(schema, {
 	transform(schemaObject) {
@@ -59,6 +64,7 @@ await Bun.write(
 		.replace(/(.*): never;/gi, "")
 		.replace(/(.*): {(\s*)};/gim, "")
 		.replace(/export type (.*) = Record<string, never>;/, "")
+
 		.replace(
 			/export interface (.*) {/gi,
 			dedent /* js */`
@@ -99,8 +105,11 @@ indexSource = indexSource.replace(
 
 						const pathParameters =
 							operation.parameters?.filter((x) => x.in === "path") || [];
+						// console.log(operation.requestBody);
+						const contentType =
+							Object.keys(operation?.requestBody?.content || {}).at(0) || null;
 
-						const body = (operation.requestBody?.content["application/json"] ||
+						const body = (operation?.requestBody?.content[contentType || ""] ||
 							[]) as OpenAPIV3_1.MediaTypeObject;
 
 						const parameters = pathParameters
@@ -119,7 +128,7 @@ indexSource = indexSource.replace(
 												// 	body.schema.required)
 												// 	? ""
 												// 	: "?"
-											}: GetRequestBody<"${path}", "${method}", TerminalKey>`,
+											}: GetRequestBody<"${path}", "${method}", TerminalKey${contentType?.endsWith("x-www-form-urlencoded") ? `, "${contentType}"` : ""}>`,
 										]
 									: [],
 							)
@@ -135,7 +144,7 @@ indexSource = indexSource.replace(
 							 * [Documentation](${getLinkToMethod(operation.tags || [], operation.operationId || "")})
                              */
                             ${fromPascalToCamelCase(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
-                                return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}")
+                                return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, "${method.toUpperCase()}"${contentType?.endsWith("x-www-form-urlencoded") ? `, "x-www-form-urlencoded"` : ""})
                             }
                         `;
 					})
