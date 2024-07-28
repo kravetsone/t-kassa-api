@@ -178,6 +178,35 @@ const tds = await тк.check3dsVersion({
 });
 ```
 
+##### [`fetchACSUrl`](https://jsr.io/@kravets/t-kassa-api/doc/~/fetchACSUrl)
+
+Функция, которая отправляет запрос в сервис аутентификации банка (по `ACSUrl`) в зависимости от версии `3D-Secure`. Возвращает [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) с HTML формочкой, которую браузер сабмитнет сразу. Вместо этого метода рекомендуется использовать элемент `form` в `<body onload="document.form.submit()">`.
+
+```ts
+const response = await fetchACSUrl(finishAuthorize.ACSUrl, threeDS.version, {
+    MD: finishAuthorize.MD,
+    PaReq: finishAuthorize.PaReq,
+    TermURL: "https://example.com",
+    // other data
+});
+```
+
+[Подробнее](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Scenarii-oplaty-po-karte/Scenarii-platezha)
+
+##### [`encryptCReq`](https://jsr.io/@kravets/t-kassa-api/doc/~/encryptCReq)
+
+Функция для получения строкового представления `creq` (нужен для 3DS 2.0)
+
+```ts
+const str = encryptCReq({
+    threeDSServerTransID: data.threeDSServerTransID,
+    acsTransID: data.acsTransID,
+    challengeWindowSize: data.challengeWindowSize,
+    messageType: "CReq",
+    messageVersion: threeDS.version,
+});
+```
+
 ##### [`encryptThreeDSMethodData`](https://jsr.io/@kravets/t-kassa-api/doc/~/encryptThreeDSMethodData)
 
 Функция для получения строкового представления `ThreeDSMethodData`

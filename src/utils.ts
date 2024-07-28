@@ -97,10 +97,14 @@ export function encryptCReq(data: CReq) {
 /** Если в ответе метода FinishAuthorize вернулся статус платежа 3DS_CHECKING, то это означает, что требуется пройти проверку 3D-Secure. Для этого Мерчант должен сформировать запрос в сервис аутентификации банка, выпустившего карту. Адрес сервиса возвращается в ответе FinishAuthorize в параметре ACSUrl. Вместе с этим требуется перенаправить клиента на эту же страницу ACSUrl для прохождения 3DS.
 
 В заголовке запроса требуется передать параметр Content-Type со значением application/x-www-form-urlencoded. Набор параметров в теле запросе зависит от версии протокола 3DS по карте */
-export function prepareThreeDS(
+export function fetchACSUrl<Version extends string>(
 	acsURL: string,
-	version: string,
-	data: CReq | ThreeDsPrepareDataV1,
+	version: Version,
+	data: Version extends `1${string}`
+		? ThreeDsPrepareDataV1
+		: Version extends `2${string}`
+			? CReq
+			: CReq | ThreeDsPrepareDataV1,
 ) {
 	const params = new URLSearchParams();
 	if (version.startsWith("1") && "MD" in data) {
