@@ -73,7 +73,7 @@ const frameworks: Record<
  *
  * const app = new Hono();
  *
- * app.get("/", webhookHandler("hono"));
+ * app.get("/", webhookHandler(ткасса, "hono"));
  * ```
  */
 export function webhookHandler<Framework extends keyof typeof frameworks>(

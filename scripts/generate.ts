@@ -44,11 +44,12 @@ schema.paths["/v2/Submit3DSAuthorization"].post.requestBody?.content[
 // @ts-ignore
 const ast = await openapiTS(schema, {
 	transform(schemaObject) {
-		// @ts-expect-error Какие-то пиколы у генератора типов с экзамплами по 3.1 спекеююю
+		// @ts-expect-error Какие-то приколы у генератора типов с экзамплами по 3.1 спеке
 		if ("examples" in schemaObject && "default" in schemaObject.examples)
 			schemaObject.example = schemaObject?.examples?.default;
 	},
 });
+
 const contents = astToString(ast);
 
 await Bun.write(

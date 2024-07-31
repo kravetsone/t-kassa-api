@@ -59,7 +59,7 @@ const ткасса = new TKassa(process.env.TERMINAL_KEY, process.env.PASSWORD);
 
 const app = new Hono();
 
-app.get("/", webhookHandler("hono"));
+app.get("/", webhookHandler(ткасса, "hono"));
 ```
 
 ### Поддерживаемые webhook адаптеры
