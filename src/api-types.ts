@@ -2919,7 +2919,7 @@ export interface components {
 			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
 			 * @example 2304882
 			 */
-			PaymentId: string;
+			PaymentId: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 * @example 0
@@ -3321,7 +3321,7 @@ export interface components {
 			 *
 			 * @example 6155312072
 			 */
-			PaymentId: string;
+			PaymentId: number;
 			/**
 			 * @description Идентификатор терминала. Выдается Мерчанту Т‑Кассой
 			 *     при заведении терминала
@@ -3379,7 +3379,7 @@ export interface components {
 			 *
 			 * @example 6155312073
 			 */
-			PaymentId: string;
+			PaymentId: number;
 			/**
 			 * @description Идентификатор терминала. Выдается Мерчанту Т‑Кассой
 			 *     при заведении терминала
@@ -3881,7 +3881,7 @@ export interface components {
 			 *
 			 * @example 10063
 			 */
-			PaymentId: string;
+			PaymentId: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -3940,7 +3940,7 @@ export interface components {
 			 *
 			 * @example 10063
 			 */
-			PaymentId: string;
+			PaymentId: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *

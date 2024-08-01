@@ -4846,7 +4846,7 @@
 						}
 					},
 					"PaymentId": {
-						"type": "string",
+						"type": "number",
 						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы",
 						"examples": {
 							"default": "2304882"
@@ -5385,7 +5385,7 @@
 				"properties": {
 					"PaymentId": {
 						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "string",
+						"type": "number",
 						"maxLength": 20,
 						"examples": {
 							"default": "6155312072"
@@ -5468,7 +5468,7 @@
 				"properties": {
 					"PaymentId": {
 						"description": "Идентификатор платежа в системе Т‑Кассы\n",
-						"type": "string",
+						"type": "number",
 						"maxLength": 20,
 						"examples": {
 							"default": "6155312073"
@@ -6094,7 +6094,7 @@
 					},
 					"PaymentId": {
 						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-						"type": "string",
+						"type": "number",
 						"examples": {
 							"default": "10063"
 						}
@@ -6174,7 +6174,7 @@
 					},
 					"PaymentId": {
 						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы\n",
-						"type": "string",
+						"type": "number",
 						"examples": {
 							"default": "10063"
 						}
