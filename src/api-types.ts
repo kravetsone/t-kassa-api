@@ -1950,7 +1950,7 @@ export interface components {
 		/** @description Информация о платеже */
 		PaymentData: {
 			/**
-			 * @description Идентификатор терминала, выдается Мерчанту Т-Кассой
+			 * @description Идентификатор терминала, выдается Мерчанту Т‑Кассой
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -2658,7 +2658,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -2828,7 +2828,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -2951,7 +2951,7 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т-Кассы
+			 *     системе Т‑Кассы
 			 *
 			 * @example 700001702044
 			 */
@@ -3027,7 +3027,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -3054,7 +3054,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -3827,7 +3827,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т-Кассы. Запрос будет работать даже если указать значение в "string" формате
+			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы. Запрос будет работать даже если указать значение в "string" формате
 			 *
 			 * @example 10063
 			 */
@@ -3998,7 +3998,7 @@ export interface components {
 			/**
 			 * @description Наименование участника
 			 *
-			 * @example АО Тинькофф Банк
+			 * @example T-Банк
 			 */
 			MemberName: string;
 			/**
@@ -4155,7 +4155,7 @@ export interface components {
 			 * @description Наименование Банка-эмитента, заполнен если BankMemberId
 			 *     передан
 			 *
-			 * @example Тинькофф Банк
+			 * @example T-Банк
 			 */
 			BankMemberName?: string;
 			/**
@@ -4273,7 +4273,7 @@ export interface components {
 				 * @description Наименование банка-эмитента, заполнен если BankMemberId
 				 *     передан
 				 *
-				 * @example Тинькофф Банк
+				 * @example T-Банк
 				 */
 				BankMemberName?: string;
 			};
@@ -4288,7 +4288,7 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т-Кассы
+			 *     системе Т‑Кассы
 			 *
 			 * @example 700001702044
 			 */
@@ -4399,7 +4399,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -4660,7 +4660,7 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -4743,7 +4743,7 @@ export interface components {
 			 *      */
 			Status?: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т-Кассы
+			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -4834,7 +4834,7 @@ export interface components {
 			 */
 			Status?: "COMPLETED" | "REJECTED";
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -5022,7 +5022,7 @@ export interface components {
 			 */
 			Status: string;
 			/**
-			 * @description Идентификатор платежа в системе Т-Кассы
+			 * @description Идентификатор платежа в системе Т‑Кассы
 			 *
 			 * @example 13660
 			 */
@@ -6078,7 +6078,7 @@ export interface operations {
 					 */
 					PaRes: string;
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т-Кассы
+					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
 					 *
 					 * @example 10063
 					 */
@@ -6161,7 +6161,7 @@ export interface operations {
 			content: {
 				"application/x-www-form-urlencoded": {
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т-Кассы
+					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы
 					 *
 					 * @example 10063
 					 */
@@ -6500,7 +6500,7 @@ export interface operations {
 					TerminalKey: string;
 					/**
 					 * @description Уникальный идентификатор транзакции в системе
-					 *     Т-Кассы
+					 *     Т‑Кассы
 					 *
 					 * @example 10063
 					 */
@@ -6656,7 +6656,7 @@ export interface operations {
 					TerminalKey: string;
 					/**
 					 * @description Уникальный идентификатор транзакции в системе
-					 *     Т-Кассы, полученный в ответе на вызов метода Init
+					 *     Т‑Кассы, полученный в ответе на вызов метода Init
 					 *
 					 * @example 700031849
 					 */
