@@ -8016,7 +8016,7 @@
 						}
 					},
 					"PaymentId": {
-						"type": "string",
+						"type": "number",
 						"description": "Идентификатор операции",
 						"examples": {
 							"default": "1201206442"

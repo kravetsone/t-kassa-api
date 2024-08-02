@@ -6899,7 +6899,7 @@
 						"example": "Запрос на отправку документа принят"
 					},
 					"PaymentId": {
-						"type": "string",
+						"type": "number",
 						"description": "Идентификатор операции",
 						"example": "1201206442"
 					}

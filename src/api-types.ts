@@ -5348,7 +5348,7 @@ export interface components {
 			 * @description Идентификатор операции
 			 * @example 1201206442
 			 */
-			PaymentId: string;
+			PaymentId: number;
 		};
 		/** Ответ на запрос (URL) */
 		response_by_url: {
