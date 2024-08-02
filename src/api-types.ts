@@ -4747,7 +4747,7 @@ export interface components {
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: string;
+			PaymentId?: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -4838,7 +4838,7 @@ export interface components {
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: string;
+			PaymentId?: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
@@ -5026,7 +5026,7 @@ export interface components {
 			 *
 			 * @example 13660
 			 */
-			PaymentId?: string;
+			PaymentId?: number;
 			/**
 			 * @description Код ошибки. «0» в случае успеха
 			 *
