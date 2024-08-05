@@ -239,7 +239,9 @@ export class TKassa<
 		if (typeof handler === "function" && typeof filtersOrHandler === "function")
 			this.listeners.push(async (context, custom) => {
 				// @ts-expect-error
-				if ((await filters(context)) === true) return handler(context, custom);
+				if ((await filtersOrHandler(context)) === true)
+					// @ts-expect-error
+					return handler(context, custom);
 			});
 
 		return this;
