@@ -147,6 +147,30 @@ const ткасса = new TKassa((body) => {
 
 И типы опять же совсем не глупы и делают вам благое дело, указывая верный путь.
 
+### RequestsOptions
+
+Вы можете повлиять на поведение запроса
+
+#### Глобально
+
+```ts
+const tKassa = new TKassa({
+    requestsOptions: {
+        headers: {
+            "x-awesome": "this library is great",
+        },
+    },
+});
+```
+
+#### Для одного запроса
+
+```ts
+await tKassa.getQr(/** some data */, {
+    signal: AbortSignal.timeout(500)
+});
+```
+
 ### Функции-хелперы
 
 ##### [`generateSignature`](https://jsr.io/@kravets/t-kassa-api/doc/~/generateSignature)

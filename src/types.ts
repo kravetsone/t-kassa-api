@@ -91,6 +91,8 @@ export type Require<O extends Record<any, any>, K extends keyof O> = {
 	[P in keyof O]-?: P extends K ? NonNullable<O[P]> : O[P];
 };
 
+export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
+
 type UnionToIntersectionHelper<U> = (
 	U extends unknown
 		? (k: U) => void
@@ -159,3 +161,8 @@ export type Prettify<T> = {
 } & {};
 
 export type MaybePromise<T> = Promise<T> | T;
+
+export type RequestOptions = Omit<RequestInit, "headers"> & {
+	mimeType?: "json" | "x-www-form-urlencoded";
+	headers?: Record<string, string>;
+};
