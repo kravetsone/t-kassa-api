@@ -177,7 +177,7 @@ export class TKassa<
 						});
 		}
 		requestOptions.mimeType = undefined;
-		const response = await fetch(this.options.server + path, options);
+		const response = await fetch(this.options.server + path, requestOptions);
 
 		if (!response.ok) throw new Error(`error${await response.text()}`);
 
