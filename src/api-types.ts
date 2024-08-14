@@ -443,7 +443,7 @@ export interface webhooks {
 		 *
 		 *     > **Нотификация о фискализации (NotificationFiscalization)**
 		 *     <br> Если используется подключенная онлайн касса, по результату фискализации будет
-		 *     отправлена нотификация с фискальными данными
+		 *     отправлена нотификация с фискальными данными. Такие нотификации маркетплейсам не отправляются.
 		 *
 		 *     > **Нотификация о статусе привязки счета по QR (NotificationQr)**
 		 *     <br> После привязки счета по QR, магазину отправляется статус привязки и токен.
@@ -6325,7 +6325,7 @@ export interface operations {
 							 * @description Link для перехода в приложение MB на мобильных
 							 *     устройствах
 							 *
-							 * @example tinkoffbank://Main/EInvoicing?billId=5000015507&providerId=e-invoicing
+							 * @example https://o.tbank.ru/tpay/<requestId>
 							 */
 							RedirectUrl: string;
 							/**
