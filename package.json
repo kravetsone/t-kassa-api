@@ -1,6 +1,6 @@
 {
 	"name": "t-kassa-api",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"module": "./dist/index.js",
 	"main": "./dist/index.cjs",
 	"types": "./dist/index.d.ts",
@@ -41,7 +41,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
 		"@scalar/openapi-parser": "^0.7.2",
-		"@types/bun": "latest",
+		"@types/bun": "^1.1.6",
 		"cheerio": "^1.0.0-rc.12",
 		"openapi-typescript": "^7.0.2",
 		"pkgroll": "^2.1.1",

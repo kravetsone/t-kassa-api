@@ -162,7 +162,10 @@ export type Prettify<T> = {
 
 export type MaybePromise<T> = Promise<T> | T;
 
-export type RequestOptions = Omit<RequestInit, "headers"> & {
+export type RequestOptions = Omit<
+	NonNullable<Parameters<typeof fetch>[1]>,
+	"headers"
+> & {
 	mimeType?: "json" | "x-www-form-urlencoded";
 	headers?: Record<string, string>;
 };

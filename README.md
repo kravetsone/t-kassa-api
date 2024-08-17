@@ -171,6 +171,34 @@ await tKassa.getQr(/** some data */, {
 });
 ```
 
+Таким образом вы можете, например, воспользоваться прокси.
+
+В [Node.js](https://nodejs.org/)
+
+```ts
+import { ProxyAgent } from "undici";
+
+const proxyAgent = new ProxyAgent("my.proxy.server");
+
+const tKassa = new TKassa({
+    requestsOptions: {
+        dispatcher: proxyAgent,
+    },
+});
+```
+
+Несмотря на то что `undici` работает под капотом `Node.js`, вам придётся его скачать. Также убедитесь, что у вас нет `"lib": ["DOM"]` в вашем `tsconfig.json`, иначе вы не увидите свойства `dispatcher` (хотя `undici` всё равно его обработает).
+
+В [Bun](https://bun.sh)
+
+```ts
+const tKassa = new TKassa({
+    requestsOptions: {
+        proxy: "my.proxy.server",
+    },
+});
+```
+
 ### Функции-хелперы
 
 ##### [`generateSignature`](https://jsr.io/@kravets/t-kassa-api/doc/~/generateSignature)
