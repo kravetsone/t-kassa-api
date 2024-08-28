@@ -287,7 +287,7 @@ export class TKassa<
 	 * Метод инициирует платежную сессию
 	 *
 	 *
-	 * @tags Стандартный платеж, Оплата через YandexPay
+	 * @tags Стандартный платеж, YandexPay
 	 * @summary Инициализация платежа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/Init)
@@ -301,10 +301,10 @@ export class TKassa<
 	/**
 	 *
 	 *
-	 * @tags Оплата через T‑Pay, Оплата через СБП
+	 * @tags T‑Pay, СБП
 	 * @summary Инициировать платеж в виджете
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-TPay/operation/InitPayments)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/InitPayments)
 	 */
 	initPayments(
 		body: GetRequestBody<"/v2/InitPayments", "post", TerminalKey>,
@@ -636,10 +636,10 @@ export class TKassa<
 	 * Должен быть вызван после вызова метода **Init**
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Формирование QR
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/GetQr)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetQr)
 	 */
 	getQr(
 		body: GetRequestBody<"/v2/GetQr", "post", TerminalKey>,
@@ -736,10 +736,10 @@ export class TKassa<
 	 * Метод определения возможности проведения платежа T‑Pay на терминале и устройстве
 	 *
 	 *
-	 * @tags Оплата через T‑Pay
+	 * @tags T‑Pay
 	 * @summary Статус
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-TPay/operation/Status)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/Status)
 	 */
 	status(
 		/** Платежный ключ, выдается Мерчанту при заведении
@@ -759,10 +759,10 @@ export class TKassa<
 	 * Метод получения Link для безусловного редиректа на мобильных устройствах
 	 *
 	 *
-	 * @tags Оплата через T‑Pay
+	 * @tags T‑Pay
 	 * @summary Получение ссылки
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-TPay/operation/Link)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/Link)
 	 */
 	link(
 		/** Идентификатор платежа в системе Т‑Кассы
@@ -787,10 +787,10 @@ export class TKassa<
 	 * Метод получения QR для десктопов
 	 *
 	 *
-	 * @tags Оплата через T‑Pay
+	 * @tags T‑Pay
 	 * @summary Получение QR
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-TPay/operation/QR)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/QR)
 	 */
 	qR(
 		/** Уникальный идентификатор транзакции в
@@ -807,10 +807,10 @@ export class TKassa<
 	 * Метод получения QR для десктопов
 	 *
 	 *
-	 * @tags Оплата через SberPay
+	 * @tags SberPay
 	 * @summary Получение QR
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SberPay/operation/SberPayQR)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SberPay/operation/SberPayQR)
 	 */
 	sberPayQR(
 		/** Уникальный идентификатор транзакции в
@@ -827,10 +827,10 @@ export class TKassa<
 	 * Получение ссылки
 	 *
 	 *
-	 * @tags Оплата через SberPay
+	 * @tags SberPay
 	 * @summary Получение ссылки
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SberPay/operation/SberPaylink)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SberPay/operation/SberPaylink)
 	 */
 	sberPaylink(
 		/** Уникальный идентификатор транзакции в
@@ -847,10 +847,10 @@ export class TKassa<
 	/**
 	 * Передача уведомления о событии платежного виджета T‑Pay + T‑ID
 	 *
-	 * @tags Оплата через T‑Pay
+	 * @tags T‑Pay
 	 * @summary Передача уведомления о событии
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-TPay/operation/T-PayEvent)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/T-PayEvent)
 	 */
 	tPayEvent(
 		body: GetRequestBody<"/v2/TinkoffPayEvent", "post", TerminalKey>,
@@ -866,10 +866,10 @@ export class TKassa<
 	 * по QR
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Список банков-пользователей QR
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/QrMembersList)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/QrMembersList)
 	 */
 	qrMembersList(
 		body: GetRequestBody<"/v2/QrMembersList", "post", TerminalKey>,
@@ -903,10 +903,10 @@ export class TKassa<
 	 * Метод возвращает статус привязки счета клиента по магазину
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Получение статуса привязки счета к магазину
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/GetAddAccountQrState)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetAddAccountQrState)
 	 */
 	getAddAccountQrState(
 		body: GetRequestBody<"/v2/GetAddAccountQrState", "post", TerminalKey>,
@@ -920,10 +920,10 @@ export class TKassa<
 	/**
 	 * Метод возвращает список привязанных счетов клиента по магазину
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Получение списка счетов, привязанных к магазину
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/GetAccountQrList)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetAccountQrList)
 	 */
 	getAccountQrList(
 		body: GetRequestBody<"/v2/GetAccountQrList", "post", TerminalKey>,
@@ -959,10 +959,10 @@ export class TKassa<
 	/**
 	 * Тестовая платежная сессия с предопределенным статусом по СБП
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Создание тестовой платежной сессии
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/SbpPayTest)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/SbpPayTest)
 	 */
 	sbpPayTest(
 		body: GetRequestBody<"/v2/SbpPayTest", "post", TerminalKey>,
@@ -974,10 +974,10 @@ export class TKassa<
 	 * Возвращает статус возврата платежа по СБП
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Получение статуса возврата
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/GetQrState)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetQrState)
 	 */
 	getQrState(
 		body: GetRequestBody<"/v2/GetQrState", "post", TerminalKey>,
@@ -1027,10 +1027,10 @@ export class TKassa<
 	/**
 	 * Получение deeplink с включенным подписанным JWT-токеном. Предназначен для запроса по API
 	 *
-	 * @tags Оплата через MirPay
+	 * @tags MirPay
 	 * @summary Получить DeepLink
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-MirPay/operation/GetDeepLink)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/MirPay/operation/GetDeepLink)
 	 */
 	getDeepLink(
 		body: GetRequestBody<"/v2/GetDeepLink", "post", TerminalKey>,
@@ -1044,10 +1044,10 @@ export class TKassa<
 	/**
 	 * Метод определяет доступность методов оплаты на терминале для SDK и API. Запрос не шифруется токеном
 	 *
-	 * @tags Оплата через MirPay
+	 * @tags MirPay
 	 * @summary Проверить доступность методов на SDK
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-MirPay/operation/GetTerminalPayMethods)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/MirPay/operation/GetTerminalPayMethods)
 	 */
 	getTerminalPayMethods(
 		body: GetRequestBody<"/v2/GetTerminalPayMethods", "get", TerminalKey>,
