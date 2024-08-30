@@ -481,12 +481,10 @@ export class TKassa<
 		return this.request("/v2/GetState", body, { method: "POST", ...options });
 	}
 	/**
-	 * Регистрирует клиента в связке с терминалом
+	 * Регистрирует клиента в связке с терминалом.
 	 *
-	 * > Возможна автоматическая привязка клиента и карты, по которой был совершен платеж, при
-	 * передаче параметра `CustomerKey` в методе **Init**. Это можно использовать для сохранения и
-	 * последующего отображения клиенту замаскированного номера карты, по которой будет совершен
-	 * рекуррентный платеж
+	 * >Можно автоматически связать клиента с картой, которой был произведен платеж, если в методе **Init** передать параметр `CustomerKey`.
+	 * Это позволит сохранить и позже показывать клиенту замаскированный номер карты, по которой будет совершен рекуррентный платеж.
 	 *
 	 *
 	 * @tags Методы работы с клиентами
@@ -540,11 +538,11 @@ export class TKassa<
 		});
 	}
 	/**
-	 * `Для Мерчантов с PCI DSS`
-	 *  <br> Метод инициирует привязку карты к клиенту.
-	 *  В случае успешной привязки переадресует клиента на `Success Add Card URL`,
-	 *  в противном случае на `Fail Add Card URL`.
-	 *  Можно использовать форму Т‑Кассы, возможно заменить на кастомную форму.
+	 * `Для мерчантов с PCI DSS`
+	 *  <br><br> Метод инициирует привязку карты к клиенту.
+	 *  При успешной привязке переадресует клиента на `Success Add Card URL`,
+	 *  при неуспешной — на `Fail Add Card URL`.
+	 *  Можно использовать форму Т‑Кассы или заменить её на кастомную.
 	 *
 	 *
 	 * @tags Методы работы с картами
@@ -885,10 +883,10 @@ export class TKassa<
 	 * и возвращает информацию о нем
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Привязка счёта к магазину
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/AddAccountQr)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/AddAccountQr)
 	 */
 	addAccountQr(
 		body: GetRequestBody<"/v2/AddAccountQr", "post", TerminalKey>,
@@ -945,10 +943,10 @@ export class TKassa<
 	 * нотификации.
 	 *
 	 *
-	 * @tags Оплата через СБП
+	 * @tags СБП
 	 * @summary Автоплатеж по QR
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Oplata-cherez-SBP/operation/ChargeQr)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/ChargeQr)
 	 */
 	chargeQr(
 		body: GetRequestBody<"/v2/ChargeQr", "post", TerminalKey>,
