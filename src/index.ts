@@ -284,11 +284,11 @@ export class TKassa<
 
 	/** @generated start-generate-methods */
 	/**
-	 * Метод инициирует платежную сессию
+	 * Метод инициирует платежную сессию.
 	 *
 	 *
 	 * @tags Стандартный платеж, YandexPay
-	 * @summary Инициализация платежа
+	 * @summary Инициировать платеж
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/Init)
 	 */
@@ -316,18 +316,18 @@ export class TKassa<
 		});
 	}
 	/**
-	 * `Для Мерчантов с PCI DSS`
-	 *  <br> Проверяет поддерживаемую версию 3DS протокола по карточным данным из входящих
-	 *  параметров
+	 * `Для мерчантов с PCI DSS`
+	 *  <br><br> Проверяет поддерживаемую версию 3DS-протокола по карточным данным из входящих
+	 *  параметров.
 	 *
-	 *  При определении второй версии, возможно в ответе получение данных для прохождения
-	 *  дополнительного метода `3DS Method`, который позволяет эмитенту собрать данные браузера
-	 *  клиента — это может быть полезно при принятии решения в пользу **Frictionless Flow**
-	 *  (аутентификация клиента без редиректа на страницу ACS) <br>
+	 *  При использовании второй версии можно получить данные для дополнительного метода `3DS Method`, который позволяет
+	 *  эмитенту собрать данные браузера
+	 *  клиента. Это может быть полезно при принятии решения в пользу **Frictionless Flow** —
+	 *  аутентификации клиента без редиректа на страницу ACS.
 	 *
 	 *
 	 * @tags Стандартный платеж
-	 * @summary Проверка версии 3DS
+	 * @summary Проверить версию 3DS
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/Check3dsVersion)
 	 */
@@ -341,15 +341,14 @@ export class TKassa<
 		});
 	}
 	/**
-	 * `Для Мерчантов с PCI DSS`
-	 *  <br> Метод подтверждает платеж передачей реквизитов, а также списывает средства
-	 *  с карты клиента при одностадийной оплате и блокирует указанную сумму при
-	 *  двухстадийной. Используется, если у площадки есть сертификация PCI DSS и
-	 *  собственная платежная форма
+	 * `Для мерчантов с PCI DSS`
+	 *  <br><br> Метод подтверждает платеж передачей реквизитов. При одностадийной оплате — списывает средства
+	 *  с карты клиента, при двухстадийной — блокирует указанную сумму. Используется, если у площадки есть сертификация PCI DSS и
+	 *  собственная платежная форма.
 	 *
 	 *
 	 * @tags Стандартный платеж
-	 * @summary Подтверждение платежа
+	 * @summary Подтвердить платеж
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/FinishAuthorize)
 	 */
@@ -363,13 +362,16 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Метод для списания заблокированных денежных средств. Используется при двухстадийном проведении платежа. Применим только к платежам в статусе **AUTHORIZED**. Статус транзакции перед разблокировкой
-	 * выставляется в **CONFIRMING**. Сумма списания может быть меньше или равна сумме авторизации.
-	 * > Подробнее про двухстадийный платеж можно прочитать в разделе [Сценарии платежа](https:\/\/www.tbank.ru\/kassa\/dev\/payments\/#tag\/Scenarii-oplaty-po-karte\/Scenarii-platezha) — "Двухстадийный платеж"
+	 * Метод для списания заблокированных денежных средств. Используется при двухстадийном проведении платежа. Применим
+	 * только к платежам в статусе `AUTHORIZED`. Статус транзакции перед разблокировкой
+	 * — `CONFIRMING`. Сумма списания может быть меньше или равна сумме авторизации.
+	 *
+	 *
+	 * [Подробнее про двухстадийный платеж](https:\/\/www.tbank.ru\/kassa\/dev\/payments\/#tag\/Scenarii-oplaty-po-karte\/Scenarii-platezha)
 	 *
 	 *
 	 * @tags Двухстадийный платеж
-	 * @summary Подтверждение платежа
+	 * @summary Подтвердить платеж
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Dvuhstadijnyj-platezh/operation/Confirm)
 	 */
@@ -380,21 +382,22 @@ export class TKassa<
 		return this.request("/v2/Confirm", body, { method: "POST", ...options });
 	}
 	/**
-	 * Отменяет платежную сессию. В зависимости от статуса платежа переводит его в следующие состояния:
-	 * * NEW — CANCELED
-	 * * AUTHORIZED — PARTIAL_REVERSED — если отмена не на полную сумму;
-	 * * AUTHORIZED — REVERSED — если отмена на полную сумму;
-	 * * CONFIRMED — PARTIAL_REFUNDED — если отмена не на полную сумму;
-	 * * CONFIRMED — REFUNDED — если отмена на полную сумму.
+	 * Отменяет платежную сессию. В зависимости от статуса платежа, переводит его в следующие состояния:
+	 * * `NEW` — `CANCELED`;
+	 * * `AUTHORIZED` — `PARTIAL_REVERSED`, если отмена не на полную сумму;
+	 * * `AUTHORIZED` — `REVERSED`, если отмена на полную сумму;
+	 * * `CONFIRMED` — `PARTIAL_REFUNDED`, если отмена не на полную сумму;
+	 * * `CONFIRMED` — `REFUNDED`, если отмена на полную сумму.
 	 *
-	 * Для платежей «в Рассрочку» отмена доступна только из статуса AUTHORIZED <br>
-	 * Для платежей «Долями» если операция в статусе CONFIRMED или PARTIAL_REFUNDED будет осуществлен частичный либо полный возврат <br>
-	 * Если платеж находился в статусе **AUTHORIZED** производится отмена холдирования средств на карте
-	 * клиента. При переходе из статуса **CONFIRMED** — возврат денежных средств на карту клиента
+	 * При оплате в рассрочку платеж можно отменить только в статусе `AUTHORIZED`.
+	 * При оплате «Долями» делается частичный или полный возврат, если операция в статусе `CONFIRMED` или `PARTIAL_REFUNDED`.
+	 *
+	 * Если платеж находился в статусе `AUTHORIZED`, холдирование средств на карте
+	 * клиента отменяется. При переходе из статуса `CONFIRMED` денежные средства возвращаются на карту клиента.
 	 *
 	 *
 	 * @tags Отмена платежа
-	 * @summary Отмена платежа
+	 * @summary Отменить платеж
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Otmena-platezha/operation/Cancel)
 	 */
@@ -405,53 +408,64 @@ export class TKassa<
 		return this.request("/v2/Cancel", body, { method: "POST", ...options });
 	}
 	/**
-	 * # Схема проведения рекуррентного платежа
+	 * ## Схема проведения рекуррентного платежа
 	 *
-	 * ## Описание
+	 * Метод проводит рекуррентный (повторный) платеж — безакцептное списание денежных средств со счета банковской карты клиента.
+	 * Чтобы его использовать, клиент должен совершить хотя бы один платеж в пользу мерчанта, который должен быть указан как рекуррентный
+	 * (параметр `Recurrent` методе **Init**), но фактически являющийся первичным.
 	 *
-	 * Осуществляет рекуррентный (повторный) платеж — безакцептное списание денежных средств со счета банковской карты клиента.
-	 * Для возможности его использования клиент должен совершить хотя бы один платеж в пользу Мерчанта, который должен быть указан как рекуррентный (см. параметр Recurrent методе **Init**), фактически являющийся первичным. По завершении оплаты в нотификации на AUTHORIZED или CONFIRMED будет передан параметр `RebillId`.<br>
-	 * В дальнейшем для совершения рекуррентного платежа Мерчант должен вызвать метод **Init**, указать нужную сумму для списания в параметре `Amount`, а затем без переадресации на PaymentURL вызвать метод **Charge** для оплаты по тем же самым реквизитам и передать параметр `RebillId`, полученный при совершении первичного платежа.<br>
-	 * Метод **Charge** работает по одностадийной и двухстадийной схеме оплаты. Чтобы перейти на двухстадийную схему нужно переключить терминал в [Личном кабинете](https:\/\/business.tbank.ru\/oplata\/main), а также написать обращение на <acq_help@tbank.ru> с просьбой переключить схему рекуррентов.
+	 * После завершения оплаты в уведомлении на `AUTHORIZED` или `CONFIRMED` будет передан параметр `RebillId`.
 	 *
-	 * >По умолчанию метод Charge отключен. Для его включения на DEMO-терминале нужно написать обращение на <acq_help@tbank.ru>, а на боевом терминале — обратиться к своему персональному менеджеру
+	 * В дальнейшем для проведения рекуррентного платежа мерчант должен вызвать метод **Init**, указать нужную сумму для списания
+	 * в параметре `Amount`, а затем без переадресации на `PaymentURL` вызвать метод **Charge** для оплаты по тем же реквизитам
+	 * и передать параметр `RebillId`, полученный при совершении первичного платежа.
 	 *
-	 * При проведении рекуррентного платежа учитывать взаимосвязь атрибута RebillId в методе \/Charge с:
-	 *   * Значением атрибута OperationInitiatorType в методе \/Init;
-	 *   * Значением атрибута Reccurent в методе \/Init;
-	 *   * Типом терминала, используемом для проведения операций (ECOM\/AFT).
+	 * Метод **Charge** работает по одностадийной и двухстадийной схеме оплаты. Чтобы перейти на двухстадийную схему, нужно
+	 * переключить терминал в [личном кабинете](https:\/\/business.tbank.ru\/oplata\/main) и написать на <acq_help@tbank.ru> с просьбой переключить схему рекуррентов.
 	 *
-	 * Наглядно допустимые сценарии взаимосвязи описаны в таблице:
-	 * |CIT\/MIT|Тип операции|OperationInitiator в \/Init|RebillId в \/Charge|Recurrent в \/Init|AFT терминал|ECOM терминал|
-	 * |---|---|---|---|---|---|---|
-	 * |CIT|Credential-Not-Captured|0|null|N|Разрешено|Разрешено|
-	 * |CIT|Credential-Captured|1|null|Y|Разрешено|Разрешено|
-	 * |CIT|Credential-on-File|2|not null|N|Запрещено|Разрешено|
-	 * |MIT|Credential-on-File, Recurring|R|not null|N|Запрещено|Разрешено|
-	 * |MIT|Credential-on-File, Installment|I|not null|N|Разрешено|Запрещено|
+	 * >По умолчанию метод **Charge** отключен. Чтобы его включить:
+	 * >- на DEMO-терминале — напишите на <acq_help@tbank.ru>;
+	 * >- на боевом терминале — обратитесь к своему персональному менеджеру.
 	 *
-	 * В случае передачи значений атрибутов не соответствующих таблице — MAPI вернет ошибку 1126
-	 * (Несопоставимые значения rebillId или Recurrent с переданным значением OperationInitiatorType)
+	 * При проведении рекуррентного платежа учитывайте взаимосвязь атрибута `RebillId` метода **Charge**:
+	 * * Со значениями атрибутов `OperationInitiatorType` и `Reccurent` метода **Init**;
+	 * * С типом терминала, который используется для проведения операций — ECOM или AFT.
+	 *
+	 * Допустимые сценарии взаимосвязи:
+	 *
+	 * |CIT\/MIT|Тип операции|`OperationInitiator` в **Init**|`RebillId` в **Charge**|`Recurrent` в **Init**| AFT-терминал | ECOM-терминал |
+	 * |---|---|---|---|---|--------------|---------------|
+	 * |CIT|Credential-Not-Captured|0|null|N| Разрешено    | Разрешено     |
+	 * |CIT|Credential-Captured|1|null|Y| Разрешено    | Разрешено     |
+	 * |CIT|Credential-on-File|2|not null|N| Запрещено    | Разрешено     |
+	 * |MIT|Credential-on-File, Recurring|R|not null|N| Запрещено    | Разрешено     |
+	 * |MIT|Credential-on-File, Installment|I|not null|N| Разрешено    | Запрещено     |
+	 *
+	 * Если передавать значения атрибутов, которые не соответствуют значениям в таблице, MAPI вернет ошибку `1126` —
+	 * несопоставимые значения `RebillId` или `Recurrent` с переданным значением `OperationInitiatorType`.
 	 *
 	 * ## Одностадийная оплата
 	 *
-	 * 1. Совершить родительский платеж путем вызова **Init** с указанием дополнительных параметров `Recurrent=Y` и `CustomerKey`.
-	 * 2. Переадресовать клиента на `PaymentUrl` (только <span style="color:#900C3F">для Мерчантов без PCI DSS<\/span>).
-	 * 3. После оплаты заказа клиентом в нотификации на статус **AUTHORIZED** или **CONFIRMED** будет передан параметр `RebillId`, который необходимо сохранить.
-	 * 4. Спустя некоторое время для совершения рекуррентного платежа необходимо вызвать метод **Init** со стандартным набором параметров (параметры `Recurrent` и `CustomerKey` здесь не нужны).
-	 * 5. Получить в ответ на **Init** параметр `PaymentId`.
-	 * 6. Вызвать метод **Charge** с параметром `RebillId`, полученным в п.3, и параметром `PaymentId`, полученным в п.5. При успешном сценарии операция перейдет в статус CONFIRMED.
+	 * 1. Проведите родительский платеж через метод **Init** с указанием дополнительных параметров `Recurrent=Y` и `CustomerKey`.
+	 * 2. Только для `мерчантов без PCI DSS` — переадресуйте клиента на `PaymentUrl`.
+	 * 3. После того как клиент оплатит заказ, в уведомлении о статусе `AUTHORIZED` или `CONFIRMED` будет передан параметр `RebillId`.
+	 * Сохраните его.
+	 * 4. Через некоторое время для выполнения рекуррентного платежа вызовите метод **Init** со стандартными параметрами —
+	 * параметры `Recurrent` и `CustomerKey` в этом случае не нужны. Вернется параметр `PaymentId` — сохраните его.
+	 * 5. Вызовите метод **Charge** с параметром `RebillId` из пункта 3 и `PaymentId` из пункта 4.
+	 * При успешном сценарии операция перейдет в статус `CONFIRMED`.
 	 *
 	 *
 	 * ## Двухстадийная оплата
 	 *
-	 * 1. Совершить родительский платеж путем вызова **Init** с указанием дополнительных параметров `Recurrent=Y` и `CustomerKey`.
-	 * 2. Переадресовать клиента на `PaymentUrl` (только <span style="color:#900C3F">для Мерчантов без PCI DSS<\/span>).
-	 * 3. После оплаты заказа клиентом в нотификации на статус **AUTHORIZED** или **CONFIRMED** будет передан параметр RebillId, который необходимо сохранить.
-	 * 4. Спустя некоторое время для совершения рекуррентного платежа необходимо вызвать метод **Init** со стандартным набором параметров (параметр `Recurrent` и `CustomerKey` здесь не нужны).
-	 * 5. Получить в ответ на **Init** параметр `PaymentId`.
-	 * 6. Вызвать метод **Charge** с параметром `RebillId`, полученным в п.3, и параметром `PaymentId`, полученным в п.5. При успешном сценарии операция перейдет в статус **AUTHORIZED**. Денежные средства будут заблокированы на карте клиента.
-	 * 7. Вызвать метод **Confirm** для подтверждения платежа.
+	 * 1. Проведите родительский платеж через метод **Init** с указанием дополнительных параметров `Recurrent=Y` и `CustomerKey`.
+	 * 2. Только для `мерчантов без PCI DSS` — переадресуйте клиента на `PaymentUrl`.
+	 * 3. После того как клиент оплатит заказ, в уведомлении о статусе `AUTHORIZED` или `CONFIRMED` будет передан параметр `RebillId`.
+	 * Сохраните его.
+	 * 4. Через некоторое время для выполнения рекуррентного платежа вызовите метод **Init** со стандартными параметрами —
+	 * параметры `Recurrent` и `CustomerKey` в этом случае не нужны. Вернется параметр `PaymentId` — сохраните его.
+	 * 5. Вызовите метод **Charge** с параметром `RebillId` из пункта 3 и `PaymentId` из пункта 4.
+	 * 6. Вызовите метод **Confirm** для подтверждения платежа.
 	 *
 	 *
 	 * @tags Рекуррентный платеж
@@ -466,11 +480,11 @@ export class TKassa<
 		return this.request("/v2/Charge", body, { method: "POST", ...options });
 	}
 	/**
-	 * Метод возвращает статус платежа
+	 * Метод возвращает статус платежа.
 	 *
 	 *
 	 * @tags Стандартный платеж
-	 * @summary Получение статуса платежа
+	 * @summary Получить статуса платежа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/GetState)
 	 */
@@ -488,7 +502,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с клиентами
-	 * @summary Регистрация клиента
+	 * @summary Зарегистрировать клиента
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-klientami/operation/AddCustomer)
 	 */
@@ -506,7 +520,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с клиентами
-	 * @summary Получение данных клиента
+	 * @summary Получить данные клиента
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-klientami/operation/GetCustomer)
 	 */
@@ -520,11 +534,11 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Удаляет сохраненные данные клиента
+	 * Метод для удаления сохраненных данных клиента.
 	 *
 	 *
 	 * @tags Методы работы с клиентами
-	 * @summary Удаление данных клиента
+	 * @summary Удалить данные клиента
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-klientami/operation/RemoveCustomer)
 	 */
@@ -546,7 +560,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с картами
-	 * @summary Инициализация привязки карты к клиенту
+	 * @summary Инициировать привязку карты к клиенту
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AddCard)
 	 */
@@ -567,7 +581,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с картами
-	 * @summary Привязка карты
+	 * @summary Привязать карту
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AttachCard)
 	 */
@@ -583,7 +597,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с картами
-	 * @summary Статус привязки карты
+	 * @summary Получить статус привязки карты
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/GetAddCardState)
 	 */
@@ -601,7 +615,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags Методы работы с картами
-	 * @summary Список карт клиента
+	 * @summary Получить список карт клиента
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/GetCardList)
 	 */
@@ -615,11 +629,11 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Метод удаляет привязанную карту клиента
+	 * Метод для удаления привязанной карты клиента.
 	 *
 	 *
 	 * @tags Методы работы с картами
-	 * @summary Удаление привязанной карты клиента
+	 * @summary Удалить привязанную карту клиента
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/RemoveCard)
 	 */
@@ -631,11 +645,11 @@ export class TKassa<
 	}
 	/**
 	 * Метод регистрирует QR и возвращает информацию о нем.
-	 * Должен быть вызван после вызова метода **Init**
+	 * Вызывается после метода **Init**.
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Формирование QR
+	 * @summary Сформировать QR
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetQr)
 	 */
@@ -646,7 +660,7 @@ export class TKassa<
 		return this.request("/v2/GetQr", body, { method: "POST", ...options });
 	}
 	/**
-	 * Метод предназначен для подтверждения карты путем блокировки случайной суммы
+	 * Метод для подтверждения карты путем блокировки случайной суммы.
 	 *
 	 * @tags Методы работы с привязанными картами и клиентами
 	 * @summary SubmitRandomAmount
@@ -663,21 +677,25 @@ export class TKassa<
 		});
 	}
 	/**
-	 * `Для Мерчантов с PCI DSS`
-	 *  <br> Осуществляет проверку результатов прохождения 3-D Secure и при успешном результате
-	 *  прохождения 3-D Secure подтверждает инициированный платеж.
-	 *  При использовании одностадийной оплаты осуществляет списание денежных средств с карты
-	 *  клиента. <br>
-	 *  При двухстадийной оплате осуществляет блокировку указанной суммы на карте клиента<br>
+	 * `Для мерчантов с PCI DSS`
 	 *
-	 *  *Формат запроса*: `x-www-form-urlencoded` <br>
 	 *
-	 *  После получения на `TermUrl` мерчанта ответа ACS с результатами прохождения 3-D Secure необходимо
-	 *  сформировать запрос к методу **Submit3DSAuthorization**
+	 *  Проверяет результаты прохождения 3-D Secure и при успешном прохождении
+	 *  подтверждает инициированный платеж.
+	 *  При использовании:
+	 *  - одностадийной оплаты — списывает денежные средства с карты
+	 *  клиента;
+	 *  - двухстадийной оплаты — блокирует указанную сумму на карте клиента.
+	 *
+	 *  Формат запроса — `x-www-form-urlencoded`.
+	 *
+	 *
+	 *  После того, как мерчант получит ответ ACS с результатами прохождения 3-D Secure на `TermUrl`, нужно
+	 *  отправить запрос через метод **Submit3DSAuthorization**.
 	 *
 	 *
 	 * @tags Прохождение 3DS
-	 * @summary Подтверждение прохождения 3DS v1.0
+	 * @summary Подтвердить прохождение 3DS v1.0
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorization)
 	 */
@@ -697,21 +715,24 @@ export class TKassa<
 		});
 	}
 	/**
-	 * `Для Мерчантов с PCI DSS`
-	 *  <br> Осуществляет проверку результатов прохождения 3-D Secure v2 и при успешном результате
-	 *  прохождения 3-D Secure v2 подтверждает инициированный платеж.
-	 *  При использовании одностадийной оплаты осуществляет списание денежных средств с карты
-	 *  клиента.
-	 *  При двухстадийной оплате осуществляет блокировку указанной суммы на карте клиента.
+	 * `Для мерчантов с PCI DSS`
 	 *
-	 *  *Формат запроса*: `x-www-form-urlencoded` <br>
 	 *
-	 *  После получения на `cresCallbackUrl` Мерчанта ответа ACS с результатами прохождения 3-D Secure необходимо
-	 *  сформировать запрос к методу **Submit3DSAuthorizationV2**
+	 *  Проверяет результаты прохождения 3-D Secure и при успешном прохождении
+	 *  подтверждает инициированный платеж.
+	 *  При использовании:
+	 *  - одностадийной оплаты — списывает денежные средства с карты
+	 *  клиента;
+	 *  - двухстадийной оплаты — блокирует указанную сумму на карте клиента.
+	 *
+	 *  Формат запроса — `x-www-form-urlencoded`.
+	 *
+	 *  После того, как мерчант получит ответ ACS с результатами прохождения 3-D Secure на `cresCallbackUrl`, нужно
+	 *  отправить запрос через метод **Submit3DSAuthorizationV2**.
 	 *
 	 *
 	 * @tags Прохождение 3DS
-	 * @summary Подтверждение прохождения 3DS v2.1
+	 * @summary Подтвердить прохождение 3DS v2.1
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorizationV2)
 	 */
@@ -731,17 +752,17 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Метод определения возможности проведения платежа T‑Pay на терминале и устройстве
+	 * Метод для определения возможности проведения платежа T‑Pay на терминале и устройстве.
 	 *
 	 *
 	 * @tags T‑Pay
-	 * @summary Статус
+	 * @summary Определить возможность проведения платежа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/Status)
 	 */
 	status(
-		/** Платежный ключ, выдается Мерчанту при заведении
-   терминала
+		/** Платежный ключ, выдается мерчанту при заведении
+   терминала.
     */ TerminalKey: paths["/v2/TinkoffPay/terminals/{TerminalKey}/status"]["get"]["parameters"]["path"]["TerminalKey"],
 		options?: RequestOptions,
 	): Promise<
@@ -758,7 +779,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags T‑Pay
-	 * @summary Получение ссылки
+	 * @summary Получить ссылку
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/Link)
 	 */
@@ -782,17 +803,17 @@ export class TKassa<
 		);
 	}
 	/**
-	 * Метод получения QR для десктопов
+	 * Метод получения QR для десктопов.
 	 *
 	 *
 	 * @tags T‑Pay
-	 * @summary Получение QR
+	 * @summary Получить QR
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/QR)
 	 */
 	qR(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы
+   системе Т‑Кассы.
     */ paymentId: paths["/v2/TinkoffPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/TinkoffPay/{paymentId}/QR", "get">> {
@@ -802,17 +823,17 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Метод получения QR для десктопов
+	 * Метод получения QR для десктопов.
 	 *
 	 *
 	 * @tags SberPay
-	 * @summary Получение QR
+	 * @summary Получить QR
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SberPay/operation/SberPayQR)
 	 */
 	sberPayQR(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы
+   системе Т‑Кассы.
     */ paymentId: paths["/v2/SberPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SberPay/{paymentId}/QR", "get">> {
@@ -822,17 +843,17 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Получение ссылки
+	 * Метод для получения ссылки SberPay.
 	 *
 	 *
 	 * @tags SberPay
-	 * @summary Получение ссылки
+	 * @summary Получить ссылку
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SberPay/operation/SberPaylink)
 	 */
 	sberPaylink(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы
+   системе Т‑Кассы.
     */ paymentId: paths["/v2/SberPay/transactions/{paymentId}/link"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SberPay/transactions/{paymentId}/link", "get">> {
@@ -843,10 +864,10 @@ export class TKassa<
 		);
 	}
 	/**
-	 * Передача уведомления о событии платежного виджета T‑Pay + T‑ID
+	 * Передача уведомления о событии платежного виджета T‑Pay + T‑ID.
 	 *
 	 * @tags T‑Pay
-	 * @summary Передача уведомления о событии
+	 * @summary Передать уведомление о событии
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/T-PayEvent)
 	 */
@@ -861,11 +882,11 @@ export class TKassa<
 	}
 	/**
 	 * Метод возвращает список участников куда может быть осуществлен возврат платежа, совершенного
-	 * по QR
+	 * по QR.
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Список банков-пользователей QR
+	 * @summary Получить список банков-пользователей QR
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/QrMembersList)
 	 */
@@ -884,7 +905,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Привязка счёта к магазину
+	 * @summary Привязать счёт к магазину
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/AddAccountQr)
 	 */
@@ -902,7 +923,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Получение статуса привязки счета к магазину
+	 * @summary Получить статус привязки счета к магазину
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetAddAccountQrState)
 	 */
@@ -919,7 +940,7 @@ export class TKassa<
 	 * Метод возвращает список привязанных счетов клиента по магазину
 	 *
 	 * @tags СБП
-	 * @summary Получение списка счетов, привязанных к магазину
+	 * @summary Получить список счетов, привязанных к магазину
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetAccountQrList)
 	 */
@@ -955,10 +976,10 @@ export class TKassa<
 		return this.request("/v2/ChargeQr", body, { method: "POST", ...options });
 	}
 	/**
-	 * Тестовая платежная сессия с предопределенным статусом по СБП
+	 * Тестовая платежная сессия с предопределенным статусом по СБП.
 	 *
 	 * @tags СБП
-	 * @summary Создание тестовой платежной сессии
+	 * @summary Создать тестовую платежную сессию
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/SbpPayTest)
 	 */
@@ -973,7 +994,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Получение статуса возврата
+	 * @summary Получить статус возврата
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetQrState)
 	 */
@@ -984,11 +1005,11 @@ export class TKassa<
 		return this.request("/v2/GetQrState", body, { method: "POST", ...options });
 	}
 	/**
-	 * Метод возвращает статус заказа
+	 * Метод возвращает статус заказа.
 	 *
 	 *
 	 * @tags Стандартный платеж
-	 * @summary Получение статуса заказа
+	 * @summary Получить статус заказа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/CheckOrder)
 	 */
@@ -1001,15 +1022,15 @@ export class TKassa<
 	/**
 	 * Метод позволяет отправить закрывающий чек в кассу.
 	 * Условия работы метода:
-	 * 1. Закрывающий чек может быть отправлен если платежная сессия по первому чеку находится в
-	 *   статусе **CONFIRMED**.
-	 * 2. В платежной сессии был передан объект `Receipt`.
-	 * 3. В объекте `Receipt` был передан хотя бы один объект `Receipt.Items.PaymentMethod` =
-	 *   `full_prepayment` или `prepayment` или `advance`.
+	 * - Закрывающий чек может быть отправлен, если платежная сессия по первому чеку находится в
+	 *   статусе `CONFIRMED`.
+	 * - В платежной сессии был передан объект `Receipt`.
+	 * - В объекте `Receipt` был передан хотя бы один объект — `Receipt.Items.PaymentMethod` =
+	 *   `full_prepayment`, `prepayment` или `advance`.
 	 *
 	 *
 	 * @tags Методы работы с чеками
-	 * @summary Закрывающий чек в кассу
+	 * @summary Отправить закрывающий чек в кассу
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-chekami/operation/SendClosingReceipt)
 	 */
@@ -1057,10 +1078,10 @@ export class TKassa<
 		});
 	}
 	/**
-	 * Справку по конкретной операции можно получить через 24 часа на: <br> 1. URL-сервиса, развернутого на своей стороне. <br> 2. Электронную почту. <br> Для формирования токена необходимо использовать только <b>PASSWORD<\/b> и <b>TERMINAL_KEY<\/b>
+	 * Справку по конкретной операции можно получить на: <br><ul><li> URL-сервиса, который развернут на вашей стороне;<\/li><li> электронную почту.<\/li><\/ul> Чтобы сформировать токен, нужно использовать только <code>PASSWORD<\/code> и <code>TERMINAL_KEY<\/code>.
 	 *
 	 * @tags Стандартный платеж
-	 * @summary Получение справки по операции
+	 * @summary Получить справку по операции
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/GetConfirmOperation)
 	 */
