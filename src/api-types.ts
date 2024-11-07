@@ -1349,7 +1349,7 @@ export interface components {
 			 *     передается признак способа расчёта
 			 *     `full_payment`.
 			 *
-			 * @example full_prepayment
+			 * @example full_payment
 			 * @enum {string}
 			 */
 			PaymentMethod:
