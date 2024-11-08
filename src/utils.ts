@@ -63,11 +63,14 @@ export function encryptCardData(
 
 	const encryptedBuffer = publicEncrypt(
 		{ key: publicKey, padding: constants.RSA_PKCS1_PADDING },
-		Buffer.from(
-			Object.entries(cardData)
-				.map(([key, data]) => `${key}=${data}`)
-				.join(";"),
-			"utf-8",
+		// TODO: maybe rm Buffer.from step
+		new Uint8Array(
+			Buffer.from(
+				Object.entries(cardData)
+					.map(([key, data]) => `${key}=${data}`)
+					.join(";"),
+				"utf-8",
+			),
 		),
 	);
 
