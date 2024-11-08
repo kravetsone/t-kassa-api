@@ -1,6 +1,6 @@
 {
 	"name": "t-kassa-api",
-	"version": "0.3.2",
+	"version": "1.0.0",
 	"module": "./dist/index.js",
 	"main": "./dist/index.cjs",
 	"types": "./dist/index.d.ts",
