@@ -6424,10 +6424,9 @@
 					},
 					"RequestKey": {
 						"description": "Идентификатор запроса на привязку счета.\n",
-						"type": "string",
-						"format": "uuid",
+						"type": "number",
 						"examples": {
-							"default": "211258"
+							"default": 211258
 						}
 					},
 					"BankMemberId": {

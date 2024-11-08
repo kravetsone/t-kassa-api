@@ -4370,12 +4370,11 @@ export interface components {
 			 */
 			TerminalKey: string;
 			/**
-			 * Format: uuid
 			 * @description Идентификатор запроса на привязку счета.
 			 *
 			 * @example 211258
 			 */
-			RequestKey: string;
+			RequestKey: number;
 			/**
 			 * @description Идентификатор банка клиента, который будет
 			 *     совершать оплату по привязанному счету —

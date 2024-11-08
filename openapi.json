@@ -5605,9 +5605,8 @@
 					},
 					"RequestKey": {
 						"description": "Идентификатор запроса на привязку счета.\n",
-						"type": "string",
-						"format": "uuid",
-						"example": "211258"
+						"type": "number",
+						"example": 211258
 					},
 					"BankMemberId": {
 						"description": "Идентификатор банка клиента, который будет\nсовершать оплату по привязанному счету —\nзаполнен, если статус `ACTIVE` или `INACTIVE`.\n",
