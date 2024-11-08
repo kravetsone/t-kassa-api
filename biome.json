@@ -3,6 +3,9 @@
 	"organizeImports": {
 		"enabled": true
 	},
+	"files": {
+		"maxSize": 120000000
+	},
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
