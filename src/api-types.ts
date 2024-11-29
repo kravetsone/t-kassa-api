@@ -2972,19 +2972,27 @@ export interface components {
 		/** @description Информация по способу оплаты или деталям для платежей в рассрочку. */
 		Items_Params: {
 			/**
-			 * @description Способ платежа.
+			 * @description Возможные значения:
+			 *     * `Route` — способ оплаты.
+			 *     * `Source` — источник платежа.
+			 *     * `CreditAmount` — сумма выданного кредита в копейках. Возвращается только для платежей в рассрочку.
 			 *
-			 * @example ТСВ
 			 * @enum {string}
 			 */
-			Route?: "ACQ" | "BNPL" | "TCB" | "SBER";
+			Key?: "Route" | "Source" | "CreditAmount";
 			/**
-			 * @description Источник платежа.
+			 * @description Возможные значения:
+			 *     * `ACQ`, `BNPL`, `TCB`, `SBER` — для Route.
+			 *     * `BNPL`, `cards`, `Installment`, `MirPay`, `qrsbp`, `SberPay`, `TinkoffPay`, `YandexPay` — для Source.
+			 *     * Сумма в копейках — для CreditAmount.
 			 *
-			 * @example Installment
 			 * @enum {string}
 			 */
-			Source?:
+			Value?:
+				| "ACQ"
+				| "BNPL"
+				| "TCB"
+				| "SBER"
 				| "BNPL"
 				| "cards"
 				| "Installment"
@@ -2993,12 +3001,6 @@ export interface components {
 				| "SberPay"
 				| "TinkoffPay"
 				| "YandexPay";
-			/**
-			 * @description Сумма выданного кредита в копейках. Возвращается только для платежей в рассрочку.
-			 *
-			 * @example 100000
-			 */
-			CreditAmount?: number;
 		};
 		"Confirm-2": {
 			/**
