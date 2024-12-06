@@ -44,7 +44,7 @@ jobs:
               run: bunx jsr publish --allow-dirty
 
             - name: Publish package to NPM
-              if: ${{ github.event.inputs.publish_to_npm }}
+              # if: ${{ github.event.inputs.publish_to_npm }}
               run: bun publish --access public
               env:
                   NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
