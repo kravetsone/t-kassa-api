@@ -1,6 +1,7 @@
 # t-kassa-api
 
 [![npm](https://img.shields.io/npm/v/t-kassa-api?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/t-kassa-api)
+[![npm downloads](https://img.shields.io/npm/dw/t-kassa-api?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/t-kassa-api)
 [![JSR](https://jsr.io/badges/@kravets/t-kassa-api)](https://jsr.io/@kravets/t-kassa-api)
 [![JSR Score](https://jsr.io/badges/@kravets/t-kassa-api/score)](https://jsr.io/@kravets/t-kassa-api)
 
