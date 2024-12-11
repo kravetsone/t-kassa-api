@@ -3723,7 +3723,7 @@ export interface components {
 			 * @example U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==
 			 */
 			CardData: string;
-			/** @description В объекте передаются дополнительные параметры в формате `ключ:значение` с разделителем `|`.
+			/** @description В объекте передаются дополнительные параметры в формате `ключ:значение`.
 			 *     Например, меняем на JSON-объект, который содержит дополнительные параметры в виде `ключ:значение`.
 			 *
 			 *     Если ключи или значения содержат в себе специальные символы, получившееся значение должно быть закодировано
