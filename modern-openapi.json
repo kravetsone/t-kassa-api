@@ -871,6 +871,19 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/AddCustomer"
+							},
+							"examples": {
+								"AddCustomerRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"CustomerKey": "4387c647-a693-449d-bc35-91faecfc50de",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"IP": "10.100.10.10",
+										"Email": "username@test.ru",
+										"Phone": "+79031234567"
+									}
+								}
 							}
 						}
 					}
@@ -882,6 +895,19 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/AddCustomerResponse"
+								},
+								"examples": {
+									"AddCustomerResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"CustomerKey": "05d65baa-9718-445e-8212-76fa0dd4c1d2",
+											"ErrorCode": "0",
+											"Success": true,
+											"Message": "Неверные параметры",
+											"Details": "Терминал не найден"
+										}
+									}
 								}
 							}
 						}
@@ -968,6 +994,28 @@
 										"$ref": "#/components/schemas/AddCard_SDK"
 									}
 								]
+							},
+							"examples": {
+								"AddCard_FULL": {
+									"summary": "Пример запроса (FULL)",
+									"value": {
+										"TerminalKey": "1111133333",
+										"CustomerKey": "testCustomer1234",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"CheckType": "NO",
+										"IP": "10.100.10.10",
+										"ResidentState": "true"
+									}
+								},
+								"AddCard_SDK": {
+									"summary": "Пример запроса (SDK)",
+									"value": {
+										"TerminalKey": "1241421414",
+										"CustomerKey": "testCustomer1234",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"CheckType": "NO"
+									}
+								}
 							}
 						}
 					}
@@ -986,6 +1034,35 @@
 											"$ref": "#/components/schemas/AddCardResponse_SDK"
 										}
 									]
+								},
+								"examples": {
+									"AddCardResponse_FULL": {
+										"summary": "Пример ответа (FULL)",
+										"value": {
+											"PaymentId": "6155312072",
+											"TerminalKey": "1111133333",
+											"CustomerKey": "906540",
+											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
+											"ErrorCode": "0",
+											"Success": "true",
+											"Message": "Неверные параметры",
+											"Details": "Терминал не найден",
+											"PaymentURL": "82a31a62-6067-4ad8-b379-04bf13e37642d"
+										}
+									},
+									"AddCardResponse_SDK": {
+										"summary": "Пример ответа (SDK)",
+										"value": {
+											"PaymentId": "6155312073",
+											"TerminalKey": "1241421414",
+											"CustomerKey": "906540",
+											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
+											"ErrorCode": "0",
+											"Success": "true",
+											"Message": "Неверные параметры",
+											"Details": "Терминал не найден"
+										}
+									}
 								}
 							}
 						}
@@ -2174,7 +2251,7 @@
 											"Data": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
 											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
 											"ErrorCode\"": "0",
-											"Success": "true",
+											"Success": true,
 											"Message": "OK"
 										}
 									}
@@ -2202,6 +2279,16 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetAddAccountQrState"
+							},
+							"examples": {
+								"GetAddAccountQrStateRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"TerminalKey": "TinkoffBankTest",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
+									}
+								}
 							}
 						}
 					}
@@ -2213,6 +2300,22 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/GetAddAccountQrStateResponse"
+								},
+								"examples": {
+									"GetAddAccountQrStateResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"RequestKey": 211258,
+											"BankMemberId": "100000000004",
+											"BankMemberName": "T-Банк",
+											"AccountToken": "a022254a5c3c46a7327c8a12cb5c8389",
+											"Success": true,
+											"Status": "ACTIVE",
+											"ErrorCode": "0",
+											"Message": "OK"
+										}
+									}
 								}
 							}
 						}
@@ -2237,6 +2340,15 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetAccountQrList"
+							},
+							"examples": {
+								"GetAccountQrListRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
+									}
+								}
 							}
 						}
 					}
@@ -2248,6 +2360,24 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/GetAccountQrListResponse"
+								},
+								"examples": {
+									"GetAccountQrListResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "OK",
+											"AccountTokens": {
+												"RequestKey": "8de92934-26c9-474c-a4ce-424f2021d24d",
+												"Status": "NEW",
+												"AccountToken": "0b67f2cae19b41809f85d5674de30a1a",
+												"BankMemberId": "5555",
+												"BankMemberName": "T-Банк"
+											}
+										}
+									}
 								}
 							}
 						}
@@ -2406,6 +2536,16 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/CheckOrder"
+							},
+							"examples": {
+								"CheckOrderRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"OrderId": "21057",
+										"Token": "4c4c36adf9936b011879fa26f60759e7b47e57f7968283129b0ae9ac457486ab"
+									}
+								}
 							}
 						}
 					}
@@ -2417,6 +2557,28 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/CheckOrder-2"
+								},
+								"examples": {
+									"CheckOrderResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"OrderId": "21057",
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "OK",
+											"Details": "None",
+											"Payments": {
+												"PaymentId": "124671934",
+												"Amount": 13660,
+												"Status": "NEW",
+												"RRN": "12345678",
+												"Success": "true",
+												"ErrorCode": 0,
+												"Message": "None"
+											}
+										}
+									}
 								}
 							}
 						}
