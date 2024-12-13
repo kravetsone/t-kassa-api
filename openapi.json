@@ -1966,6 +1966,22 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/AddAccountQr"
+							},
+							"examples": {
+								"AddAccountQrRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"Description": "string",
+										"DataType": "PAYLOAD",
+										"Data": {
+											"property1": "string",
+											"property2": "string"
+										},
+										"RedirectDueDate\"": "2016-08-31T12:28:00+03:00",
+										"Token": "871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6"
+									}
+								}
 							}
 						}
 					}
@@ -1977,6 +1993,21 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/AddAccountQrResponse"
+								},
+								"examples": {
+									"AddAccountQrResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Description": "string",
+											"DataType": "PAYLOAD",
+											"Data": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
+											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
+											"ErrorCode\"": "0",
+											"Success": "true",
+											"Message": "OK"
+										}
+									}
 								}
 							}
 						}
