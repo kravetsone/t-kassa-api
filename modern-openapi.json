@@ -338,6 +338,128 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/InitPayments"
+							},
+							"examples": {
+								"default": {
+									"container": "string",
+									"TerminalKey": "string",
+									"paymentInfo": {
+										"InfoEmail": "string",
+										"PaymentData": {
+											"TerminalKey": "TinkoffBankTest",
+											"Amount": 1751,
+											"OrderId": "autoOrd1615285401068DELb",
+											"Description": "string",
+											"DATA": {},
+											"Receipt": {
+												"Items": [
+													{
+														"Name": "Наименование товара 1",
+														"Price": 10000,
+														"Quantity": 1,
+														"Amount": 10000,
+														"PaymentMethod": "full_prepayment",
+														"PaymentObject": "commodity",
+														"Tax": "vat10",
+														"Ean13": "0123456789",
+														"ShopCode": "12345",
+														"AgentData": {
+															"AgentSign": "paying_agent",
+															"OperationName": "Позиция чека",
+															"Phones": ["+790912312398"],
+															"ReceiverPhones": [
+																"+79221210697",
+																"+79098561231"
+															],
+															"TransferPhones": ["+79221210697"],
+															"OperatorName": "Tinkoff",
+															"OperatorAddress": "г. Тольятти",
+															"OperatorInn": "7710140679"
+														},
+														"SupplierInfo": {
+															"Phones": ["+79221210697", "+79098561231"],
+															"Name": "ООО Вендор товара",
+															"Inn": "7710140679"
+														},
+														"FfdVersion": "1.05",
+														"Email": "a@test.ru",
+														"Phone": "+79031234567",
+														"Taxation": "osn",
+														"Payments": {
+															"Cash": 90000,
+															"Electronic": 50000,
+															"AdvancePayment": 0,
+															"Credit": 0,
+															"Provision": 0
+														}
+													}
+												]
+											}
+										}
+									},
+									"paymentItems": [
+										{
+											"container": "string",
+											"paymentInfo": {
+												"InfoEmail": "string",
+												"PaymentData": {
+													"TerminalKey": "TinkoffBankTest",
+													"Amount": 1751,
+													"OrderId": "autoOrd1615285401068DELb",
+													"Description": "string",
+													"DATA": {},
+													"Receipt": {
+														"Items": [
+															{
+																"Name": "Наименование товара 1",
+																"Price": 10000,
+																"Quantity": 1,
+																"Amount": 10000,
+																"PaymentMethod": "full_prepayment",
+																"PaymentObject": "commodity",
+																"Tax": "vat10",
+																"Ean13": "0123456789",
+																"ShopCode": "12345",
+																"AgentData": {
+																	"AgentSign": "paying_agent",
+																	"OperationName": "Позиция чека",
+																	"Phones": ["+790912312398"],
+																	"ReceiverPhones": [
+																		"+79221210697",
+																		"+79098561231"
+																	],
+																	"TransferPhones": ["+79221210697"],
+																	"OperatorName": "Tinkoff",
+																	"OperatorAddress": "г. Тольятти",
+																	"OperatorInn": "7710140679"
+																},
+																"SupplierInfo": {
+																	"Phones": ["+79221210697", "+79098561231"],
+																	"Name": "ООО Вендор товара",
+																	"Inn": "7710140679"
+																}
+															}
+														]
+													},
+													"FfdVersion": "1.05",
+													"Email": "a@test.ru",
+													"Phone": "+79031234567",
+													"Taxation": "osn",
+													"Payments": {
+														"Cash": 90000,
+														"Electronic": 50000,
+														"AdvancePayment": 0,
+														"Credit": 0,
+														"Provision": 0
+													}
+												}
+											}
+										}
+									],
+									"paymentSystems": {
+										"TinkoffPay": {}
+									}
+								}
 							}
 						}
 					}
@@ -349,6 +471,11 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/InitPaymentsResponse"
+								},
+								"examples": {
+									"default": {
+										"Success": true
+									}
 								}
 							}
 						}
@@ -373,33 +500,29 @@
 									"PaymentId": {
 										"description": "Идентификатор платежа в системе Т‑Кассы.\n",
 										"type": "string",
-										"maxLength": 20,
-										"examples": {
-											"default": 13660
-										}
+										"maxLength": 20
 									},
 									"TerminalKey": {
 										"description": "Идентификатор терминала, выдается мерчанту Т‑Кассой.\n",
 										"type": "string",
-										"maxLength": 20,
-										"examples": {
-											"default": "testRegressBank"
-										}
+										"maxLength": 20
 									},
 									"CardData": {
 										"description": "Зашифрованные данные карты в формате: \n  ```\n  PAN=4300000000000777;ExpDate=0519;CardHolder=IVAN PETROV;CVV=111\n  ```\n",
-										"type": "string",
-										"examples": {
-											"default": "U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg=="
-										}
+										"type": "string"
 									},
 									"Token": {
 										"description": "Подпись запроса.\n",
-										"type": "string",
-										"examples": {
-											"default": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e"
-										}
+										"type": "string"
 									}
+								}
+							},
+							"examples": {
+								"default": {
+									"PaymentId": 13660,
+									"TerminalKey": "testRegressBank",
+									"CardData": "U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==",
+									"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e"
 								}
 							}
 						}
@@ -421,62 +544,50 @@
 									"properties": {
 										"Version": {
 											"description": "Версия протокола 3DS. \nПримеры:\n* `1.0.0` — первая версия,\n* `2.1.0` — вторая версия.\n",
-											"type": "string",
-											"examples": {
-												"default": "2.1.0"
-											}
+											"type": "string"
 										},
 										"TdsServerTransID": {
 											"description": "Уникальный идентификатор транзакции,\nкоторый генерируется 3DS-Server. Обязательный\nпараметр для 3DS второй версии.\n",
-											"type": "string",
-											"examples": {
-												"default": "17d3791b-5cfa-4318-bc23-3d949e8c4b7e"
-											}
+											"type": "string"
 										},
 										"ThreeDSMethodURL": {
 											"description": "Дополнительный параметр для 3DS второй\nверсии, который позволяет пройти этап по\nсбору данных браузера ACS-ом.\n",
 											"type": "string",
-											"format": "uri",
-											"examples": {
-												"default": "https://acs.vendorcert.mirconnect.ru/ds/6300"
-											}
+											"format": "uri"
 										},
 										"PaymentSystem": {
 											"description": "Платежная система карты.\n",
-											"type": "string",
-											"examples": {
-												"default": "mir"
-											}
+											"type": "string"
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
-											"type": "string",
-											"examples": {
-												"default": "None"
-											}
+											"type": "string"
 										},
 										"Details": {
 											"description": "Подробное описание ошибки.\n",
-											"type": "string",
-											"examples": {
-												"default": "None"
-											}
+											"type": "string"
 										}
+									}
+								},
+								"examples": {
+									"default": {
+										"Version": "2.1.0",
+										"TdsServerTransID": "17d3791b-5cfa-4318-bc23-3d949e8c4b7e",
+										"ThreeDSMethodURL": "https://acs.vendorcert.mirconnect.ru/ds/6300",
+										"PaymentSystem": "mir",
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "None",
+										"Details": "None"
 									}
 								}
 							}
@@ -504,6 +615,59 @@
 										"$ref": "#/components/schemas/FinishAuthorize_SDK"
 									}
 								]
+							},
+							"examples": {
+								"FinishAuthorize_FULL": {
+									"summary": "FinishAuthorize_FULL",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "700001702044",
+										"Token": "f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5",
+										"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334",
+										"SendEmail": true,
+										"Source": "cards",
+										"DATA": {
+											"threeDSCompInd": "Y",
+											"language": "RU",
+											"timezone": "-300",
+											"screen_height": "1024",
+											"screen_width": "967",
+											"cresCallbackUrl": "www.callbackurl.ru",
+											"colorDepth": "48",
+											"javaEnabled": "false"
+										},
+										"InfoEmail": "qwerty@test.com",
+										"EncryptedPaymentData": "string",
+										"CardData": "eyJzaWduYXR1cmUiOiJNRVVDSVFEdjNJS1A5WG9nWml4RytUUm9zZWFDK0RGd3RKd2FtMHVEcm91RUVGZVB6Z0lnYXBFbHhxQ3AwQWtZcVVmTFVMaVNhUjBKWkVQNmg 4THFqYks5YkJKQnM5d1x1MDAzZCIsInByb3RvY29sVmVyc2lvbiI6IkVDdjEiLCJzaWduZWRNZXNzYWdlIjoie1wiZW5jcnlwdGVkTWVzc2FnZVwiOlwiQW11dm5OYUIralBsa3VKTitrMUZLSDZFcm1VK2lTY052 L05rR3FFaXIxOHZmSWxkVFJ5L2U4cW5zMXkyanFtcm1acU1JSWNYMUhyTHBxRURpaXkvS3B6SUhNZFllcXRkSVVNOU1tRjNpejU2d2NTZUVVaXU2ODI3QThGcitaYm8xRWtWRjY1TUxRYVY3NlBOUFRndH UvQ1BodW5HUk0rN25KdVhDczVtbkVvOHFma0RNVk8xWktGWDQ4TnVEL2FKcDJQdVVIY2puSnBTZ0pTSDB4U21YSnAzU1MreXFDNm54N254WUEwN2h4YjYvSnp2R2s3ZExDU2hWWGU1Z2haUjNDaFQyV W8rRnpXTWJRRGZtSjBLQW9kc2VlR0xaaitqMzVqOUlKMkhJRFhIUUZZMWNuTW9YVUVoTjgvdEkvRkpqRnJiYVdFRkIzRDZwOFUzT2tkUmVaNHAyYi8yYURNZXVxR1ozSUtjc3R0R2lKMFhQQVhhZXYyQU8 o1M3RRQXVqQXRYdFlaekNTVjVBVXdXZS85T1VcXHUwMDNkXCJ9In0=",
+										"Amount": 10000,
+										"deviceChannel": "02",
+										"Route": "ACQ"
+									}
+								},
+								"FinishAuthorize_SDK": {
+									"summary": "FinishAuthorize_SDK",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "700001702044",
+										"Token": "f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5",
+										"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334",
+										"SendEmail": true,
+										"Source": "cards",
+										"DATA": {
+											"sdkAppID": "6dg99s67h9d6hv",
+											"sdkEncData": "f8s9v04bvglglgkvkUO0UvUF7rHlKL",
+											"sdkEphemPubKey": "f8s9v04POPP479GHky5dG7InO0UvUF7rHlKL",
+											"sdkMaxTimeout": "05",
+											"sdkReferenceNumber": "3DSV2",
+											"sdkTransID": "194050GHYYtu86nOJ",
+											"sdkInterface": "02",
+											"sdkUiType": "04"
+										},
+										"InfoEmail": "qwerty@test.com",
+										"EncryptedPaymentData": "string",
+										"CardData": "eyJzaWduYXR1cmUiOiJNRVVDSVFEdjNJS1A5WG9nWml4RytUUm9zZWFDK0RGd3RKd2FtMHVEcm91RUVGZVB6Z0lnYXBFbHhxQ3AwQWtZcVVmTFVMaVNhUjBKWkVQNmg 4THFqYks5YkJKQnM5d1x1MDAzZCIsInByb3RvY29sVmVyc2lvbiI6IkVDdjEiLCJzaWduZWRNZXNzYWdlIjoie1wiZW5jcnlwdGVkTWVzc2FnZVwiOlwiQW11dm5OYUIralBsa3VKTitrMUZLSDZFcm1VK2lTY052 L05rR3FFaXIxOHZmSWxkVFJ5L2U4cW5zMXkyanFtcm1acU1JSWNYMUhyTHBxRURpaXkvS3B6SUhNZFllcXRkSVVNOU1tRjNpejU2d2NTZUVVaXU2ODI3QThGcitaYm8xRWtWRjY1TUxRYVY3NlBOUFRndH UvQ1BodW5HUk0rN25KdVhDczVtbkVvOHFma0RNVk8xWktGWDQ4TnVEL2FKcDJQdVVIY2puSnBTZ0pTSDB4U21YSnAzU1MreXFDNm54N254WUEwN2h4YjYvSnp2R2s3ZExDU2hWWGU1Z2haUjNDaFQyV W8rRnpXTWJRRGZtSjBLQW9kc2VlR0xaaitqMzVqOUlKMkhJRFhIUUZZMWNuTW9YVUVoTjgvdEkvRkpqRnJiYVdFRkIzRDZwOFUzT2tkUmVaNHAyYi8yYURNZXVxR1ozSUtjc3R0R2lKMFhQQVhhZXYyQU8 o1M3RRQXVqQXRYdFlaekNTVjVBVXdXZS85T1VcXHUwMDNkXCJ9In0="
+									}
+								}
 							}
 						}
 					}
@@ -528,6 +692,85 @@
 											"$ref": "#/components/schemas/With3DSv2BRW"
 										}
 									]
+								},
+								"examples": {
+									"Without3DS": {
+										"summary": "Without3DS",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Amount": 100000,
+											"OrderId": "21050",
+											"Success": true,
+											"Status": "NEW",
+											"PaymentId": "13660",
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "0",
+											"RebillId": "21813157",
+											"CardId": "string"
+										}
+									},
+									"With3DS": {
+										"summary": "With3DS",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Amount": 100000,
+											"OrderId": "21050",
+											"Success": true,
+											"Status": "NEW",
+											"PaymentId": "13660",
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "0",
+											"RebillId": "21813157",
+											"CardId": "string",
+											"MD": "ACQT-563587431",
+											"PaReq": "eJxVUl1TwjAQ/CtM30s+KLTDHGHQwsiogFh09C2kp1RpC2nLh7/eBAtqnnYvN3ubvUD/kK4bO9RFkmc9hzWp08BM5XGSvfecRTRyA6cvIFppxP\\nARVaVRwD0WhXzHRhL3HMUU73itwKVtyl1Pcs8Nli3pymUQK+z2Sww6joDZYI5bAfUgYeY0OZAzNYparWRWCpBqezWeiDZnLe3BqSmkqMeh4PRy2p\\n02BfJThkymKCIsSiAnCCqvslIfhXEG5Eyg0muxKstN0SVkv983yyT7zN/emroiQOwlkF8js8qiwogdklg8rEfT5WK0jj6G7D4cepNo8TWNBmwSDXtAbAfEskTjkPk0\\noF6DeV3a6jLj8VQHmVoXglFTqTFs7IjBn4u/BTBZa7OK8yPODPCwyTM0HSbACwby6/f6xsaoSpNMMN89+uHdV/iUPz2nyat/uxrPXz5nuX/c2nBPTVYxMflwzthJ0hIgVobUeyP1yg469xW+AedOuuM=\\",
+											"ACSUrl": "https://secure.tcsbank.ru/acs/auth/start.do"
+										}
+									},
+									"With3DSv2APP": {
+										"summary": "With3DSv2APP",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Amount": 100000,
+											"OrderId": "21050",
+											"Success": true,
+											"Status": "NEW",
+											"PaymentId": "13660",
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "0",
+											"RebillId": "21813157",
+											"CardId": "string",
+											"TdsServerTransId": "d93f7c66-3ecf-4d10-ba62-46046e7b7596",
+											"AcsTransId": "aceca6af-56ee-43f0-80ef-ea8d30d5c5b0",
+											"AcsInterface": "02",
+											"AcsUiTemplate": "03",
+											"AcsSignedContent": "eyJ4NWMiOlsiTUlJRGtUQ0NBbm1nQXdJQkFnSVVRU1VEV05VZEFicWozS1Uya0M0VHpaSEpVVHd3RFFZSktvWklodmNOQVFFTEJRQXdXREVMTUFrR0ExVUVCaE1DVWxVeER6QU5CZ05WQkFnTUJrMXZjMk52ZHpFUE1BMEdBMVVFQnd3R1RXOXpZMjkzTVJJ d0VBWURWUVFLREFsVGIyMWxJR0poYm1zeEV6QVJCZ05WQkFNTUNtUnpMbTF2WTJzdWNuVXdIaGNOTWpBd056RTRNVFExT1RNM1doY05NakV3TnpFNE1UUTFPVE0zV2pCWU1Rc3dDUVlEVlFRR0V3SlNWVEVQTUEwR0ExVUVDQXdHVFc5elkyOTNNUTh3RF FZRFZRUUhEQVpOYjNOamIzY3hFakFRQmdOVkJBb01DVk52YldVZ1ltRnVhekVUTUJFR0ExVUVBd3dLWkhNdWJXOWpheTV5ZFRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTUhNdXB1Wlg3VUFWR3Z5dm9uZ1o4U3BJcisrRD RnMjBRaFwvZ0NGb3JUN1pDUkRaVWhRamlDSzdXSWpiVHRKQUFKVG1yelhcLzlMSGJIdHpIcFFvRFVTNXZPTnRqVWFaVGVQUE91SklMRWl6NDBBVjJCUVZRd0xnRzBjbm9oK21Qa0dNMEZ4VmJFcHFEVHk3SHB0dFAwdm96cGxHNjdFWk1HTXdKSUpESmlDYUdG OGZ0aTlYR3M4MXB3NUhWZElmOHNpQnFaWW94cGt0QWJ1dnpBTFJEUnp3dFBhclFHOTZyQStPM0dJaE53VDhZXC9pallwS0hWNkJCWDBKNmxZdFdoaVY5blhBVktYNTNlVTJ4M1E2Njh4U3BLa2dwSVh1N2xiNUN2M2dDTlIrelVqK0lTODNZYjJhUlR2WkF6MFI1 V3dBNW5Zb2J6V3Vta1wvdE5iV1FYdzBWTUNBd0VBQWFOVE1GRXdIUVlEVlIwT0JCWUVGRmVWN0dzR0tCSzhUTDljaVk4UFF2N0RhY290TUI4R0ExVWRJd1FZTUJhQUZGZVY3R3NHS0JLOFRMOWNpWThQUXY3RGFjb3RNQThHQTFVZEV3RUJcL3dRRk1BT UJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUZqVGppUkxKOFpaWld5dXFLNTZHVkR6dnJiXC9uRlVDTHVjVXZEV2toK09lRWkxWUFPOUJZV3RFVTVzdmRNNTlsOWVTMGtjbGxrRzVDTklcL1U4S2dKSnUzV0tEVXp5cU80eVRNU3g3RWZDXC9qVE1oT2d2Y UJubktWK2hvV3FQZTlKNHZVYzZ2R0wzWE1cL0FNeWpoVDlBRko1ZjZBaVdZMk5QYkxHczQ2N0ZPY2Vwb1RJMkdseHBtcWdaMFVGKzlsblNZbDU0WEg2dGNZYUszWjcxS2NES0I0QkUySWVmV1Y3MUM3anBVdjFFSlFsNTY4XC8xaGpsZktXUExWcE5NTzVlTlNMR 1ZKd1VmdFA0V0tKU2Y2VmdtbG5XOU1yVStiK3hvZW44MFF1dUxrSWs1ZXBIM2l1ZDV4a1IxcVVXQU1aTUZTQW4yUHJDdjQrZFFMRDd2OG83d3BrPSJdLCJhbGciOiJQUzI1NiJ9.eyJhY3NFcGhlbVB1YktleSI6eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6IlRoRj NJY3BIMVVLanliQW5lNWhHcy1BNnpyYXo2aUxiYVk0WmVEOU1oSU0iLCJ5Ijoid0VuVXNvNlRLZDlfbjZSc2NjUXRCeFc2Q1gzLXFSTGk0UWJBU3pNbm4tTSJ9LCJzZGtFcGhlbVB1YktleSI6eyJrdHkiOiJFQyIsImNydiI6IlAtMjU2IiwieCI6Ikp6R2tGM2w3WGxnclJ6NU 1PTl9ncDg3WUxfd0NkVVJpVUlxOXJmNnVyR2MiLCJ5IjoiTnI4UmllTE9vVzJXUkhiX2RFazFmdHRoWEZXTHdYaWZFUzNZZkFnMkhvWSJ9LCJhY3NVUkwiOiJodHRwczovL2VhY3EtZHMtbW9jay1zZXJ2aWNlLXRlc3QudGNzYmFuay5ydS9jaGFsbGVuZ2UvZDkzZjdj NjYtM2VjZi00ZDEwLWJhNjItNDYwNDZlN2I3NTk2In0.hQLVTT5YMAY8TjISRdYX2IT04zH8Z8DgoB4kIAyVfkuJ0X6AGIKXSVcIVSNgC-A_SEkCZRqAyUeu0ZJtpoIVyOf1mumBGEK-uC6yVQlX5WSPidQUj4nuBvpYsfdrGPeoHWvNsrBpMMxvvW4559jtbAUY00NcW3rwDShAi4gVKgJcssMPAM1zOOR5vi0_ClUsCW1k9a201Hv6cYcEBuO2JQ8NPLampEkZ55nOmwcPPTEziXeZsq9VjROXNfBewbA4wLuQmh8aSrcOcwFtJo0CPpdrsKiY77KPT0c8XMmZZK_FiAxzrWocfHraqC7cRJNQ5glEBakXvSfrwGg_xXA",
+											"AcsReferenceNumber": "12345",
+											"SdkTransID": "d5a44dfe-673b-4666-82f9-96346107e424"
+										}
+									},
+									"With3DSv2BRW": {
+										"summary": "With3DSv2BRW",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Amount": 100000,
+											"OrderId": "21050",
+											"Success": true,
+											"Status": "NEW",
+											"PaymentId": "13660",
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "0",
+											"RebillId": "21813157",
+											"CardId": "string",
+											"TdsServerTransId": "d7171a06-7159-4bdd-891a-a560fe9938d2",
+											"AcsTransId": "e176d5d3-2f19-40f5-8234-46d3464e0b08",
+											"ACSUrl": "https://acs.vendorcert.mirconnect.ru/mdpayacs/creq"
+										}
+									}
 								}
 							}
 						}
@@ -547,6 +790,93 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/Confirm"
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "2304882",
+									"Token": "c0ad1dfc4e94ed44715c5ed0e84f8ec439695b9ac219a7a19555a075a3c3ed24",
+									"IP": "192.168.255.255",
+									"Amount": 19200,
+									"Receipt": {
+										"FfdVersion": "string",
+										"ClientInfo": {
+											"Birthdate": "string",
+											"Citizenship": "string",
+											"DocumentСode": "21",
+											"DocumentData": "string",
+											"Address": "string"
+										},
+										"Taxation": "osn",
+										"Email": "a@test.ru",
+										"Phone": "+79031234567",
+										"Customer": "78894325",
+										"CustomerInn": "788621292",
+										"Items": [
+											{
+												"AgentData": {
+													"AgentSign": "paying_agent",
+													"OperationName": "Позиция чека",
+													"Phones": ["+790912312398"],
+													"ReceiverPhones": ["+79221210697", "+79098561231"],
+													"TransferPhones": ["+79221210697"],
+													"OperatorName": "Tinkoff",
+													"OperatorAddress": "г. Тольятти",
+													"OperatorInn": "7710140679"
+												},
+												"SupplierInfo": {
+													"Phones": ["+79221210697", "+79098561231"],
+													"Name": "ООО Вендор товара",
+													"Inn": "7710140679"
+												},
+												"Name": "Наименование товара 1",
+												"Price": 10000,
+												"Quantity": 1,
+												"Amount": 10000,
+												"Tax": "vat10",
+												"PaymentMethod": "full_payment",
+												"PaymentObject": "goods_with_marking_code",
+												"UserData": "Данные пользователя ext.test.qa@tinkoff.ru",
+												"Excise": "12.2",
+												"CountryCode": "056",
+												"DeclarationNumber": "12345678901",
+												"MeasurementUnit": "шт",
+												"MarkProcessingMode": "string",
+												"MarkCode": {
+													"MarkCodeType": "EAN8",
+													"Value": "12345678"
+												},
+												"MarkQuantity": {
+													"Numerator": 1,
+													"Denominator": 2
+												},
+												"SectoralItemProps": {
+													"FederalId": "001",
+													"Date": "21.11.2020",
+													"Number": "123/43",
+													"Value": "test value SectoralItemProps"
+												}
+											}
+										],
+										"Payments": {
+											"Cash": 90000,
+											"Electronic": 50000,
+											"AdvancePayment": 0,
+											"Credit": 0,
+											"Provision": 0
+										}
+									},
+									"Shops": [
+										{
+											"ShopCode": "700456",
+											"Amount": 10000,
+											"Name": "Товар",
+											"Fee": "500"
+										}
+									],
+									"Route": "BNPL",
+									"Source": "BNPL"
+								}
 							}
 						}
 					}
@@ -558,6 +888,24 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/Confirm-2"
+								},
+								"examples": {
+									"default": {
+										"TerminalKey": "TinkoffBankTest",
+										"OrderId": "21057",
+										"Success": true,
+										"Status": "CONFIRMED",
+										"PaymentId": "2304882",
+										"ErrorCode": "0",
+										"Message": "OK",
+										"Details": "None",
+										"Params": [
+											{
+												"Key": "Route",
+												"Value": "ACQ"
+											}
+										]
+									}
 								}
 							}
 						}
@@ -577,6 +925,94 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/Cancel"
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "2304882",
+									"Token": "c0ad1dfc4e94ed44715c5ed0e84f8ec439695b9ac219a7a19555a075a3c3ed24",
+									"IP": "192.168.255.255",
+									"Amount": 19200,
+									"Receipt": {
+										"FfdVersion": "string",
+										"ClientInfo": {
+											"Birthdate": "string",
+											"Citizenship": "string",
+											"DocumentСode": "21",
+											"DocumentData": "string",
+											"Address": "string"
+										},
+										"Taxation": "osn",
+										"Email": "a@test.ru",
+										"Phone": "+79031234567",
+										"Customer": "78894325",
+										"CustomerInn": "788621292",
+										"Items": [
+											{
+												"AgentData": {
+													"AgentSign": "paying_agent",
+													"OperationName": "Позиция чека",
+													"Phones": ["+790912312398"],
+													"ReceiverPhones": ["+79221210697", "+79098561231"],
+													"TransferPhones": ["+79221210697"],
+													"OperatorName": "Tinkoff",
+													"OperatorAddress": "г. Тольятти",
+													"OperatorInn": "7710140679"
+												},
+												"SupplierInfo": {
+													"Phones": ["+79221210697", "+79098561231"],
+													"Name": "ООО Вендор товара",
+													"Inn": "7710140679"
+												},
+												"Name": "Наименование товара 1",
+												"Price": 10000,
+												"Quantity": 1,
+												"Amount": 10000,
+												"Tax": "vat10",
+												"PaymentMethod": "full_payment",
+												"PaymentObject": "goods_with_marking_code",
+												"UserData": "Данные пользователя ext.test.qa@tinkoff.ru",
+												"Excise": "12.2",
+												"CountryCode": "056",
+												"DeclarationNumber": "12345678901",
+												"MeasurementUnit": "шт",
+												"MarkProcessingMode": "string",
+												"MarkCode": {
+													"MarkCodeType": "EAN8",
+													"Value": "12345678"
+												},
+												"MarkQuantity": {
+													"Numerator": 1,
+													"Denominator": 2
+												},
+												"SectoralItemProps": {
+													"FederalId": "001",
+													"Date": "21.11.2020",
+													"Number": "123/43",
+													"Value": "test value SectoralItemProps"
+												}
+											}
+										],
+										"Payments": {
+											"Cash": 90000,
+											"Electronic": 50000,
+											"AdvancePayment": 0,
+											"Credit": 0,
+											"Provision": 0
+										}
+									},
+									"Shops": [
+										{
+											"ShopCode": "700456",
+											"Amount": 10000,
+											"Name": "Товар"
+										}
+									],
+									"QrMemberId": "77892",
+									"Route": "BNPL",
+									"Source": "BNPL",
+									"ExternalRequestId": "1234556"
+								}
 							}
 						}
 					}
@@ -588,6 +1024,21 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/Cancel-2"
+								},
+								"examples": {
+									"default": {
+										"TerminalKey": "TinkoffBankTest",
+										"OrderId": "21057",
+										"Success": true,
+										"Status": "REVERSED",
+										"OriginalAmount": 13000,
+										"NewAmount": 5000,
+										"PaymentId": "2304882",
+										"ErrorCode": "0",
+										"Message": "OK",
+										"Details": "None",
+										"ExternalRequestId": "756478567845678436"
+									}
 								}
 							}
 						}
@@ -614,6 +1065,29 @@
 										"$ref": "#/components/schemas/Charge_SDK"
 									}
 								]
+							},
+							"examples": {
+								"Charge_FULL": {
+									"summary": "Charge_FULL",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "700001702044",
+										"RebillId": "145919",
+										"Token": "f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5",
+										"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334",
+										"SendEmail": true,
+										"InfoEmail": "customer@test.com"
+									}
+								},
+								"Charge_SDK": {
+									"summary": "Charge_SDK",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "700001702044",
+										"RebillId": "145919",
+										"Token": "f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5"
+									}
+								}
 							}
 						}
 					}
@@ -699,6 +1173,17 @@
 											"type": "string"
 										}
 									}
+								},
+								"examples": {
+									"default": {
+										"TerminalKey": "TinkoffBankTest",
+										"Amount": 100000,
+										"OrderId": "21050",
+										"Success": true,
+										"Status": "NEW",
+										"PaymentId": "13660",
+										"ErrorCode": "0"
+									}
 								}
 							}
 						}
@@ -725,6 +1210,25 @@
 										"$ref": "#/components/schemas/GetState_SDK"
 									}
 								]
+							},
+							"examples": {
+								"GetState_FULL": {
+									"summary": "Пример запроса (FULL)",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "13660",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96",
+										"IP": "192.168.0.52"
+									}
+								},
+								"GetState_SDK": {
+									"summary": "Пример запроса (SDK)",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "13660",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
+									}
+								}
 							}
 						}
 					}
@@ -749,71 +1253,44 @@
 										"TerminalKey": {
 											"description": "Идентификатор терминала. Выдается мерчанту Т‑Кассой\nпри заведении терминала.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "TinkoffBankTest"
-											}
+											"maxLength": 20
 										},
 										"Amount": {
 											"description": "Сумма в копейках.\n",
 											"type": "number",
-											"maxLength": 20,
-											"examples": {
-												"default": 100000
-											}
+											"maxLength": 20
 										},
 										"OrderId": {
 											"description": "Идентификатор заказа в системе мерчанта.\n",
 											"type": "string",
-											"maxLength": 36,
-											"examples": {
-												"default": "21050"
-											}
+											"maxLength": 36
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"Status": {
 											"description": "Статус платежа. Подробнее — в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha).\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "NEW"
-											}
+											"maxLength": 20
 										},
 										"PaymentId": {
 											"description": "Идентификатор платежа в системе Т‑Кассы.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "13660"
-											}
+											"maxLength": 20
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
-											"type": "string",
-											"examples": {
-												"default": "OK"
-											}
+											"type": "string"
 										},
 										"Details": {
 											"description": "Подробное описание ошибки.\n",
-											"type": "string",
-											"examples": {
-												"default": "0"
-											}
+											"type": "string"
 										},
 										"Params": {
 											"description": "Информация по способу оплаты или деталям для платежей в рассрочку.\n",
@@ -825,32 +1302,29 @@
 									}
 								},
 								"examples": {
-									"GetState": {
-										"summary": "Пример ответа",
-										"value": {
-											"Success": "true,",
-											"ErrorCode": "0",
-											"Message": "OK",
-											"TerminalKey": "TinkoffBankTest",
-											"Status": "AUTHORIZED",
-											"PaymentId": "13660",
-											"OrderId": "21050",
-											"Params": [
-												{
-													"Key": "Route",
-													"Value": "ACQ"
-												},
-												{
-													"Key": "Source",
-													"Value": "cards"
-												},
-												{
-													"Key": "CreditAmount",
-													"Value": "100000"
-												}
-											],
-											"Amount": 1230
-										}
+									"default": {
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "OK",
+										"TerminalKey": "TinkoffBankTest",
+										"Status": "AUTHORIZED",
+										"PaymentId": "13660",
+										"OrderId": "21050",
+										"Params": [
+											{
+												"Key": "Route",
+												"Value": "ACQ"
+											},
+											{
+												"Key": "Source",
+												"Value": "cards"
+											},
+											{
+												"Key": "CreditAmount",
+												"Value": "100000"
+											}
+										],
+										"Amount": 1230
 									}
 								}
 							}
@@ -927,6 +1401,17 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetOrRemoveCustomer"
+							},
+							"examples": {
+								"GetCustomerRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"CustomerKey": "string",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"IP": "string"
+									}
+								}
 							}
 						}
 					}
@@ -938,6 +1423,21 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/GetCustomerResponse"
+								},
+								"examples": {
+									"GetCustomerResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"CustomerKey": "4264aa7b-08ab-4429-ab5a-2a171d841ced",
+											"ErrorCode": "0",
+											"Success": true,
+											"Message": "Неверный статус клиента",
+											"Details": "Клиент не найден.",
+											"Email": "a@test.ru",
+											"Phone": "+79031234567"
+										}
+									}
 								}
 							}
 						}
@@ -957,6 +1457,17 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetOrRemoveCustomer"
+							},
+							"examples": {
+								"RemoveCustomerRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"CustomerKey": "string",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"IP": "string"
+									}
+								}
 							}
 						}
 					}
@@ -968,6 +1479,19 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/RemoveCustomerResponse"
+								},
+								"examples": {
+									"RemoveCustomerResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"CustomerKey": "string",
+											"ErrorCode": "0",
+											"Success": true,
+											"Message": "Неверные параметры",
+											"Details": "string"
+										}
+									}
 								}
 							}
 						}
@@ -1004,7 +1528,7 @@
 										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
 										"CheckType": "NO",
 										"IP": "10.100.10.10",
-										"ResidentState": "true"
+										"ResidentState": true
 									}
 								},
 								"AddCard_SDK": {
@@ -1039,12 +1563,12 @@
 									"AddCardResponse_FULL": {
 										"summary": "Пример ответа (FULL)",
 										"value": {
-											"PaymentId": "6155312072",
+											"PaymentId": 6155312072,
 											"TerminalKey": "1111133333",
 											"CustomerKey": "906540",
 											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
 											"ErrorCode": "0",
-											"Success": "true",
+											"Success": true,
 											"Message": "Неверные параметры",
 											"Details": "Терминал не найден",
 											"PaymentURL": "82a31a62-6067-4ad8-b379-04bf13e37642d"
@@ -1053,12 +1577,12 @@
 									"AddCardResponse_SDK": {
 										"summary": "Пример ответа (SDK)",
 										"value": {
-											"PaymentId": "6155312073",
+											"PaymentId": 6155312073,
 											"TerminalKey": "1241421414",
 											"CustomerKey": "906540",
 											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
 											"ErrorCode": "0",
-											"Success": "true",
+											"Success": true,
 											"Message": "Неверные параметры",
 											"Details": "Терминал не найден"
 										}
@@ -1082,6 +1606,21 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/AttachCard"
+							},
+							"examples": {
+								"AttachCardRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"CardData": "U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==",
+										"DATA": {
+											"property1": "string",
+											"property2": "string"
+										},
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
+									}
+								}
 							}
 						}
 					}
@@ -1150,6 +1689,16 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetAddCardState"
+							},
+							"examples": {
+								"GetAddCardStateRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e"
+									}
+								}
 							}
 						}
 					}
@@ -1161,6 +1710,23 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/GetAddCardStateResponse"
+								},
+								"examples": {
+									"GetAddCardStateResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+											"Status": "NEW",
+											"Success": true,
+											"CardId": "156516516",
+											"RebillId": "134249124",
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "Данный RequestKey не найден.",
+											"CustomerKey": "testCustomer1234"
+										}
+									}
 								}
 							}
 						}
@@ -1187,6 +1753,27 @@
 										"$ref": "#/components/schemas/GetCardList_SDK"
 									}
 								]
+							},
+							"examples": {
+								"GetCardList_FULL": {
+									"summary": "Пример запроса (FULL)",
+									"value": {
+										"TerminalKey": "testRegressBank",
+										"CustomerKey": "testCustomer1234",
+										"SavedCard": true,
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334"
+									}
+								},
+								"GetCardList_SDK": {
+									"summary": "Пример запроса (SDK)",
+									"value": {
+										"TerminalKey": "testRegressBank",
+										"CustomerKey": "testCustomer1234",
+										"SavedCard": true,
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e"
+									}
+								}
 							}
 						}
 					}
@@ -1204,50 +1791,44 @@
 										"properties": {
 											"CardId": {
 												"description": "Идентификатор карты в системе Т‑Кассы\n",
-												"type": "string",
-												"examples": {
-													"default": "881900"
-												}
+												"type": "string"
 											},
 											"Pan": {
 												"description": "Номер карты\n",
-												"type": "string",
-												"examples": {
-													"default": "518223******0036"
-												}
+												"type": "string"
 											},
 											"Status": {
 												"description": "Статус карты:\n* A — активная,  \n* D — удаленная.\n",
 												"type": "string",
-												"enum": ["A", "D"],
-												"examples": {
-													"default": "D"
-												}
+												"enum": ["A", "D"]
 											},
 											"RebillId": {
 												"description": "Идентификатор рекуррентного платежа\n",
-												"type": "string",
-												"examples": {
-													"default": "6155312073"
-												}
+												"type": "string"
 											},
 											"CardType": {
 												"description": "Тип карты:\n* карта списания (0),\n* карта пополнения (1),\n* карта пополнения и списания (2).\n",
 												"type": "number",
-												"enum": [0, 1, 2],
-												"examples": {
-													"default": 0
-												}
+												"enum": [0, 1, 2]
 											},
 											"ExpDate": {
 												"description": "Срок действия карты\n",
-												"type": "string",
-												"examples": {
-													"default": "1122"
-												}
+												"type": "string"
 											}
 										}
 									}
+								},
+								"examples": {
+									"default": [
+										{
+											"CardId": "881900",
+											"Pan": "518223******0036",
+											"Status": "D",
+											"RebillId'": "6155312073",
+											"CardType": 0,
+											"ExpDate": "1122"
+										}
+									]
 								}
 							}
 						}
@@ -1267,6 +1848,18 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/RemoveCard"
+							},
+							"examples": {
+								"RemoveCardRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "testRegressBank",
+										"CustomerKey": "testCustomer1234",
+										"CardId": "156516516",
+										"Token": "30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e",
+										"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334"
+									}
+								}
 							}
 						}
 					}
@@ -1278,6 +1871,22 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/RemoveCardResponse"
+								},
+								"examples": {
+									"RemoveCardResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"Status": "D",
+											"CustomerKey": "testCustomer1234",
+											"CardId": "156516516",
+											"CardType": 0,
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "Не удалось удалить карту клиента, для данного клиента такая карта не существует"
+										}
+									}
 								}
 							}
 						}
@@ -1303,6 +1912,17 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/GetQr"
+							},
+							"examples": {
+								"GetQrRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": 10063,
+										"DataType": "PAYLOAD",
+										"Token": "871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6"
+									}
+								}
 							}
 						}
 					}
@@ -1321,6 +1941,36 @@
 											"$ref": "#/components/schemas/QrResponse_SDK"
 										}
 									]
+								},
+								"examples": {
+									"QrResponse_FULL": {
+										"summary": "Пример ответа (FULL)",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"OrderId": "21057",
+											"Success": true,
+											"Data": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
+											"PaymentId": 10063,
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "Подробное описание ошибки",
+											"RequestKey": "Идентификатор запроса"
+										}
+									},
+									"QrResponse_SDK": {
+										"summary": "Пример ответа (SDK)",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"OrderId": "21057",
+											"Success": true,
+											"Data": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
+											"PaymentId": 10063,
+											"ErrorCode": "0",
+											"Message": "Неверные параметры",
+											"Details": "Подробное описание ошибки",
+											"RequestKey": "Идентификатор запроса"
+										}
+									}
 								}
 							}
 						}
@@ -1547,46 +2197,28 @@
 									"properties": {
 										"TerminalKey": {
 											"description": "Идентификатор терминала, выдается мерчанту Т‑Кассой.\n",
-											"type": "string",
-											"examples": {
-												"default": "TinkoffBankTest"
-											}
+											"type": "string"
 										},
 										"OrderId": {
 											"description": "Номер заказа в системе мерчанта.\n",
-											"type": "string",
-											"examples": {
-												"default": "21050"
-											}
+											"type": "string"
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"Status": {
 											"description": "Статус транзакции:\n- `CONFIRMED` — при успешном сценарии и одностадийном проведении платежа;\n- `AUTHORIZED` — при успешном сценарии и двухстадийном проведении платежа; \n- `REJECTED` — при неуспешном сценарии.\n",
-											"type": "string",
-											"examples": {
-												"default": "CONFIRMED"
-											}
+											"type": "string"
 										},
 										"PaymentId": {
 											"description": "Уникальный идентификатор транзакции в системе Т‑Кассы.\n",
-											"type": "string",
-											"examples": {
-												"default": "10063"
-											}
+											"type": "string"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
@@ -1595,6 +2227,21 @@
 										"Details": {
 											"description": "Подробное описание ошибки.\n",
 											"type": "string"
+										}
+									}
+								},
+								"examples": {
+									"Submit3DSAuthorizationResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"TerminalKey": "TinkoffBankTest",
+											"OrderId": "21050",
+											"Success": true,
+											"Status": "CONFIRMED",
+											"PaymentId": "10063",
+											"ErrorCode": "0",
+											"Message": "string",
+											"Details": "string"
 										}
 									}
 								}
@@ -1669,46 +2316,28 @@
 									"properties": {
 										"OrderId": {
 											"description": "Номер заказа в системе мерчанта.\n",
-											"type": "string",
-											"examples": {
-												"default": "21050"
-											}
+											"type": "string"
 										},
 										"TerminalKey": {
 											"description": "Идентификатор терминала, выдается мерчанту Т‑Кассой.\n",
-											"type": "string",
-											"examples": {
-												"default": "TinkoffBankTest"
-											}
+											"type": "string"
 										},
 										"Status": {
 											"description": "Статус транзакции\n",
-											"type": "string",
-											"examples": {
-												"default": "CONFIRMED"
-											}
+											"type": "string"
 										},
 										"PaymentId": {
 											"description": "Уникальный идентификатор транзакции в системе Т‑Кассы.\n",
-											"type": "string",
-											"examples": {
-												"default": "10063"
-											}
+											"type": "string"
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
@@ -1717,6 +2346,21 @@
 										"Details": {
 											"description": "Подробное описание ошибки.\n",
 											"type": "string"
+										}
+									}
+								},
+								"examples": {
+									"Submit3DSAuthorizationV2Response": {
+										"summary": "Пример ответа",
+										"value": {
+											"OrderId": "21050",
+											"TerminalKey": "TinkoffBankTest",
+											"Status": "CONFIRMED",
+											"PaymentId": "10063",
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "string",
+											"Details": "string"
 										}
 									}
 								}
@@ -1763,34 +2407,22 @@
 											"properties": {
 												"Allowed": {
 													"description": "Наличие возможности проведения оплаты\nT‑Pay по API, SDK.\n",
-													"type": "boolean",
-													"examples": {
-														"default": true
-													}
+													"type": "boolean"
 												},
 												"Version": {
 													"description": "Версия T‑Pay, доступная на терминале:\n* `1.0` — e-invoice,\n* `2.0` — T‑Pay.\n",
-													"type": "string",
-													"examples": {
-														"default": "1.0"
-													}
+													"type": "string"
 												}
 											}
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
@@ -1800,6 +2432,18 @@
 											"description": "Подробное описание ошибки.\n",
 											"type": "string"
 										}
+									}
+								},
+								"examples": {
+									"default": {
+										"Params": {
+											"Allowed": true,
+											"Version": "1.0"
+										},
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "string",
+										"Details": "string"
 									}
 								}
 							}
@@ -1858,10 +2502,7 @@
 												"RedirectUrl": {
 													"description": "Link для перехода в приложение MB на мобильных\nустройствах\n",
 													"type": "string",
-													"format": "uri",
-													"examples": {
-														"default": "https://o.tbank.ru/tpay/<requestId>"
-													}
+													"format": "uri"
 												},
 												"WebQR": {
 													"description": "URL для получения QR\n",
@@ -1872,18 +2513,12 @@
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки\n",
@@ -1892,6 +2527,21 @@
 										"Details": {
 											"description": "Подробное описание ошибки\n",
 											"type": "string"
+										}
+									}
+								},
+								"examples": {
+									"default": {
+										"summary": "Пример ответа",
+										"value": {
+											"Params": {
+												"RedirectUrl": "https://o.tbank.ru/tpay/<requestId>",
+												"WebQR": "http://example.com"
+											},
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "string",
+											"Details": "string"
 										}
 									}
 								}
@@ -2001,27 +2651,18 @@
 												"RedirectUrl": {
 													"description": "URL для перехода.\n",
 													"type": "string",
-													"format": "uri",
-													"examples": {
-														"default": "tinkoffbank://Main/EInvoicing?billId=5000015507&providerId=e-invoicing"
-													}
+													"format": "uri"
 												}
 											}
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
@@ -2031,6 +2672,17 @@
 											"description": "Подробное описание ошибки.\n",
 											"type": "string"
 										}
+									}
+								},
+								"examples": {
+									"default": {
+										"Params": {
+											"RedirectUrl": "tinkoffbank://Main/EInvoicing?billId=5000015507&providerId=e-invoicing"
+										},
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "string",
+										"Details": "string"
 									}
 								}
 							}
@@ -2051,6 +2703,20 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/T-PayEvent"
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "string",
+									"EventData": {
+										"SessionId": "string",
+										"Type": "string",
+										"AccessToken": "string",
+										"AccountId": "string",
+										"EventSessionId": "string"
+									},
+									"PaymentId": "string",
+									"Token": "string"
+								}
 							}
 						}
 					}
@@ -2067,17 +2733,11 @@
 										"Success": {
 											"type": "boolean",
 											"description": "Успешность прохождения запроса — `true`/`false`.",
-											"enum": [true, false],
-											"examples": {
-												"default": "true"
-											}
+											"enum": [true, false]
 										},
 										"ErrorCode": {
 											"type": "string",
-											"description": "Код ошибки. `0` — если успешно.",
-											"examples": {
-												"default": 0
-											}
+											"description": "Код ошибки. `0` — если успешно."
 										},
 										"Message": {
 											"type": "string",
@@ -2087,6 +2747,14 @@
 											"type": "string",
 											"description": "Подробное описание ошибки."
 										}
+									}
+								},
+								"examples": {
+									"default": {
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "string",
+										"Details": "string"
 									}
 								}
 							}
@@ -2117,25 +2785,23 @@
 								"properties": {
 									"TerminalKey": {
 										"type": "string",
-										"description": "Идентификатор терминала, выдается мерчанту Т‑Кассой.\n",
-										"examples": {
-											"default": "TinkoffBankTest"
-										}
+										"description": "Идентификатор терминала, выдается мерчанту Т‑Кассой.\n"
 									},
 									"PaymentId": {
 										"type": "string",
-										"description": "Уникальный идентификатор транзакции в системе.\nТ‑Кассы\n",
-										"examples": {
-											"default": "10063"
-										}
+										"description": "Уникальный идентификатор транзакции в системе.\nТ‑Кассы\n"
 									},
 									"Token": {
 										"type": "string",
-										"description": "Подпись запроса.",
-										"examples": {
-											"default": "871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6"
-										}
+										"description": "Подпись запроса."
 									}
+								}
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "10063",
+									"Token": "871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6"
 								}
 							}
 						}
@@ -2160,33 +2826,36 @@
 										"OrderId": {
 											"description": "Идентификатор заказа в системе мерчанта.\n",
 											"type": "string",
-											"maxLength": 36,
-											"examples": {
-												"default": "21050"
-											}
+											"maxLength": 36
 										},
 										"Success": {
 											"description": "Успешность прохождения запроса — `true`/`false`.\n",
-											"type": "boolean",
-											"examples": {
-												"default": true
-											}
+											"type": "boolean"
 										},
 										"ErrorCode": {
 											"description": "Код ошибки. `0` в случае успеха.\n",
 											"type": "string",
-											"maxLength": 20,
-											"examples": {
-												"default": "0"
-											}
+											"maxLength": 20
 										},
 										"Message": {
 											"description": "Краткое описание ошибки.\n",
-											"type": "string",
-											"examples": {
-												"default": "OK"
-											}
+											"type": "string"
 										}
+									}
+								},
+								"examples": {
+									"default": {
+										"Members": [
+											{
+												"MemberId": "1000000",
+												"MemberName": "T-Банк",
+												"IsPayee": true
+											}
+										],
+										"OrderId": "21050",
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "OK"
 									}
 								}
 							}
@@ -2403,6 +3072,17 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ChargeQr"
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "700001702044",
+									"AccountToken": "70LSS7DN18SJQRS10006DNPKLJL24B05",
+									"Token": "f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5",
+									"IP": "2011:0db8:85a3:0101:0101:8a2e:0370:7334",
+									"SendEmail": true,
+									"InfoEmail": "customer@test.com"
+								}
 							}
 						}
 					}
@@ -2414,6 +3094,20 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ChargeQrResponse"
+								},
+								"examples": {
+									"default": {
+										"TerminalKey": "TinkoffBankTest",
+										"Amount": 100000,
+										"OrderId": "21050",
+										"Success": true,
+										"Status": "CONFIRMED",
+										"PaymentId": "13660",
+										"ErrorCode": "0",
+										"Message": "Неверные параметры",
+										"Details": "string",
+										"Currency": 643
+									}
 								}
 							}
 						}
@@ -2439,6 +3133,18 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/SbpPayTest"
+							},
+							"examples": {
+								"SbpPayTestRequest": {
+									"summary": "Пример запроса",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentId": "13660",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96",
+										"IsDeadlineExpired": true,
+										"IsRejected": false
+									}
+								}
 							}
 						}
 					}
@@ -2450,6 +3156,17 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/SbpPayTestResponse"
+								},
+								"examples": {
+									"SbpPayTestResponse": {
+										"summary": "Пример ответа",
+										"value": {
+											"Success": true,
+											"ErrorCode": "0",
+											"Message": "OK",
+											"Details": "0"
+										}
+									}
 								}
 							}
 						}
@@ -2499,6 +3216,13 @@
 										}
 									}
 								}
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "700031849",
+									"Token": "l43kb4hyi6lknb23bv4gdfskjn238fsllsdf8"
+								}
 							}
 						}
 					}
@@ -2517,6 +3241,34 @@
 											"$ref": "#/components/schemas/GetQRStateResponse_SDK"
 										}
 									]
+								},
+								"examples": {
+									"GetQRStateResponse_FULL": {
+										"summary": "GetQRStateResponse_FULL",
+										"value": {
+											"Success": true,
+											"ErrorCode": "0",
+											"Status": "CONFIRMED",
+											"QrCancelCode": "I05043",
+											"QrCancelMessage": "У клиента нет расчетного счета в этом банке. Попробуйте вернуть деньги на счет этого клиента в другом банке",
+											"OrderId": "7830122",
+											"Amount": 10000,
+											"Message": "OK"
+										}
+									},
+									"GetQRStateResponse_SDK": {
+										"summary": "GetQRStateResponse_SDK",
+										"value": {
+											"Success": true,
+											"ErrorCode": "0",
+											"Status": "CONFIRMED",
+											"QrCancelCode": "I05043",
+											"QrCancelMessage": "У клиента нет расчетного счета в этом банке. Попробуйте вернуть деньги на счет этого клиента в другом банке",
+											"OrderId": "7830122",
+											"Amount": 10000,
+											"Message": "OK"
+										}
+									}
 								}
 							}
 						}
@@ -2568,15 +3320,17 @@
 											"ErrorCode": "0",
 											"Message": "OK",
 											"Details": "None",
-											"Payments": {
-												"PaymentId": "124671934",
-												"Amount": 13660,
-												"Status": "NEW",
-												"RRN": "12345678",
-												"Success": "true",
-												"ErrorCode": 0,
-												"Message": "None"
-											}
+											"Payments": [
+												{
+													"PaymentId": "124671934",
+													"Amount": 13660,
+													"Status": "NEW",
+													"RRN": "12345678",
+													"Success": "true",
+													"ErrorCode": 0,
+													"Message": "None"
+												}
+											]
 										}
 									}
 								}
@@ -2598,6 +3352,81 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/SendClosingReceipt"
+							},
+							"examples": {
+								"default": {
+									"TerminalKey": "TinkoffBankTest",
+									"PaymentId": "2304882",
+									"Receipt": {
+										"FfdVersion": "string",
+										"ClientInfo": {
+											"Birthdate": "string",
+											"Citizenship": "string",
+											"DocumentСode": "21",
+											"DocumentData": "string",
+											"Address": "string"
+										},
+										"Taxation": "osn",
+										"Email": "a@test.ru",
+										"Phone": "+79031234567",
+										"Customer": "78894325",
+										"CustomerInn": "788621292",
+										"Items": [
+											{
+												"AgentData": {
+													"AgentSign": "paying_agent",
+													"OperationName": "Позиция чека",
+													"Phones": ["+790912312398"],
+													"ReceiverPhones": ["+79221210697", "+79098561231"],
+													"TransferPhones": ["+79221210697"],
+													"OperatorName": "Tinkoff",
+													"OperatorAddress": "г. Тольятти",
+													"OperatorInn": "7710140679"
+												},
+												"SupplierInfo": {
+													"Phones": ["+79221210697", "+79098561231"],
+													"Name": "ООО Вендор товара",
+													"Inn": "7710140679"
+												},
+												"Name": "Наименование товара 1",
+												"Price": 10000,
+												"Quantity": 1,
+												"Amount": 10000,
+												"Tax": "vat10",
+												"PaymentMethod": "full_payment",
+												"PaymentObject": "goods_with_marking_code",
+												"UserData": "Данные пользователя ext.test.qa@tinkoff.ru",
+												"Excise": "12.2",
+												"CountryCode": "056",
+												"DeclarationNumber": "12345678901",
+												"MeasurementUnit": "шт",
+												"MarkProcessingMode": "string",
+												"MarkCode": {
+													"MarkCodeType": "EAN8",
+													"Value": "12345678"
+												},
+												"MarkQuantity": {
+													"Numerator": 1,
+													"Denominator": 2
+												},
+												"SectoralItemProps": {
+													"FederalId": "001",
+													"Date": "21.11.2020",
+													"Number": "123/43",
+													"Value": "test value SectoralItemProps"
+												}
+											}
+										],
+										"Payments": {
+											"Cash": 90000,
+											"Electronic": 50000,
+											"AdvancePayment": 0,
+											"Credit": 0,
+											"Provision": 0
+										}
+									},
+									"Token": "string"
+								}
 							}
 						}
 					}
@@ -2609,6 +3438,13 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/SendClosingReceipt-2"
+								},
+								"examples": {
+									"default": {
+										"Success": true,
+										"ErrorCode": "2304882",
+										"Message": "Неверные параметры"
+									}
 								}
 							}
 						}
@@ -2694,6 +3530,26 @@
 										"$ref": "#/components/schemas/by_email"
 									}
 								]
+							},
+							"examples": {
+								"URL": {
+									"summary": "URL",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"CallbackUrl": "http://www.tinkoff.ru",
+										"PaymentIdList": [1201206437, 1201206442],
+										"Token": "f2fdd7fec8225872590e1558b7ea258c75df8f300d808006c41ab540dd7514d9"
+									}
+								},
+								"Email": {
+									"summary": "Email",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"PaymentIdList": [1201206437, 1201206442],
+										"EmailList": ["test1@tinkoff.ru", "test2@tinkoff.ru"],
+										"Token": "f2fdd7fec8225872590e1558b7ea258c75df8f300d808006c41ab540dd7514d9"
+									}
+								}
 							}
 						}
 					}
@@ -2712,6 +3568,40 @@
 											"$ref": "#/components/schemas/response_by_email"
 										}
 									]
+								},
+								"examples": {
+									"URL": {
+										"summary": "URL",
+										"value": {
+											"Success": true,
+											"ErrorCode": 0,
+											"Message": "OK",
+											"PaymentIdList": [
+												{
+													"Success": true,
+													"ErrorCode": 0,
+													"Message": "Запрос на отправку документа принят",
+													"PaymentId": "1201206442"
+												}
+											]
+										}
+									},
+									"Email": {
+										"summary": "Email",
+										"value": {
+											"Success": true,
+											"ErrorCode": 0,
+											"Message": "OK",
+											"PaymentIdList": [
+												{
+													"Success": true,
+													"ErrorCode": 0,
+													"Message": "Запрос на отправку документа принят",
+													"PaymentId": "1201206442"
+												}
+											]
+										}
+									}
 								}
 							}
 						}

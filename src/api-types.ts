@@ -5717,32 +5717,20 @@ export interface operations {
 		requestBody: {
 			content: {
 				"application/json": {
-					/**
-					 * @description Идентификатор платежа в системе Т‑Кассы.
-					 *
-					 * @example 13660
-					 */
+					/** @description Идентификатор платежа в системе Т‑Кассы.
+					 *      */
 					PaymentId: string;
-					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-					 *
-					 * @example testRegressBank
-					 */
+					/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					 *      */
 					TerminalKey: string;
-					/**
-					 * @description Зашифрованные данные карты в формате:
+					/** @description Зашифрованные данные карты в формате:
 					 *       ```
 					 *       PAN=4300000000000777;ExpDate=0519;CardHolder=IVAN PETROV;CVV=111
 					 *       ```
-					 *
-					 * @example U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==
-					 */
+					 *      */
 					CardData: string;
-					/**
-					 * @description Подпись запроса.
-					 *
-					 * @example 30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e
-					 */
+					/** @description Подпись запроса.
+					 *      */
 					Token: string;
 				};
 			};
@@ -5755,22 +5743,16 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/**
-						 * @description Версия протокола 3DS.
+						/** @description Версия протокола 3DS.
 						 *     Примеры:
 						 *     * `1.0.0` — первая версия,
 						 *     * `2.1.0` — вторая версия.
-						 *
-						 * @example 2.1.0
-						 */
+						 *      */
 						Version: string;
-						/**
-						 * @description Уникальный идентификатор транзакции,
+						/** @description Уникальный идентификатор транзакции,
 						 *     который генерируется 3DS-Server. Обязательный
 						 *     параметр для 3DS второй версии.
-						 *
-						 * @example 17d3791b-5cfa-4318-bc23-3d949e8c4b7e
-						 */
+						 *      */
 						TdsServerTransID?: string;
 						/**
 						 * Format: uri
@@ -5778,38 +5760,22 @@ export interface operations {
 						 *     версии, который позволяет пройти этап по
 						 *     сбору данных браузера ACS-ом.
 						 *
-						 * @example https://acs.vendorcert.mirconnect.ru/ds/6300
 						 */
 						ThreeDSMethodURL?: string;
-						/**
-						 * @description Платежная система карты.
-						 *
-						 * @example mir
-						 */
+						/** @description Платежная система карты.
+						 *      */
 						PaymentSystem: string;
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
-						/**
-						 * @description Краткое описание ошибки.
-						 *
-						 * @example None
-						 */
+						/** @description Краткое описание ошибки.
+						 *      */
 						Message?: string;
-						/**
-						 * @description Подробное описание ошибки.
-						 *
-						 * @example None
-						 */
+						/** @description Подробное описание ошибки.
+						 *      */
 						Details?: string;
 					};
 				};
@@ -5964,60 +5930,33 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/**
-						 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+						/** @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
 						 *     при заведении терминала.
-						 *
-						 * @example TinkoffBankTest
-						 */
+						 *      */
 						TerminalKey: string;
-						/**
-						 * @description Сумма в копейках.
-						 *
-						 * @example 100000
-						 */
+						/** @description Сумма в копейках.
+						 *      */
 						Amount: number;
-						/**
-						 * @description Идентификатор заказа в системе мерчанта.
-						 *
-						 * @example 21050
-						 */
+						/** @description Идентификатор заказа в системе мерчанта.
+						 *      */
 						OrderId: string;
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Статус платежа. Подробнее — в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha).
-						 *
-						 * @example NEW
-						 */
+						/** @description Статус платежа. Подробнее — в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha).
+						 *      */
 						Status: string;
-						/**
-						 * @description Идентификатор платежа в системе Т‑Кассы.
-						 *
-						 * @example 13660
-						 */
+						/** @description Идентификатор платежа в системе Т‑Кассы.
+						 *      */
 						PaymentId: string;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
-						/**
-						 * @description Краткое описание ошибки.
-						 *
-						 * @example OK
-						 */
+						/** @description Краткое описание ошибки.
+						 *      */
 						Message?: string;
-						/**
-						 * @description Подробное описание ошибки.
-						 *
-						 * @example 0
-						 */
+						/** @description Подробное описание ошибки.
+						 *      */
 						Details?: string;
 						/** @description Информация по способу оплаты или деталям для платежей в рассрочку.
 						 *      */
@@ -6155,32 +6094,22 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/**
-						 * @description Идентификатор карты в системе Т‑Кассы
-						 *
-						 * @example 881900
-						 */
+						/** @description Идентификатор карты в системе Т‑Кассы
+						 *      */
 						CardId: string;
-						/**
-						 * @description Номер карты
-						 *
-						 * @example 518223******0036
-						 */
+						/** @description Номер карты
+						 *      */
 						Pan: string;
 						/**
 						 * @description Статус карты:
 						 *     * A — активная,
 						 *     * D — удаленная.
 						 *
-						 * @example D
 						 * @enum {string}
 						 */
 						Status: "A" | "D";
-						/**
-						 * @description Идентификатор рекуррентного платежа
-						 *
-						 * @example 6155312073
-						 */
+						/** @description Идентификатор рекуррентного платежа
+						 *      */
 						RebillId?: string;
 						/**
 						 * @description Тип карты:
@@ -6188,15 +6117,11 @@ export interface operations {
 						 *     * карта пополнения (1),
 						 *     * карта пополнения и списания (2).
 						 *
-						 * @example 0
 						 * @enum {number}
 						 */
 						CardType: 0 | 1 | 2;
-						/**
-						 * @description Срок действия карты
-						 *
-						 * @example 1122
-						 */
+						/** @description Срок действия карты
+						 *      */
 						ExpDate?: string;
 					}[];
 				};
@@ -6382,44 +6307,26 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/**
-						 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-						 *
-						 * @example TinkoffBankTest
-						 */
+						/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+						 *      */
 						TerminalKey: string;
-						/**
-						 * @description Номер заказа в системе мерчанта.
-						 *
-						 * @example 21050
-						 */
+						/** @description Номер заказа в системе мерчанта.
+						 *      */
 						OrderId: string;
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Статус транзакции:
+						/** @description Статус транзакции:
 						 *     - `CONFIRMED` — при успешном сценарии и одностадийном проведении платежа;
 						 *     - `AUTHORIZED` — при успешном сценарии и двухстадийном проведении платежа;
 						 *     - `REJECTED` — при неуспешном сценарии.
-						 *
-						 * @example CONFIRMED
-						 */
+						 *      */
 						Status: string;
-						/**
-						 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
-						 *
-						 * @example 10063
-						 */
+						/** @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+						 *      */
 						PaymentId: string;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки.
 						 *      */
@@ -6465,41 +6372,23 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/**
-						 * @description Номер заказа в системе мерчанта.
-						 *
-						 * @example 21050
-						 */
+						/** @description Номер заказа в системе мерчанта.
+						 *      */
 						OrderId: string;
-						/**
-						 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-						 *
-						 * @example TinkoffBankTest
-						 */
+						/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+						 *      */
 						TerminalKey: string;
-						/**
-						 * @description Статус транзакции
-						 *
-						 * @example CONFIRMED
-						 */
+						/** @description Статус транзакции
+						 *      */
 						Status: string;
-						/**
-						 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
-						 *
-						 * @example 10063
-						 */
+						/** @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+						 *      */
 						PaymentId: string;
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки.
 						 *      */
@@ -6533,33 +6422,21 @@ export interface operations {
 						/** @description Параметры ответа.
 						 *      */
 						Params: {
-							/**
-							 * @description Наличие возможности проведения оплаты
+							/** @description Наличие возможности проведения оплаты
 							 *     T‑Pay по API, SDK.
-							 *
-							 * @example true
-							 */
+							 *      */
 							Allowed: boolean;
-							/**
-							 * @description Версия T‑Pay, доступная на терминале:
+							/** @description Версия T‑Pay, доступная на терминале:
 							 *     * `1.0` — e-invoice,
 							 *     * `2.0` — T‑Pay.
-							 *
-							 * @example 1.0
-							 */
+							 *      */
 							Version?: string;
 						};
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки.
 						 *      */
@@ -6601,7 +6478,6 @@ export interface operations {
 							 * @description Link для перехода в приложение MB на мобильных
 							 *     устройствах
 							 *
-							 * @example https://o.tbank.ru/tpay/<requestId>
 							 */
 							RedirectUrl: string;
 							/**
@@ -6611,17 +6487,11 @@ export interface operations {
 							 */
 							WebQR?: string;
 						};
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки
 						 *      */
@@ -6703,21 +6573,14 @@ export interface operations {
 							 * Format: uri
 							 * @description URL для перехода.
 							 *
-							 * @example tinkoffbank://Main/EInvoicing?billId=5000015507&providerId=e-invoicing
 							 */
 							RedirectUrl: string;
 						};
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки.
 						 *      */
@@ -6746,14 +6609,10 @@ export interface operations {
 					"application/json": {
 						/**
 						 * @description Успешность прохождения запроса — `true`/`false`.
-						 * @example true
 						 * @enum {boolean}
 						 */
 						Success: true | false;
-						/**
-						 * @description Код ошибки. `0` — если успешно.
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` — если успешно. */
 						ErrorCode: string;
 						/** @description Краткое описание ошибки. */
 						Message?: string;
@@ -6768,23 +6627,14 @@ export interface operations {
 		requestBody: {
 			content: {
 				"application/json": {
-					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-					 *
-					 * @example TinkoffBankTest
-					 */
+					/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					 *      */
 					TerminalKey: string;
-					/**
-					 * @description Уникальный идентификатор транзакции в системе.
+					/** @description Уникальный идентификатор транзакции в системе.
 					 *     Т‑Кассы
-					 *
-					 * @example 10063
-					 */
+					 *      */
 					PaymentId: string;
-					/**
-					 * @description Подпись запроса.
-					 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
-					 */
+					/** @description Подпись запроса. */
 					Token: string;
 				};
 			};
@@ -6801,29 +6651,17 @@ export interface operations {
 						 *     только если возврат возможен.
 						 *      */
 						Members?: components["schemas"]["Member"][];
-						/**
-						 * @description Идентификатор заказа в системе мерчанта.
-						 *
-						 * @example 21050
-						 */
+						/** @description Идентификатор заказа в системе мерчанта.
+						 *      */
 						OrderId: string;
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 *
-						 * @example true
-						 */
+						/** @description Успешность прохождения запроса — `true`/`false`.
+						 *      */
 						Success: boolean;
-						/**
-						 * @description Код ошибки. `0` в случае успеха.
-						 *
-						 * @example 0
-						 */
+						/** @description Код ошибки. `0` в случае успеха.
+						 *      */
 						ErrorCode: string;
-						/**
-						 * @description Краткое описание ошибки.
-						 *
-						 * @example OK
-						 */
+						/** @description Краткое описание ошибки.
+						 *      */
 						Message?: string;
 					};
 				};
