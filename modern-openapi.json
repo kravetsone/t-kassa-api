@@ -9313,6 +9313,163 @@
 										"$ref": "#/components/schemas/NotificationQr"
 									}
 								]
+							},
+							"examples": {
+								"NotificationPayment": {
+									"summary": "NotificationPayment",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"Amount": 100000,
+										"OrderId": "21050",
+										"Success": true,
+										"Status": "string",
+										"PaymentId": 13660,
+										"ErrorCode": "0",
+										"Message": "string",
+										"Details": "string",
+										"RebillId": 3207469334,
+										"CardId": 10452089,
+										"Pan": "string",
+										"ExpDate": "0229",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96",
+										"DATA": {
+											"Route": "TCB",
+											"Source": "Installment",
+											"CreditAmount": 10000
+										}
+									}
+								},
+								"NotificationAddCard": {
+									"summary": "NotificationAddCard",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"CustomerKey": "testCustomer1234",
+										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"Success": true,
+										"Status": "COMPLETED",
+										"PaymentId": 13660,
+										"ErrorCode": "0",
+										"RebillId": "3207469334",
+										"CardId": "10452089",
+										"Pan": "string",
+										"ExpDate": "0229",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
+									}
+								},
+								"NotificationFiscalization": {
+									"summary": "NotificationFiscalization",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"OrderId": "21050",
+										"Success": true,
+										"Status": "RECEIPT",
+										"PaymentId": 13660,
+										"ErrorCode": "0",
+										"ErrorMessage": "string",
+										"Amount": 100000,
+										"FiscalNumber": 0,
+										"ShiftNumber": 0,
+										"ReceiptDatetime": "string",
+										"FnNumber": "string",
+										"EcrRegNumber": "string",
+										"FiscalDocumentNumber": 0,
+										"FiscalDocumentAttribute": 0,
+										"Receipt": {
+											"FfdVersion": "string",
+											"ClientInfo": {
+												"Birthdate": "string",
+												"Citizenship": "string",
+												"DocumentСode": "21",
+												"DocumentData": "string",
+												"Address": "string"
+											},
+											"Taxation": "osn",
+											"Email": "a@test.ru",
+											"Phone": "+79031234567",
+											"Customer": "string",
+											"CustomerInn": "string",
+											"Items": [
+												{
+													"AgentData": {
+														"AgentSign": "paying_agent",
+														"OperationName": "Позиция чека",
+														"Phones": ["+790912312398"],
+														"ReceiverPhones": ["+79221210697", "+79098561231"],
+														"TransferPhones": ["+79221210697"],
+														"OperatorName": "Tinkoff",
+														"OperatorAddress": "г. Тольятти",
+														"OperatorInn": "7710140679"
+													},
+													"SupplierInfo": {
+														"Phones": ["+79221210697", "+79098561231"],
+														"Name": "ООО Вендор товара",
+														"Inn": "7710140679"
+													},
+													"Name": "Наименование товара 1",
+													"Price": 10000,
+													"Quantity": 1,
+													"Amount": 10000,
+													"Tax": "vat10",
+													"PaymentMethod": "full_payment",
+													"PaymentObject": "goods_with_marking_code",
+													"UserData": "Данные пользователя ext.test.qa@tinkoff.ru",
+													"Excise": "12.2",
+													"CountryCode": "056",
+													"DeclarationNumber": "12345678901",
+													"MeasurementUnit": "шт",
+													"MarkProcessingMode": "string",
+													"MarkCode": {
+														"MarkCodeType": "EAN8",
+														"Value": "12345678"
+													},
+													"MarkQuantity": {
+														"Numerator": 1,
+														"Denominator": 2
+													},
+													"SectoralItemProps": {
+														"FederalId": "001",
+														"Date": "21.11.2020",
+														"Number": "123/43",
+														"Value": "test value SectoralItemProps"
+													}
+												}
+											],
+											"Payments": [
+												{
+													"Cash": 90000,
+													"Electronic": 50000,
+													"AdvancePayment": 0,
+													"Credit": 0,
+													"Provision": 0
+												}
+											]
+										},
+										"Type": "string",
+										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96",
+										"Ofd": "string",
+										"Url": "string",
+										"QrCodeUrl": "string",
+										"CalculationPlace": "string",
+										"CashierName": "string",
+										"SettlePlace": "string"
+									}
+								},
+								"NotificationQr": {
+									"summary": "NotificationQr",
+									"value": {
+										"TerminalKey": "TinkoffBankTest",
+										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"AccountToken": "70LSS7DN18SJQRS10006DNPKLJL24B05",
+										"BankMemberId": "5555",
+										"BankMemberName": "string",
+										"NotificationType": "LINKACCOUNT",
+										"Success": true,
+										"ErrorCode": "0",
+										"Message": "string",
+										"Token": "871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6",
+										"Status": "ACTIVE"
+									}
+								}
 							}
 						}
 					}
