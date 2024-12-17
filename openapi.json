@@ -3223,7 +3223,9 @@
 													"RRN": "12345678",
 													"Success": "true",
 													"ErrorCode": 0,
-													"Message": "None"
+													"Message": "None",
+													"SbpPaymentId": "A42631655397753A0000030011340501",
+													"SbpCustomerId": "c4494ca1c0888b3fb0e2bfd0b83576aaae0d2c71161c5f472133ea9401473aee"
 												}
 											]
 										}
@@ -7431,6 +7433,16 @@
 						"description": "Краткое описание ошибки.\n",
 						"type": "string",
 						"example": "None"
+					},
+					"SbpPaymentId": {
+						"description": "Идентификатор платежа в СБП.\n",
+						"type": "string",
+						"example": "A42631655397753A0000030011340501"
+					},
+					"SbpCustomerId": {
+						"description": "Хэшированный номер телефона покупателя.\n",
+						"type": "string",
+						"example": "c4494ca1c0888b3fb0e2bfd0b83576aaae0d2c71161c5f472133ea9401473aee"
 					}
 				}
 			},
