@@ -5,6 +5,7 @@ import openapiTS, { astToString } from "openapi-typescript";
 import dedent from "ts-dedent";
 import { parseRedocState } from "./parse-redoc-state";
 import {
+	formatOperationIdToMethod,
 	fromPascalToCamelCase,
 	getLinkToMethod,
 	httpMethods,
@@ -145,7 +146,7 @@ indexSource = indexSource.replace(
 							 * ${operation.deprecated ? "@deprecated" : ""} 
 							 * [Documentation](${getLinkToMethod(operation.tags || [], operation.operationId || "")})
                              */
-                            ${fromPascalToCamelCase(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
+                            ${formatOperationIdToMethod(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
                                 return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, {method: "${method.toUpperCase()}" ${contentType?.endsWith("x-www-form-urlencoded") ? `, mimeType: "x-www-form-urlencoded"` : ""}, ...options})
                             }
                         `;

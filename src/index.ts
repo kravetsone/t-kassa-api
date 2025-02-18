@@ -341,6 +341,29 @@ export class TKassa<
 		});
 	}
 	/**
+	 *   `Для Мерчантов с PCI DSS` <br> Если в ответе метода был получен параметр ThreeDSMethodURL, то необходимо отправить запрос на стороне браузера по полученному ThreeDSMethodURL. Это необходимо для сбора информации ACS-ом о девайсе клиента. Отправка запроса 3DS Method в браузере должна происходить в скрытом frame. <br> Время ожидания выполнения метода не более 10 секунд
+	 *
+	 * @tags Стандартный платеж
+	 * @summary Прохождение этапа “3DS Method”
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/3DSMethod)
+	 */
+	threeDSMethod(
+		body: GetRequestBody<
+			"/v2/3DSMethod",
+			"post",
+			TerminalKey,
+			"application/x-www-form-urlencoded"
+		>,
+		options?: RequestOptions,
+	): Promise<GetResponse<"/v2/3DSMethod", "post">> {
+		return this.request("/v2/3DSMethod", body, {
+			method: "POST",
+			mimeType: "x-www-form-urlencoded",
+			...options,
+		});
+	}
+	/**
 	 * `Для мерчантов, использующих собственную платежную форму`
 	 *  <br><br> Метод подтверждает платеж передачей реквизитов. При одностадийной оплате — списывает средства
 	 *  с карты клиента, при двухстадийной — блокирует указанную сумму. Используется, если у площадки есть сертификация PCI DSS и
@@ -386,8 +409,8 @@ export class TKassa<
 	 * * `NEW` — `CANCELED`;
 	 * * `AUTHORIZED` — `PARTIAL_REVERSED`, если отмена не на полную сумму;
 	 * * `AUTHORIZED` — `REVERSED`, если отмена на полную сумму;
-	 * * `CONFIRMED` — `PARTIAL_REFUNDED`, если отмена не на полную сумму;
-	 * * `CONFIRMED` — `REFUNDED`, если отмена на полную сумму.
+	 * * `CONFIRMED` — `PARTIAL_REFUNDED`, если возврат не на полную сумму;
+	 * * `CONFIRMED` — `REFUNDED`, если возврат на полную сумму.
 	 *
 	 * При оплате в рассрочку платеж можно отменить только в статусе `AUTHORIZED`.
 	 * При оплате «Долями» делается частичный или полный возврат, если операция в статусе `CONFIRMED` или `PARTIAL_REFUNDED`.
@@ -428,7 +451,7 @@ export class TKassa<
 	 * >- на боевом терминале — обратитесь к своему персональному менеджеру.
 	 *
 	 * При проведении рекуррентного платежа учитывайте взаимосвязь атрибута `RebillId` метода **Charge**:
-	 * * Со значениями атрибутов `OperationInitiatorType` и `Reccurent` метода **Init**;
+	 * * Со значениями атрибутов `OperationInitiatorType` и `Recurrent` метода **Init**;
 	 * * С типом терминала, который используется для проведения операций — ECOM или AFT.
 	 *
 	 * Допустимые сценарии взаимосвязи:
@@ -1096,3 +1119,5 @@ export class TKassa<
 	}
 	/** @generated stop-generate-methods */
 }
+
+const a = new TKassa()["3DSMethod"];

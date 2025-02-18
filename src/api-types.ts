@@ -35,6 +35,13 @@ export interface paths {
 		 */
 		post: operations["Check3dsVersion"];
 	};
+	"/v2/3DSMethod": {
+		/**
+		 * Прохождение этапа “3DS Method”
+		 * @description   `Для Мерчантов с PCI DSS` <br> Если в ответе метода был получен параметр ThreeDSMethodURL, то необходимо отправить запрос на стороне браузера по полученному ThreeDSMethodURL. Это необходимо для сбора информации ACS-ом о девайсе клиента. Отправка запроса 3DS Method в браузере должна происходить в скрытом frame. <br> Время ожидания выполнения метода не более 10 секунд
+		 */
+		post: operations["3DSMethod"];
+	};
 	"/v2/FinishAuthorize": {
 		/**
 		 * Подтвердить платеж
@@ -66,8 +73,8 @@ export interface paths {
 		 *     * `NEW` — `CANCELED`;
 		 *     * `AUTHORIZED` — `PARTIAL_REVERSED`, если отмена не на полную сумму;
 		 *     * `AUTHORIZED` — `REVERSED`, если отмена на полную сумму;
-		 *     * `CONFIRMED` — `PARTIAL_REFUNDED`, если отмена не на полную сумму;
-		 *     * `CONFIRMED` — `REFUNDED`, если отмена на полную сумму.
+		 *     * `CONFIRMED` — `PARTIAL_REFUNDED`, если возврат не на полную сумму;
+		 *     * `CONFIRMED` — `REFUNDED`, если возврат на полную сумму.
 		 *
 		 *     При оплате в рассрочку платеж можно отменить только в статусе `AUTHORIZED`.
 		 *     При оплате «Долями» делается частичный или полный возврат, если операция в статусе `CONFIRMED` или `PARTIAL_REFUNDED`.
@@ -101,7 +108,7 @@ export interface paths {
 		 *     >- на боевом терминале — обратитесь к своему персональному менеджеру.
 		 *
 		 *     При проведении рекуррентного платежа учитывайте взаимосвязь атрибута `RebillId` метода **Charge**:
-		 *     * Со значениями атрибутов `OperationInitiatorType` и `Reccurent` метода **Init**;
+		 *     * Со значениями атрибутов `OperationInitiatorType` и `Recurrent` метода **Init**;
 		 *     * С типом терминала, который используется для проведения операций — ECOM или AFT.
 		 *
 		 *     Допустимые сценарии взаимосвязи:
@@ -497,7 +504,7 @@ export interface components {
 			 *     * `I` — повторяющаяся операция по сохраненной карте в соответствии с графиком платежей для погашения кредита. Является Merchant Initiated сценарием — «I = Merchant-Initiated, Credential-on-File, Installment».
 			 *
 			 *     При передаче в объекте `DATA` атрибута `OperationInitiatorType` учитывайте взаимосвязь его значений:
-			 *       * со значением атрибута `Reccurent` в методе **Init**;
+			 *       * со значением атрибута `Recurrent` в методе **Init**;
 			 *       * со значением атрибута `RebillId` в методе **Charge**;
 			 *       * с типом терминала, используемом для проведения операций — ECOM или AFT.
 			 *
@@ -894,15 +901,29 @@ export interface components {
 			 *     Перечисление со значениями:
 			 *     * `none` — без НДС,
 			 *     * `vat0` — НДС по ставке 0%,
+			 *     * `vat5` — НДС по ставке 5%,
+			 *     * `vat7` — НДС по ставке 7%,
 			 *     * `vat10` — НДС по ставке 10%,
 			 *     * `vat20` — НДС по ставке 20%,
+			 *     * `vat105` — НДС чека по расчетной ставке 5/105,
+			 *     * `vat107` — НДС чека по расчетной ставке 7/107,
 			 *     * `vat110` — НДС чека по расчетной ставке 10/110,
 			 *     * `vat120` — НДС чека по расчетной ставке 20/120.
 			 *
 			 * @example vat10
 			 * @enum {string}
 			 */
-			Tax: "none" | "vat0" | "vat10" | "vat20" | "vat110" | "vat120";
+			Tax:
+				| "none"
+				| "vat0"
+				| "vat5"
+				| "vat7"
+				| "vat10"
+				| "vat20"
+				| "vat105"
+				| "vat107"
+				| "vat110"
+				| "vat120";
 			/**
 			 * @description `Тег ФФД: 1162`
 			 *
@@ -1321,15 +1342,29 @@ export interface components {
 			 *     Возможные значения:
 			 *     * `none` — без НДС,
 			 *     * `vat0` — НДС по ставке 0%;
+			 *     * `vat5` — НДС по ставке 5%;
+			 *     * `vat7` — НДС по ставке 7%;
 			 *     * `vat10` — НДС по ставке 10%;
 			 *     * `vat20` — НДС по ставке 20%;
+			 *     * `vat105` — НДС чека по расчетной ставке 5/105;
+			 *     * `vat107` — НДС чека по расчетной ставке 7/107;
 			 *     * `vat110` — НДС чека по расчетной ставке 10/110;
 			 *     * `vat120` — НДС чека по расчетной ставке 20/120.
 			 *
 			 * @example vat10
 			 * @enum {string}
 			 */
-			Tax: "none" | "vat0" | "vat10" | "vat20" | "vat110" | "vat120";
+			Tax:
+				| "none"
+				| "vat0"
+				| "vat5"
+				| "vat7"
+				| "vat10"
+				| "vat20"
+				| "vat105"
+				| "vat107"
+				| "vat110"
+				| "vat120";
 			/**
 			 * @description `Тег ФФД: 1214`
 			 *
@@ -1858,7 +1893,6 @@ export interface components {
 			 *
 			 *     Рекомендации для заполнения поля `Device`:
 			 *
-			 *       * SDK — при способе интеграции «Мобильный SDK»;
 			 *       * Mobile  — при оплате c мобильного устройства;
 			 *       * Desktop — при оплате c десктопного устройства.
 			 *
@@ -1895,7 +1929,7 @@ export interface components {
 			 *
 			 *     6. При передаче в объекте `DATA` атрибута `OperationInitiatorType` учитывайте взаимосвязь его значений:
 			 *
-			 *        * Со значением атрибута `Reccurent` в методе **\/Init**.
+			 *        * Со значением атрибута `Recurrent` в методе **\/Init**.
 			 *        * Со значением атрибута `RebillId` в методе **\/Charge**.
 			 *        * С типом терминала, который используется для проведения операций — ECOM/AFT.
 			 *
@@ -1919,207 +1953,6 @@ export interface components {
 			 * @example 678451
 			 */
 			Descriptor?: string;
-		};
-		/** @description SDK */
-		Init_SDK: {
-			/**
-			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description * Сумма в копейках. Например, сумма 3руб. 12коп. — это число 312.
-			 *     * Параметр должен быть равен сумме всех параметров `Amount`, переданных в объекте `Items`.
-			 *     * Минимальная сумма операции с помощью СБП — 10 руб.
-			 *
-			 * @example 140000
-			 */
-			Amount: number;
-			/**
-			 * @description Идентификатор заказа в системе мерчанта.
-			 * @example 21050
-			 */
-			OrderId: string;
-			/**
-			 * @description Подпись запроса.
-			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
-			 */
-			Token: string;
-			/**
-			 * @description Описание заказа. Поле необходимо обязательно заполнять для осуществления привязки и одновременной оплаты по CБП.
-			 * @example Подарочная карта на 1400.00 рублей
-			 */
-			Description?: string;
-			/** @description Идентификатор клиента в системе мерчанта.
-			 *     * Обязателен, если передан атрибут `Recurrent`.
-			 *     * Если был передан в запросе, в нотификации будет указан `CustomerKey` и его `CardId`. Смотрите метод [GetCardList](#tag/Metody-raboty-s-kartami/paths/~1GetCardList/post).
-			 *     * Необходим для сохранения карт на платежной форме — платежи в один клик.
-			 *      */
-			CustomerKey?: string;
-			/**
-			 * @description Признак родительского рекуррентного платежа
-			 *     * Для регистрации автоплатежа — обязателен. Если передается и установлен в Y, то регистрирует платеж как рекуррентный. В этом случае после оплаты в нотификации на AUTHORIZED будет передан параметр RebillId для использования в методе [Charge](#tag/Rekurrentnyj-platyozh/paths/~1Charge/post).
-			 *     * Для осуществления привязки и одновременной оплаты по CБП необходимо передавать 'Y'
-			 *
-			 * @example Y
-			 */
-			Recurrent?: string;
-			/**
-			 * @description Определяет тип проведения платежа — двухстадийная или одностадийная оплата
-			 *     * "O" — одностадийная оплата,
-			 *     * "T" — двухстадийная оплата.
-			 *
-			 * @enum {string}
-			 */
-			PayType?: "O" | "T";
-			/**
-			 * @description Язык платежной формы
-			 *     * ru — русский,
-			 *     * en — английский.
-			 *     Если не передан, форма откроется на русском языке
-			 *
-			 * @enum {string}
-			 */
-			Language?: "ru" | "en";
-			/**
-			 * Format: uri
-			 * @description URL на веб-сайте Мерчанта, куда будет отправлен
-			 *     POST запрос о статусе выполнения вызываемых методов
-			 *     (настраивается в Личном кабинете):
-			 *     * если параметр передан – используется его значение;
-			 *     * если нет – значение в настройках терминала.
-			 *
-			 */
-			NotificationURL?: string;
-			/**
-			 * Format: uri
-			 * @description URL на веб-сайте Мерчанта, куда будет
-			 *     переведен клиент в случае успешной оплаты (для установки обратитесь к персональному менеджеру)
-			 *     * если параметр передан – используется также значение, установленное через менеджера (актуально для SDK)
-			 *
-			 */
-			SuccessURL?: string;
-			/**
-			 * Format: uri
-			 * @description URL на веб-сайте Мерчанта, куда будет
-			 *     переведен клиент в случае неуспешной оплаты (для установки обратитесь к персональному менеджеру)
-			 *     * если параметр передан – используется также значение, установленное через менеджера (актуально для SDK)
-			 *
-			 */
-			FailURL?: string;
-			/**
-			 * Format: date-time
-			 * @description Cрок жизни ссылки или динамического QR-кода
-			 *     СБП (если выбран данный способ оплаты).
-			 *     Если текущая дата превышает дату, переданную в
-			 *     данном параметре, ссылка для оплаты или
-			 *     возможность платежа по QR-коду становятся
-			 *     недоступными и платёж выполнить нельзя.
-			 *     * Максимальное значение: 90 дней от текущей даты;
-			 *     * Минимальное значение: 1 минута от текущей даты;
-			 *     * Формат даты: YYYY-MM-DDTHH24:MI:SS+GMT;
-			 *     * Пример даты: 2016-08-31T12:28:00+03:00. <br>
-			 *     Если не передан, принимает значение 24 часа для платежа
-			 *     и 30 дней для счета
-			 *
-			 */
-			RedirectDueDate?: string;
-			/** @description JSON-объект, который позволяет передавать дополнительные параметры по операции и задавать определенные настройки в формате "ключ":"значение".
-			 *
-			 *     Максимальная длина для каждого передаваемого параметра:
-			 *       * Ключ — 20 знаков;
-			 *       * Значение — 100 знаков.
-			 *
-			 *     Максимальное количество пар "ключ":"значение" — 20
-			 *
-			 *     1. Если у терминала включена опция привязки клиента после
-			 *     успешной оплаты и передается параметр `CustomerKey`, то в передаваемых
-			 *     параметрах `DATA` могут присутствовать параметры метода **AddCustomer**.
-			 *     Если они присутствуют, то автоматически привязываются к клиенту.
-			 *     Например, если указать:
-			 *     ```
-			 *     "DATA":{"Phone":"+71234567890", "Email":"a@test.com"}
-			 *     ```
-			 *     к клиенту автоматически будут привязаны данные Email и телефон,
-			 *     и они будут возвращаться при вызове метода **GetCustomer**.
-			 *
-			 *         Для МСС 4814 обязательно передать значение в параметре `Phone`
-			 *
-			 *         Для МСС 6051 и 6050 обязательно передать параметр `account` (номер электронного кошелька, не должен превышать 30 символов). Пример:
-			 *     ```
-			 *     "DATA": {"account":"123456789"}
-			 *     ```
-			 *     2. Если используется функционал сохранения карт на платежной форме,
-			 *     то при помощи опционального параметра `DefaultCard` можно задать
-			 *     какая карта будет выбираться по умолчанию.
-			 *     Возможные варианты:
-			 *     * Оставить платежную форму пустой. Пример:
-			 *       ```
-			 *       "DATA":{"DefaultCard":"none"}
-			 *       ```
-			 *     * Заполнить данными передаваемой карты. В этом случае передается `CardId`. Пример:
-			 *       ```
-			 *       "DATA":{"DefaultCard":"894952"}
-			 *       ```
-			 *     * Заполнить данными последней сохраненной карты. Применяется, если параметр `DefaultCard` не передан, передан с некорректным значением или в значении null
-			 *
-			 *     3. Если вы подключаете оплату через T‑Pay,
-			 *     **ОБЯЗАТЕЛЬНО** передавайте параметры устройства, с которого будет осуществлен переход в объекте `Data`.
-			 *     Параметры устройства критично влияют на переход в приложение с устройств.
-			 *     Пример:
-			 *
-			 *       ```
-			 *       "DATA": {
-			 *         "TinkoffPayWeb": "true",
-			 *         "Device": "Desktop",
-			 *         "DeviceOs": "iOS",
-			 *         "DeviceWebView": "true",
-			 *         "DeviceBrowser": "Safari"
-			 *        }
-			 *       ```
-			 *
-			 *     Рекомендации для заполнения поля `Device`:
-			 *
-			 *       * SDK — при способе интеграции «Мобильный SDK»;
-			 *       * Mobile  — при оплате c мобильного устройства;
-			 *       * Desktop — при оплате c десктопного устройства.
-			 *
-			 *     Рекомендации для заполнения поля `DeviceOs`:
-			 *
-			 *       * iOS,
-			 *       * Android,
-			 *       * macOS,
-			 *       * Windows,
-			 *       * Linux.
-			 *
-			 *     Рекомендации для заполнения поля `DeviceBrowser`:
-			 *
-			 *       * Chrome,
-			 *       * Firefox,
-			 *       * JivoMobile,
-			 *       * Microsoft Edge,
-			 *       * Miui,
-			 *       * Opera,
-			 *       * Safari,
-			 *       * Samsung,
-			 *       * WebKit,
-			 *       * WeChat,
-			 *       * Yandex.
-			 *
-			 *     4. Для осуществления привязки и одновременной оплаты по CБП необходимо передавать параметр "QR" = "true"
-			 *      */
-			DATA?:
-				| components["schemas"]["Common"]
-				| components["schemas"]["T-Pay"]
-				| components["schemas"]["LongPay"];
-			/** @description JSON объект с данными чека */
-			Receipt?:
-				| components["schemas"]["Receipt_FFD_105"]
-				| components["schemas"]["Receipt_FFD_12"];
-			/** @description JSON объект с данными Маркетплейса */
-			Shops?: components["schemas"]["Shops"][];
 		};
 		Response: {
 			/**
@@ -2259,14 +2092,38 @@ export interface components {
 			 */
 			Success?: true | false;
 		};
+		/** Запрос */
+		"3DSMethod": {
+			/**
+			 * @description JSON с параметрами threeDSMethodNotificationURL, threeDSServerTransID, **закодированный в формат base-64**
+			 *
+			 *       | Название параметра | Тип | Описание             |
+			 *      | --------------------- | ------------ | -------------------- |
+			 *      | threeDSMethodNotificationURL | string | Обратный адрес, на который будет отправлен запрос после прохождения threeDSMethod |
+			 *      | threeDSServerTransID | string | Идентификатор транзакции из ответа метода |
+			 *
+			 *
+			 * @example eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6IjU2ZTcxMmE1LTE5MGEtNDU4OC05MWJjLWUwODYyNmU3N2M0NCIsInRocmVlRFNNZXRob2ROb3RpZmljYXRpb25VUkwiOiJodHRwczovL3Jlc3QtYXBpLXRlc3QudGlua29mZi5ydS92Mi9Db21wbGV0ZTNEU01ldGhvZHYyIn0
+			 */
+			threeDSMethodData: string;
+		};
+		"3DSMethod-2": {
+			/**
+			 * @description Идентификатор транзакции
+			 *
+			 * @example string
+			 */
+			threeDSServerTransID: string;
+		};
 		"3DSv2": {
 			/**
 			 * @description `deviceChannel 02 — BRW`
 			 *
 			 *
 			 *     Идентификатор выполнения 3DS Method:
-			 *     * `Y` — выполнение метода успешно завершено,
-			 *     * `N` — выполнение метода завершено неуспешно или метод не выполнялся.
+			 *     * `Y` — выполнение метода успешно завершено
+			 *     * `N` — выполнение метода завершено неуспешно или метод не выполнялся
+			 *     * `U` — в ответе на вызов метода Check3dsVersion не было получено значение threeDSMethodURL
 			 *
 			 * @example Y
 			 */
@@ -2505,233 +2362,6 @@ export interface components {
 			 * @enum {string}
 			 */
 			Route?: "ACQ" | "MC" | "EINV" | "WM";
-		};
-		"3DSv2SDK": {
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Уникальный идентификатор приложения 3DS Requestor, который формируется 3DS SDK при каждой установке или обновлении приложения.
-			 *
-			 * @example 6dg99s67h9d6hv
-			 */
-			sdkAppID: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Данные, собранные SDK.
-			 *
-			 *     JWE-объект, полученный от 3DS SDK, должен быть дополнительно закодирован в `base64`-строку.
-			 *
-			 * @example f8s9v04bvglglgkvkUO0UvUF7rHlKL
-			 */
-			sdkEncData: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Компонент public key пары ephemeral key, сгенерированный 3DS SDK.
-			 *
-			 *     JWE-объект, полученный от 3DS SDK, должен быть дополнительно закодирован в `base64`-строку.
-			 *
-			 * @example f8s9v04POPP479GHky5dG7InO0UvUF7rHlKL
-			 */
-			sdkEphemPubKey: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Максимальное количество времени в минутахю
-			 *
-			 * @example 05
-			 */
-			sdkMaxTimeout: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Поставщик и версия 3DS SDK.
-			 *
-			 * @example 3DSV2
-			 */
-			sdkReferenceNumber: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Уникальный идентификатор транзакции, назначенный 3DS SDK для идентификации одной транзакции.
-			 *
-			 * @example 194050GHYYtu86nOJ
-			 */
-			sdkTransID: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Список поддерживаемых интерфейсов SDK.
-			 *     <br> Поддерживаемые значения:
-			 *     * `01` = Native,
-			 *     * `02` = HTML,
-			 *     * `03` = Both.
-			 *
-			 * @example 02
-			 */
-			sdkInterface: string;
-			/**
-			 * @description `deviceChannel 01 — APP`
-			 *
-			 *
-			 *     Список поддерживаемых типов UI.
-			 *
-			 *
-			 *     Значения для каждого интерфейса:
-			 *     * Native UI = 01–04,
-			 *     * HTML UI = 01–05.
-			 *
-			 *
-			 *     Поддерживаемые значения:
-			 *     * `01` = Text,
-			 *     * `02` = Single Select,
-			 *     * `03` = Multi Select,
-			 *     * `04` = OOB,
-			 *     * `05` = HTML Other (valid only for HTML UI).
-			 *
-			 * @example 04
-			 */
-			sdkUiType: string;
-		};
-		FinishAuthorize_SDK: {
-			/**
-			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы.
-			 *
-			 * @example 700001702044
-			 */
-			PaymentId: string;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5
-			 */
-			Token: string;
-			/**
-			 * @description IP-адрес клиента.
-			 *
-			 *     Обязательный параметр для 3DS второй
-			 *     версии. DS платежной системы требует
-			 *     передавать данный адрес в полном формате,
-			 *     без каких-либо сокращений — 8 групп по 4 символа.
-			 *
-			 *     Этот формат регламентируется на уровне
-			 *     спецификации EMVCo.
-			 *
-			 * @example 2011:0db8:85a3:0101:0101:8a2e:0370:7334
-			 */
-			IP?: string;
-			/** @description * `true` — отправлять клиенту информацию об оплате на
-			 *     почту;
-			 *     * `false` — не отправлять.
-			 *      */
-			SendEmail?: boolean;
-			/**
-			 * @description Источник платежа.
-			 *
-			 * @example cards
-			 * @enum {string}
-			 */
-			Source?:
-				| "cards"
-				| "einvoicing"
-				| "Installment"
-				| "qrsbp"
-				| "Bnpl"
-				| "MC"
-				| "RC"
-				| "VC"
-				| "TinkoffPay"
-				| "TinkoffWallet"
-				| "UP";
-			/** @description JSON-объект, который содержит дополнительные
-			 *     параметры в виде `ключ`:`значение`.
-			 *
-			 *
-			 *     Эти параметры будут переданы на страницу
-			 *     оплаты, если она кастомизирована.
-			 *
-			 *
-			 *     Максимальная длина для каждого передаваемого параметра:
-			 *     * ключ — 20 знаков,
-			 *     * значение — 100 знаков.
-			 *
-			 *
-			 *     Максимальное количество пар `ключ`:`значение` — не больше 20.
-			 *      */
-			DATA?:
-				| components["schemas"]["3DSv2SDK"]
-				| {
-						[key: string]: string | undefined;
-				  };
-			/**
-			 * Format: email
-			 * @description Электронная почта для отправки информации об оплате.
-			 *     Обязателен при передаче `SendEmail`.
-			 *
-			 * @example qwerty@test.com
-			 */
-			InfoEmail?: string;
-			/** @description Данные карты.
-			 *      */
-			EncryptedPaymentData?: string;
-			/**
-			 * @description Объект `CardData` собирается в виде списка `ключ`=`значение` c разделителем `;`.
-			 *     Объект зашифровывается открытым ключом (X509 RSA 2048), и получившееся бинарное значение кодируется в `Base64`.
-			 *     Открытый ключ генерируется Т‑Кассой и выдается при регистрации терминала.
-			 *     Доступен в личном кабинете Интернет-эквайринга в разделе **Магазины** при изменении типа подключения на «Мобильное».
-			 *
-			 *     |Наименование|Тип данных| Обязательность | Описание                                                                                                                                           |
-			 *     |---|---|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-			 *     |PAN|Number| Да             | Номер карты.                                                                                                                                       |
-			 *     |ExpDate| Number| Да             | Месяц и год срока действия карты в формате `MMYY`.                                                                                                 |
-			 *     |CardHolder |String| Нет            | Имя и фамилия держателя карты — как на карте.                                                                                                      |
-			 *     |CVV |String| Нет            | Код защиты с обратной стороны карты. Для платежей по Apple Pay с расшифровкой токена на своей стороне необязательный.                              |
-			 *     |ECI |String | Нет            | Electronic Commerce Indicator. Индикатор, который показывает степень защиты, применяемую при предоставлении клиентом своих данных ТСП. |
-			 *     |CAVV |String | Нет            | Cardholder Authentication Verification Value или Accountholder Authentication Value.                                                               |
-			 *
-			 *
-			 *     Пример значения элемента формы `CardData`:
-			 *
-			 *     ```
-			 *     PAN=4300000000000777;ExpDate=0519;CardHolder=IVAN PETROV;CVV=111
-			 *     ```
-			 *
-			 *     Для MirPay, если интеграция с НСПК для получения платежного токена:
-			 *     1. Передавайте `Route=ACQ` и `Source= MirPay`.
-			 *     2. ПВ `DATA.transId` передавайте значение `transId`.
-			 *     3. В `DATA.tavv` передавайте значение `cav`.
-			 *     4. Передавайте параметр `CardData`:
-			 *
-			 *         - **Pan** заполняйте `tan`,
-			 *         - **ExpDate** заполняйте `tem + tey`.<br>
-			 *
-			 *     Если мерчант интегрируется только с банком для проведения платежа по MirPay,
-			 *     метод не вызывается. Эквайер самостоятельно получает платежный токен и инициирует авторизацию
-			 *     вместо мерчанта.<br>
-			 *
-			 *     При получении **CAVV** в **CardData** оплата будет проводиться как оплата токеном — иначе прохождение 3DS будет
-			 *     регулироваться стандартными настройками треминала или платежа.
-			 *
-			 *     Не используется и не является обязательным, если передается `EncryptedPaymentData`.
-			 * @example eyJzaWduYXR1cmUiOiJNRVVDSVFEdjNJS1A5WG9nWml4RytUUm9zZWFDK0RGd3RKd2FtMHVEcm91RUVGZVB6Z0lnYXBFbHhxQ3AwQWtZcVVmTFVMaVNhUjBKWkVQNmg 4THFqYks5YkJKQnM5d1x1MDAzZCIsInByb3RvY29sVmVyc2lvbiI6IkVDdjEiLCJzaWduZWRNZXNzYWdlIjoie1wiZW5jcnlwdGVkTWVzc2FnZVwiOlwiQW11dm5OYUIralBsa3VKTitrMUZLSDZFcm1VK2lTY052 L05rR3FFaXIxOHZmSWxkVFJ5L2U4cW5zMXkyanFtcm1acU1JSWNYMUhyTHBxRURpaXkvS3B6SUhNZFllcXRkSVVNOU1tRjNpejU2d2NTZUVVaXU2ODI3QThGcitaYm8xRWtWRjY1TUxRYVY3NlBOUFRndH UvQ1BodW5HUk0rN25KdVhDczVtbkVvOHFma0RNVk8xWktGWDQ4TnVEL2FKcDJQdVVIY2puSnBTZ0pTSDB4U21YSnAzU1MreXFDNm54N254WUEwN2h4YjYvSnp2R2s3ZExDU2hWWGU1Z2haUjNDaFQyV W8rRnpXTWJRRGZtSjBLQW9kc2VlR0xaaitqMzVqOUlKMkhJRFhIUUZZMWNuTW9YVUVoTjgvdEkvRkpqRnJiYVdFRkIzRDZwOFUzT2tkUmVaNHAyYi8yYURNZXVxR1ozSUtjc3R0R2lKMFhQQVhhZXYyQU8 o1M3RRQXVqQXRYdFlaekNTVjVBVXdXZS85T1VcXHUwMDNkXCJ9In0=
-			 */
-			CardData: string;
 		};
 		FinishAuthorize: {
 			/**
@@ -3269,34 +2899,6 @@ export interface components {
 			 */
 			InfoEmail?: string;
 		};
-		Charge_SDK: {
-			/**
-			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы.
-			 *
-			 * @example 700001702044
-			 */
-			PaymentId: string;
-			/**
-			 * @description Идентификатор рекуррентного платежа.
-			 *
-			 * @example 145919
-			 */
-			RebillId: string;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example f5a3be479324a6d3a4d9efa0d02880b77d04a91758deddcbd9e752a6df97cab5
-			 */
-			Token: string;
-		};
 		GetState_FULL: {
 			/**
 			 * @description Идентификатор терминала. <br>
@@ -3323,27 +2925,6 @@ export interface components {
 			 * @example 192.168.0.52
 			 */
 			IP?: string;
-		};
-		GetState_SDK: {
-			/**
-			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
-			 *
-			 * @example 13660
-			 */
-			PaymentId: string;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
-			 */
-			Token: string;
 		};
 		AddCustomer: {
 			/**
@@ -3556,40 +3137,6 @@ export interface components {
 			 *      */
 			ResidentState?: boolean;
 		};
-		AddCard_SDK: {
-			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-			 *
-			 * @example 1241421414
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example testCustomer1234
-			 */
-			CustomerKey: string;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example 30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e
-			 */
-			Token: string;
-			/**
-			 * @description Возможные значения:
-			 *     Возможные значения:
-			 *     * `NO` — сохранить карту без проверок. `RebillID` для рекуррентных платежей не возвращается.
-			 *     * `HOLD` — при сохранении сделать списание на 0 руб. `RebillID` возвращается для терминалов без
-			 *     поддержки 3DS.
-			 *     * `3DS` — при сохранении карты выполнить проверку 3DS и выполнить списание на 0 р. В этом случае `RebillID` будет только для
-			 *     3DS карт. Карты, не поддерживающие 3DS, привязаны не будут.
-			 *     * `3DSHOLD` – при привязке карты выполнить проверку, поддерживает карта 3DS или нет. Если карта не поддерживает 3DS, выполняется
-			 *     списание на 0 руб.
-			 *
-			 * @enum {string}
-			 */
-			CheckType?: "NO" | "HOLD" | "3DS" | "3DSHOLD";
-		};
 		AddCardResponse_FULL: {
 			/**
 			 * @description Идентификатор платежа в системе Т‑Кассы.
@@ -3647,57 +3194,6 @@ export interface components {
 			 * @example 82a31a62-6067-4ad8-b379-04bf13e37642d
 			 */
 			PaymentURL: string;
-		};
-		AddCardResponse_SDK: {
-			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
-			 *
-			 * @example 6155312073
-			 */
-			PaymentId: number;
-			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
-			 *     при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example 906540
-			 */
-			CustomerKey: string;
-			/**
-			 * @description Идентификатор запроса на привязку карты.
-			 *
-			 * @example ed989549-d3be-4758-95c7-22647e03f9ec
-			 */
-			RequestKey: string;
-			/**
-			 * @description Код ошибки. `0` в случае успеха.
-			 *
-			 * @example 0
-			 */
-			ErrorCode: string;
-			/**
-			 * @description Успешность прохождения запроса — `true`/`false`.
-			 *
-			 * @example true
-			 */
-			Success: boolean;
-			/**
-			 * @description Краткое описание ошибки.
-			 *
-			 * @example Неверные параметры
-			 */
-			Message?: string;
-			/**
-			 * @description Подробное описание ошибки.
-			 *
-			 * @example Терминал не найден
-			 */
-			Details?: string;
 		};
 		AttachCard: {
 			/**
@@ -3791,8 +3287,8 @@ export interface components {
 			 * @description Статус привязки карты:
 			 *     * `NEW` — новая сессия привязки карты;
 			 *     * `FORM_SHOWED` — показ формы привязки карты;
-			 *     * `3DS_CHECKING` — отправка клиента на проверку 3DS;
-			 *     * `3DS_CHECKED` — клиент успешно прошел проверку 3DS;
+			 *     * `THREE_DS_CHECKING` — отправка клиента на проверку 3DS;
+			 *     * `THREE_DS_CHECKED` — клиент успешно прошел проверку 3DS;
 			 *     * `AUTHORIZING` — отправка платежа на 0 руб;
 			 *     * `AUTHORIZED` — платеж на 0 руб прошел успешно;
 			 *     * `COMPLETED` — карта успешно привязана;
@@ -3803,8 +3299,8 @@ export interface components {
 			Status?:
 				| "NEW"
 				| "FORM_SHOWED"
-				| "3DS_CHECKING"
-				| "3DS_CHECKED"
+				| "THREE_DS_CHECKING"
+				| "THREE_DS_CHECKED"
 				| "AUTHORIZING"
 				| "AUTHORIZED"
 				| "COMPLETED"
@@ -3884,8 +3380,8 @@ export interface components {
 			 * @description Статус привязки карты:
 			 *     * `NEW` — новая сессия привязки карты,
 			 *     * `FORM_SHOWED` — показ формы привязки карты,
-			 *     * `3DS_CHECKING` — отправка клиента на проверку 3DS;
-			 *     * `3DS_CHECKED` — клиент успешно прошел проверку 3DS;
+			 *     * `THREE_DS_CHECKING` — отправка клиента на проверку 3DS;
+			 *     * `THREE_DS_CHECKED` — клиент успешно прошел проверку 3DS;
 			 *     * `AUTHORIZING` — отправка платежа на 0 руб;
 			 *     * `AUTHORIZED` — платеж на 0 руб прошел успешно;
 			 *     * `COMPLETED` — карта успешно привязана,
@@ -3896,8 +3392,8 @@ export interface components {
 			Status:
 				| "NEW"
 				| "FORM_SHOWED"
-				| "3DS_CHECKING"
-				| "3DS_CHECKED"
+				| "THREE_DS_CHECKING"
+				| "THREE_DS_CHECKED"
 				| "AUTHORIZING"
 				| "AUTHORIZED"
 				| "COMPLETED"
@@ -3976,32 +3472,6 @@ export interface components {
 			 * @example 2011:0db8:85a3:0101:0101:8a2e:0370:7334
 			 */
 			IP?: string;
-		};
-		GetCardList_SDK: {
-			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-			 *
-			 * @example testRegressBank
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example testCustomer1234
-			 */
-			CustomerKey: string;
-			/**
-			 * @description Признак сохранения карты для оплаты в 1 клик.
-			 *
-			 * @example true
-			 */
-			SavedCard?: boolean;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example 30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e
-			 */
-			Token: string;
 		};
 		RemoveCard: {
 			/**
@@ -4126,65 +3596,6 @@ export interface components {
 			Token: string;
 		};
 		QrResponse_FULL: {
-			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
-			 *     при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Номер заказа в системе мерчанта.
-			 *
-			 * @example 21057
-			 */
-			OrderId: string;
-			/**
-			 * @description Успешность прохождения запроса — `true`/`false`.
-			 *
-			 * @example true
-			 */
-			Success: boolean;
-			/**
-			 * @description В зависимости от параметра `DataType` в запросе:
-			 *       * `Payload` — информация, которая должна быть закодирована в QR;
-			 *       * `SVG` — изображение QR, в котором уже закодирован Payload.
-			 *
-			 * @example https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B
-			 */
-			Data: string;
-			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
-			 *
-			 * @example 10063
-			 */
-			PaymentId: number;
-			/**
-			 * @description Код ошибки. `0` в случае успеха.
-			 *
-			 * @example 0
-			 */
-			ErrorCode: string;
-			/**
-			 * @description Краткое описание ошибки.
-			 *
-			 * @example Неверные параметры
-			 */
-			Message?: string;
-			/**
-			 * @description Подробное описание ошибки.
-			 *
-			 * @example Подробное описание ошибки
-			 */
-			Details?: string;
-			/**
-			 * @description Идентификатор запроса на привязку счета. Передается в случае привязки и одновременной оплаты по CБП.
-			 *
-			 * @example Идентификатор запроса
-			 */
-			RequestKey: string;
-		};
-		QrResponse_SDK: {
 			/**
 			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
 			 *     при заведении терминала.
@@ -4641,10 +4052,11 @@ export interface components {
 			PaymentId: string;
 			/**
 			 * @description Код ошибки:
-			 *     * `0` — успешная операция;
+			 *     * `0` — Успешная операция;
 			 *     * `3013` — Рекуррентные платежи недоступны;
 			 *     * `3015` — Неверный статус AccountToken;
 			 *     * `3040` — Техническая ошибка;
+			 *     * `3037` — Повторный вызов метода недоступен;
 			 *     * `3041` — Слишком много неудачных попыток за сутки. Попробуйте еще раз завтра;
 			 *     * `3042` — Слишком много неудачных попыток за час. Попробуйте снова через час;
 			 *     * `9999` — Повторите попытку позже.
@@ -4730,58 +4142,6 @@ export interface components {
 			Details: string;
 		};
 		GetQRStateResponse_FULL: {
-			/**
-			 * @description Успешность прохождения запроса — `true`/`false`.
-			 *
-			 * @example true
-			 * @enum {boolean}
-			 */
-			Success: true | false;
-			/**
-			 * @description Код ошибки. `0` в случае успеха.
-			 *
-			 * @example 0
-			 */
-			ErrorCode: string;
-			/**
-			 * @description Статус платежа. <br>
-			 *     Обязателен, если не произошло ошибки при получении статуса.
-			 *
-			 * @example CONFIRMED
-			 */
-			Status?: string;
-			/**
-			 * @description Код ошибки возврата, полученный от СБП.
-			 *
-			 * @example I05043
-			 */
-			QrCancelCode?: string;
-			/**
-			 * @description Дополнительное описание ошибки, произошедшей при возврате по QR.
-			 *
-			 * @example У клиента нет расчетного счета в этом банке. Попробуйте вернуть деньги на счет этого клиента в другом банке
-			 */
-			QrCancelMessage?: string;
-			/**
-			 * @description Номер заказа в системе мерчанта.
-			 *
-			 * @example 7830122
-			 */
-			OrderId?: string;
-			/**
-			 * @description Сумма отмены в копейках.
-			 *
-			 * @example 10000
-			 */
-			Amount?: number;
-			/**
-			 * @description Краткое описание ошибки, произошедшей при запросе статуса.
-			 *
-			 * @example OK
-			 */
-			Message?: string;
-		};
-		GetQRStateResponse_SDK: {
 			/**
 			 * @description Успешность прохождения запроса — `true`/`false`.
 			 *
@@ -5678,9 +5038,7 @@ export interface operations {
 	Init: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["Init_FULL"]
-					| components["schemas"]["Init_SDK"];
+				"application/json": components["schemas"]["Init_FULL"];
 			};
 		};
 		responses: {
@@ -5782,12 +5140,28 @@ export interface operations {
 			};
 		};
 	};
+	"3DSMethod": {
+		requestBody?: {
+			content: {
+				"application/x-www-form-urlencoded": components["schemas"]["3DSMethod"];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["3DSMethod-2"];
+				};
+			};
+		};
+	};
 	FinishAuthorize: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["FinishAuthorize_FULL"]
-					| components["schemas"]["FinishAuthorize_SDK"];
+				"application/json": components["schemas"]["FinishAuthorize_FULL"];
 			};
 		};
 		responses: {
@@ -5845,9 +5219,7 @@ export interface operations {
 	ChargePCI: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["Charge_FULL"]
-					| components["schemas"]["Charge_SDK"];
+				"application/json": components["schemas"]["Charge_FULL"];
 			};
 		};
 		responses: {
@@ -5917,9 +5289,7 @@ export interface operations {
 	GetState: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["GetState_FULL"]
-					| components["schemas"]["GetState_SDK"];
+				"application/json": components["schemas"]["GetState_FULL"];
 			};
 		};
 		responses: {
@@ -6023,9 +5393,7 @@ export interface operations {
 	AddCard: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["AddCard_FULL"]
-					| components["schemas"]["AddCard_SDK"];
+				"application/json": components["schemas"]["AddCard_FULL"];
 			};
 		};
 		responses: {
@@ -6035,9 +5403,7 @@ export interface operations {
 					[name: string]: unknown;
 				};
 				content: {
-					"application/json":
-						| components["schemas"]["AddCardResponse_FULL"]
-						| components["schemas"]["AddCardResponse_SDK"];
+					"application/json": components["schemas"]["AddCardResponse_FULL"];
 				};
 			};
 		};
@@ -6081,9 +5447,7 @@ export interface operations {
 	GetCardList: {
 		requestBody: {
 			content: {
-				"application/json":
-					| components["schemas"]["GetCardList_FULL"]
-					| components["schemas"]["GetCardList_SDK"];
+				"application/json": components["schemas"]["GetCardList_FULL"];
 			};
 		};
 		responses: {
@@ -6159,9 +5523,7 @@ export interface operations {
 					[name: string]: unknown;
 				};
 				content: {
-					"application/json":
-						| components["schemas"]["QrResponse_FULL"]
-						| components["schemas"]["QrResponse_SDK"];
+					"application/json": components["schemas"]["QrResponse_FULL"];
 				};
 			};
 		};
@@ -6791,9 +6153,7 @@ export interface operations {
 					[name: string]: unknown;
 				};
 				content: {
-					"application/json":
-						| components["schemas"]["GetQRStateResponse_FULL"]
-						| components["schemas"]["GetQRStateResponse_SDK"];
+					"application/json": components["schemas"]["GetQRStateResponse_FULL"];
 				};
 			};
 		};
