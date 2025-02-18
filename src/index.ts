@@ -296,7 +296,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/Init", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Init", "post">> {
-		return this.request("/v2/Init", body, { method: "POST", ...options });
+		return this.request("/v2/Init", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 *
@@ -310,7 +313,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/InitPayments", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/InitPayments", "post">> {
-		return this.request("/v2/InitPayments", body, {
+		return this.request("/v2/InitPayments", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -335,7 +338,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/Check3dsVersion", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Check3dsVersion", "post">> {
-		return this.request("/v2/Check3dsVersion", body, {
+		return this.request("/v2/Check3dsVersion", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -357,7 +360,7 @@ export class TKassa<
 		>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/3DSMethod", "post">> {
-		return this.request("/v2/3DSMethod", body, {
+		return this.request("/v2/3DSMethod", body as any, {
 			method: "POST",
 			mimeType: "x-www-form-urlencoded",
 			...options,
@@ -379,7 +382,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/FinishAuthorize", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/FinishAuthorize", "post">> {
-		return this.request("/v2/FinishAuthorize", body, {
+		return this.request("/v2/FinishAuthorize", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -402,7 +405,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/Confirm", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Confirm", "post">> {
-		return this.request("/v2/Confirm", body, { method: "POST", ...options });
+		return this.request("/v2/Confirm", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Отменяет платежную сессию. В зависимости от статуса платежа, переводит его в следующие состояния:
@@ -428,7 +434,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/Cancel", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Cancel", "post">> {
-		return this.request("/v2/Cancel", body, { method: "POST", ...options });
+		return this.request("/v2/Cancel", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * ## Схема проведения рекуррентного платежа
@@ -500,7 +509,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/Charge", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Charge", "post">> {
-		return this.request("/v2/Charge", body, { method: "POST", ...options });
+		return this.request("/v2/Charge", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Метод возвращает статус платежа.
@@ -515,7 +527,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetState", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetState", "post">> {
-		return this.request("/v2/GetState", body, { method: "POST", ...options });
+		return this.request("/v2/GetState", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Регистрирует клиента в связке с терминалом.
@@ -533,7 +548,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/AddCustomer", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/AddCustomer", "post">> {
-		return this.request("/v2/AddCustomer", body, {
+		return this.request("/v2/AddCustomer", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -551,7 +566,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetCustomer", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetCustomer", "post">> {
-		return this.request("/v2/GetCustomer", body, {
+		return this.request("/v2/GetCustomer", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -569,7 +584,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/RemoveCustomer", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/RemoveCustomer", "post">> {
-		return this.request("/v2/RemoveCustomer", body, {
+		return this.request("/v2/RemoveCustomer", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -591,7 +606,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/AddCard", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/AddCard", "post">> {
-		return this.request("/v2/AddCard", body, { method: "POST", ...options });
+		return this.request("/v2/AddCard", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * `Для мерчантов, использующих собственную платежную форму`
@@ -612,7 +630,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/AttachCard", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/AttachCard", "post">> {
-		return this.request("/v2/AttachCard", body, { method: "POST", ...options });
+		return this.request("/v2/AttachCard", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * `Для мерчантов, использующих собственную платежную форму`
@@ -628,7 +649,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetAddCardState", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetAddCardState", "post">> {
-		return this.request("/v2/GetAddCardState", body, {
+		return this.request("/v2/GetAddCardState", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -646,7 +667,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetCardList", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetCardList", "post">> {
-		return this.request("/v2/GetCardList", body, {
+		return this.request("/v2/GetCardList", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -664,7 +685,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/RemoveCard", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/RemoveCard", "post">> {
-		return this.request("/v2/RemoveCard", body, { method: "POST", ...options });
+		return this.request("/v2/RemoveCard", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Метод регистрирует QR и возвращает информацию о нем.
@@ -680,7 +704,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetQr", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetQr", "post">> {
-		return this.request("/v2/GetQr", body, { method: "POST", ...options });
+		return this.request("/v2/GetQr", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Метод для подтверждения карты путем блокировки случайной суммы.
@@ -694,7 +721,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/SubmitRandomAmount", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SubmitRandomAmount", "post">> {
-		return this.request("/v2/SubmitRandomAmount", body, {
+		return this.request("/v2/SubmitRandomAmount", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -731,7 +758,7 @@ export class TKassa<
 		>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Submit3DSAuthorization", "post">> {
-		return this.request("/v2/Submit3DSAuthorization", body, {
+		return this.request("/v2/Submit3DSAuthorization", body as any, {
 			method: "POST",
 			mimeType: "x-www-form-urlencoded",
 			...options,
@@ -768,7 +795,7 @@ export class TKassa<
 		>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/Submit3DSAuthorizationV2", "post">> {
-		return this.request("/v2/Submit3DSAuthorizationV2", body, {
+		return this.request("/v2/Submit3DSAuthorizationV2", body as any, {
 			method: "POST",
 			mimeType: "x-www-form-urlencoded",
 			...options,
@@ -898,7 +925,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/TinkoffPayEvent", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/TinkoffPayEvent", "post">> {
-		return this.request("/v2/TinkoffPayEvent", body, {
+		return this.request("/v2/TinkoffPayEvent", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -917,7 +944,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/QrMembersList", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/QrMembersList", "post">> {
-		return this.request("/v2/QrMembersList", body, {
+		return this.request("/v2/QrMembersList", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -936,7 +963,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/AddAccountQr", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/AddAccountQr", "post">> {
-		return this.request("/v2/AddAccountQr", body, {
+		return this.request("/v2/AddAccountQr", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -954,7 +981,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetAddAccountQrState", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetAddAccountQrState", "post">> {
-		return this.request("/v2/GetAddAccountQrState", body, {
+		return this.request("/v2/GetAddAccountQrState", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -971,7 +998,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetAccountQrList", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetAccountQrList", "post">> {
-		return this.request("/v2/GetAccountQrList", body, {
+		return this.request("/v2/GetAccountQrList", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -996,7 +1023,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/ChargeQr", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/ChargeQr", "post">> {
-		return this.request("/v2/ChargeQr", body, { method: "POST", ...options });
+		return this.request("/v2/ChargeQr", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Тестовая платежная сессия с предопределенным статусом по СБП.
@@ -1010,7 +1040,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/SbpPayTest", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SbpPayTest", "post">> {
-		return this.request("/v2/SbpPayTest", body, { method: "POST", ...options });
+		return this.request("/v2/SbpPayTest", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Возвращает статус возврата платежа по СБП
@@ -1025,7 +1058,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetQrState", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetQrState", "post">> {
-		return this.request("/v2/GetQrState", body, { method: "POST", ...options });
+		return this.request("/v2/GetQrState", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Метод возвращает статус заказа.
@@ -1040,7 +1076,10 @@ export class TKassa<
 		body: GetRequestBody<"/v2/CheckOrder", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/CheckOrder", "post">> {
-		return this.request("/v2/CheckOrder", body, { method: "POST", ...options });
+		return this.request("/v2/CheckOrder", body as any, {
+			method: "POST",
+			...options,
+		});
 	}
 	/**
 	 * Метод позволяет отправить закрывающий чек в кассу.
@@ -1061,7 +1100,7 @@ export class TKassa<
 		body: GetRequestBody<"/cashbox/SendClosingReceipt", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/cashbox/SendClosingReceipt", "post">> {
-		return this.request("/cashbox/SendClosingReceipt", body, {
+		return this.request("/cashbox/SendClosingReceipt", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -1078,7 +1117,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetDeepLink", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetDeepLink", "post">> {
-		return this.request("/v2/GetDeepLink", body, {
+		return this.request("/v2/GetDeepLink", body as any, {
 			method: "POST",
 			...options,
 		});
@@ -1095,7 +1134,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/GetTerminalPayMethods", "get", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetTerminalPayMethods", "get">> {
-		return this.request("/v2/GetTerminalPayMethods", body, {
+		return this.request("/v2/GetTerminalPayMethods", body as any, {
 			method: "GET",
 			...options,
 		});
@@ -1112,7 +1151,7 @@ export class TKassa<
 		body: GetRequestBody<"/v2/getConfirmOperation", "post", TerminalKey>,
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/getConfirmOperation", "post">> {
-		return this.request("/v2/getConfirmOperation", body, {
+		return this.request("/v2/getConfirmOperation", body as any, {
 			method: "POST",
 			...options,
 		});

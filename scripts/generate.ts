@@ -147,7 +147,7 @@ indexSource = indexSource.replace(
 							 * [Documentation](${getLinkToMethod(operation.tags || [], operation.operationId || "")})
                              */
                             ${formatOperationIdToMethod(operation.operationId!)}(${parameters}): Promise<GetResponse<"${path}", "${method}">> {
-                                return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body" : "undefined"}, {method: "${method.toUpperCase()}" ${contentType?.endsWith("x-www-form-urlencoded") ? `, mimeType: "x-www-form-urlencoded"` : ""}, ...options})
+                                return this.request(\`${path.replaceAll(/{/gi, "${")}\`, ${body?.schema ? "body as any" : "undefined"}, {method: "${method.toUpperCase()}" ${contentType?.endsWith("x-www-form-urlencoded") ? `, mimeType: "x-www-form-urlencoded"` : ""}, ...options})
                             }
                         `;
 					})
