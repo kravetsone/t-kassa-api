@@ -1119,5 +1119,3 @@ export class TKassa<
 	}
 	/** @generated stop-generate-methods */
 }
-
-const a = new TKassa()["3DSMethod"];
