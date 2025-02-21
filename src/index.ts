@@ -388,6 +388,75 @@ export class TKassa<
 		});
 	}
 	/**
+	 * `Для мерчантов, использующих собственную платежную форму`
+	 *  <br><br> Метод инициирует привязку карты к клиенту.
+	 *  При успешной привязке переадресует клиента на `Success Add Card URL`,
+	 *  при неуспешной — на `Fail Add Card URL`.
+	 *  Можно использовать форму Т‑Кассы или заменить её на кастомную.
+	 *
+	 *
+	 * @tags Методы работы с картами
+	 * @summary Инициировать привязку карты к клиенту
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AddCard)
+	 */
+	addCard(
+		body: GetRequestBody<"/v2/AddCard", "post", TerminalKey>,
+		options?: RequestOptions,
+	): Promise<GetResponse<"/v2/AddCard", "post">> {
+		return this.request("/v2/AddCard", body as any, {
+			method: "POST",
+			...options,
+		});
+	}
+	/**
+	 * `Для мерчантов, использующих собственную платежную форму`
+	 *  <br> Завершает привязку карты к клиенту.
+	 *  В случае успешной привязки переадресует клиента на **Success Add Card URL**
+	 *  в противном случае на **Fail Add Card URL**.
+	 *  Для прохождения 3DS второй версии перед вызовом метода должен быть вызван **\/v2\/check3dsVersion**
+	 *  и выполнен **3DS Method**, который является обязательным при прохождении **3DS** по протоколу версии
+	 *  2.0.
+	 *
+	 *
+	 * @tags Методы работы с картами
+	 * @summary Привязать карту
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AttachCard)
+	 */
+	attachCard(
+		body: GetRequestBody<"/v2/AttachCard", "post", TerminalKey>,
+		options?: RequestOptions,
+	): Promise<GetResponse<"/v2/AttachCard", "post">> {
+		return this.request("/v2/AttachCard", body as any, {
+			method: "POST",
+			...options,
+		});
+	}
+	/**
+	 *  `Для Мерчантов с PCI DSS` <br> **Для 3DS v1.0**: ACSUrl возвращается в ответе метода [Check3DSVersion](#tag\/Standartnyj-platezh\/operation\/Check3dsVersion). Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода \/Check3DSVersion параметр ACSUrl)<br> **Для 3DS v2.1**: Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе параметр ACSUrl). <br> Компонент ACS использует пары сообщений CReq и CRes для выполнения Проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации <br> <br> **Формат ответа:** CRes, полученный по cresCallbackUrl из запроса Check3DSVersion <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода Check3DSVersion)
+	 *
+	 * @tags Стандартный платеж, Методы работы с картами
+	 * @summary Запрос в банк-эмитент для прохождения 3DS
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/ACSUrl)
+	 */
+	aCSUrl(
+		body: GetRequestBody<
+			"/v2/ACSUrl",
+			"post",
+			TerminalKey,
+			"application/x-www-form-urlencoded"
+		>,
+		options?: RequestOptions,
+	): Promise<GetResponse<"/v2/ACSUrl", "post">> {
+		return this.request("/v2/ACSUrl", body as any, {
+			method: "POST",
+			mimeType: "x-www-form-urlencoded",
+			...options,
+		});
+	}
+	/**
 	 * Метод для списания заблокированных денежных средств. Используется при двухстадийном проведении платежа. Применим
 	 * только к платежам в статусе `AUTHORIZED`. Статус транзакции перед разблокировкой
 	 * — `CONFIRMING`. Сумма списания может быть меньше или равна сумме авторизации.
@@ -585,52 +654,6 @@ export class TKassa<
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/RemoveCustomer", "post">> {
 		return this.request("/v2/RemoveCustomer", body as any, {
-			method: "POST",
-			...options,
-		});
-	}
-	/**
-	 * `Для мерчантов, использующих собственную платежную форму`
-	 *  <br><br> Метод инициирует привязку карты к клиенту.
-	 *  При успешной привязке переадресует клиента на `Success Add Card URL`,
-	 *  при неуспешной — на `Fail Add Card URL`.
-	 *  Можно использовать форму Т‑Кассы или заменить её на кастомную.
-	 *
-	 *
-	 * @tags Методы работы с картами
-	 * @summary Инициировать привязку карты к клиенту
-	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AddCard)
-	 */
-	addCard(
-		body: GetRequestBody<"/v2/AddCard", "post", TerminalKey>,
-		options?: RequestOptions,
-	): Promise<GetResponse<"/v2/AddCard", "post">> {
-		return this.request("/v2/AddCard", body as any, {
-			method: "POST",
-			...options,
-		});
-	}
-	/**
-	 * `Для мерчантов, использующих собственную платежную форму`
-	 *  <br> Завершает привязку карты к клиенту.
-	 *  В случае успешной привязки переадресует клиента на **Success Add Card URL**
-	 *  в противном случае на **Fail Add Card URL**.
-	 *  Для прохождения 3DS второй версии перед вызовом метода должен быть вызван **\/v2\/check3dsVersion**
-	 *  и выполнен **3DS Method**, который является обязательным при прохождении **3DS** по протоколу версии
-	 *  2.0.
-	 *
-	 *
-	 * @tags Методы работы с картами
-	 * @summary Привязать карту
-	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Metody-raboty-s-kartami/operation/AttachCard)
-	 */
-	attachCard(
-		body: GetRequestBody<"/v2/AttachCard", "post", TerminalKey>,
-		options?: RequestOptions,
-	): Promise<GetResponse<"/v2/AttachCard", "post">> {
-		return this.request("/v2/AttachCard", body as any, {
 			method: "POST",
 			...options,
 		});

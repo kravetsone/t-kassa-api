@@ -53,6 +53,39 @@ export interface paths {
 		 */
 		post: operations["FinishAuthorize"];
 	};
+	"/v2/AddCard": {
+		/**
+		 * Инициировать привязку карты к клиенту
+		 * @description `Для мерчантов, использующих собственную платежную форму`
+		 *      <br><br> Метод инициирует привязку карты к клиенту.
+		 *      При успешной привязке переадресует клиента на `Success Add Card URL`,
+		 *      при неуспешной — на `Fail Add Card URL`.
+		 *      Можно использовать форму Т‑Кассы или заменить её на кастомную.
+		 *
+		 */
+		post: operations["AddCard"];
+	};
+	"/v2/AttachCard": {
+		/**
+		 * Привязать карту
+		 * @description `Для мерчантов, использующих собственную платежную форму`
+		 *      <br> Завершает привязку карты к клиенту.
+		 *      В случае успешной привязки переадресует клиента на **Success Add Card URL**
+		 *      в противном случае на **Fail Add Card URL**.
+		 *      Для прохождения 3DS второй версии перед вызовом метода должен быть вызван **\/v2/check3dsVersion**
+		 *      и выполнен **3DS Method**, который является обязательным при прохождении **3DS** по протоколу версии
+		 *      2.0.
+		 *
+		 */
+		post: operations["AttachCard"];
+	};
+	"/v2/ACSUrl": {
+		/**
+		 * Запрос в банк-эмитент для прохождения 3DS
+		 * @description  `Для Мерчантов с PCI DSS` <br> **Для 3DS v1.0**: ACSUrl возвращается в ответе метода [Check3DSVersion](#tag/Standartnyj-platezh/operation/Check3dsVersion). Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /Check3DSVersion параметр ACSUrl)<br> **Для 3DS v2.1**: Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе параметр ACSUrl). <br> Компонент ACS использует пары сообщений CReq и CRes для выполнения Проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации <br> <br> **Формат ответа:** CRes, полученный по cresCallbackUrl из запроса Check3DSVersion <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода Check3DSVersion)
+		 */
+		post: operations["ACSUrl"];
+	};
 	"/v2/Confirm": {
 		/**
 		 * Подтвердить платеж
@@ -184,32 +217,6 @@ export interface paths {
 		 *
 		 */
 		post: operations["RemoveCustomer"];
-	};
-	"/v2/AddCard": {
-		/**
-		 * Инициировать привязку карты к клиенту
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *      <br><br> Метод инициирует привязку карты к клиенту.
-		 *      При успешной привязке переадресует клиента на `Success Add Card URL`,
-		 *      при неуспешной — на `Fail Add Card URL`.
-		 *      Можно использовать форму Т‑Кассы или заменить её на кастомную.
-		 *
-		 */
-		post: operations["AddCard"];
-	};
-	"/v2/AttachCard": {
-		/**
-		 * Привязать карту
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *      <br> Завершает привязку карты к клиенту.
-		 *      В случае успешной привязки переадресует клиента на **Success Add Card URL**
-		 *      в противном случае на **Fail Add Card URL**.
-		 *      Для прохождения 3DS второй версии перед вызовом метода должен быть вызван **\/v2/check3dsVersion**
-		 *      и выполнен **3DS Method**, который является обязательным при прохождении **3DS** по протоколу версии
-		 *      2.0.
-		 *
-		 */
-		post: operations["AttachCard"];
 	};
 	"/v2/GetAddCardState": {
 		/**
@@ -2225,7 +2232,8 @@ export interface components {
 			 */
 			Token: string;
 			/**
-			 * @description IP-адрес клиента.
+			 * @description IP-адрес клиента. <br>
+			 *     Передача адреса допускается в формате IPv4 и IPv6.
 			 *
 			 *     Обязательный параметр для 3DS второй
 			 *     версии. DS платежной системы требует
@@ -2552,6 +2560,320 @@ export interface components {
 				 */
 				ACSUrl?: string;
 			};
+		AddCard_FULL: {
+			/**
+			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 *
+			 * @example 1111133333
+			 */
+			TerminalKey: string;
+			/**
+			 * @description Идентификатор клиента в системе мерчанта.
+			 *
+			 * @example testCustomer1234
+			 */
+			CustomerKey: string;
+			/**
+			 * @description Подпись запроса.
+			 *
+			 * @example 30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e
+			 */
+			Token: string;
+			/**
+			 * @description Если `CheckType` не передается, автоматически проставляется значение `NO`.
+			 *      Возможные значения:
+			 *      * `NO` — сохранить карту без проверок. `RebillID` для рекуррентных платежей не возвращается.
+			 *      * `HOLD` — при сохранении сделать списание на 0 руб. `RebillID` возвращается для терминалов без
+			 *      поддержки 3DS.
+			 *      * `3DS` — при сохранении карты выполнить проверку 3DS и выполнить списание на 0 р. В этом случае `RebillID` будет только для
+			 *      3DS карт. Карты, не поддерживающие 3DS, привязаны не будут.
+			 *      * `3DSHOLD` – при привязке карты выполнить проверку, поддерживает карта 3DS или нет. Если карта не поддерживает 3DS, выполняется
+			 *      списание на 0 руб.
+			 *
+			 * @enum {string}
+			 */
+			CheckType?: "NO" | "HOLD" | "3DS" | "3DSHOLD";
+			/**
+			 * @description IP-адрес запроса.
+			 *
+			 * @example 10.100.10.10
+			 */
+			IP?: string;
+			/** @description Признак резидентности добавляемой карты:
+			 *     Возможные значения:
+			 *     * `true` — карта РФ,
+			 *     * `false` — карта не РФ,
+			 *     * `null` — не специфицируется, универсальная карта.
+			 *      */
+			ResidentState?: boolean;
+		};
+		AddCardResponse_FULL: {
+			/**
+			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 *
+			 * @example 6155312072
+			 */
+			PaymentId: number;
+			/**
+			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 *     при заведении терминала.
+			 *
+			 * @example TinkoffBankTest
+			 */
+			TerminalKey: string;
+			/**
+			 * @description Идентификатор клиента в системе мерчанта.
+			 *
+			 * @example 906540
+			 */
+			CustomerKey: string;
+			/**
+			 * @description Идентификатор запроса на привязку карты.
+			 *
+			 * @example ed989549-d3be-4758-95c7-22647e03f9ec
+			 */
+			RequestKey: string;
+			/**
+			 * @description Код ошибки. `0` в случае успеха.
+			 *
+			 * @example 0
+			 */
+			ErrorCode: string;
+			/**
+			 * @description Успешность прохождения запроса — `true`/`false`.
+			 *
+			 * @example true
+			 */
+			Success: boolean;
+			/**
+			 * @description Краткое описание ошибки.
+			 *
+			 * @example Неверные параметры
+			 */
+			Message?: string;
+			/**
+			 * @description Подробное описание ошибки.
+			 *
+			 * @example Терминал не найден
+			 */
+			Details?: string;
+			/**
+			 * Format: uri
+			 * @description UUID, используется для работы без PCI DSS.
+			 *
+			 * @example 82a31a62-6067-4ad8-b379-04bf13e37642d
+			 */
+			PaymentURL: string;
+		};
+		AttachCard: {
+			/**
+			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 *     при заведении терминала.
+			 *
+			 * @example TinkoffBankTest
+			 */
+			TerminalKey: string;
+			/**
+			 * Format: uuid
+			 * @description Идентификатор запроса на привязку карты.
+			 *
+			 * @example 13021e10-a3ed-4f14-bcd1-823b5ac37390
+			 */
+			RequestKey: string;
+			/**
+			 * @description Зашифрованные данные карты в формате:
+			 *       ```
+			 *       PAN=4300000000000777;ExpDate=0519;CardHolder=IVAN PETROV;CVV=111
+			 *       ```
+			 *
+			 * @example U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==
+			 */
+			CardData: string;
+			/** @description В объекте передаются дополнительные параметры в формате `ключ:значение`.
+			 *     Например, меняем на JSON-объект, который содержит дополнительные параметры в виде `ключ:значение`.
+			 *
+			 *     Если ключи или значения содержат в себе специальные символы, получившееся значение должно быть закодировано
+			 *     функцией `urlencode`. Максимальная длина для каждого передаваемого параметра:
+			 *     * ключ — 20 знаков,
+			 *     * значение — 100 знаков.
+			 *
+			 *     Максимальное количество пар `ключ:значение` — не больше 20.
+			 *
+			 *     >**Важно** Для 3DS второй версии в `DATA` передаются параметры, описанные в объекте
+			 *     `3DSv2`. В `HttpHeaders` запроса обязательны заголовки `User-Agent` и `Accept`.
+			 *      */
+			DATA?:
+				| {
+						[key: string]: string | undefined;
+				  }
+				| components["schemas"]["3DSv2"];
+			/**
+			 * @description Подпись запроса.
+			 *
+			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
+			 */
+			Token: string;
+		};
+		AttachCardResponse: {
+			/**
+			 * @description Платежный ключ, выдается мерчанту при заведении
+			 *     терминала.
+			 *
+			 * @example testRegress
+			 */
+			TerminalKey: string;
+			/**
+			 * @description Идентификатор клиента в системе мерчанта.
+			 *
+			 * @example testCustomerKey
+			 */
+			CustomerKey: string;
+			/**
+			 * Format: uuid
+			 * @description Идентификатор запроса на привязку карты.
+			 *
+			 * @example 8de92934-26c9-474c-a4ce-424f2021d24d
+			 */
+			RequestKey: string;
+			/**
+			 * @description Идентификатор карты в системе Т‑Кассы.
+			 *
+			 * @example 5555
+			 */
+			CardId: string;
+			/**
+			 * @description Успешность прохождения запроса — `true`/`false`.
+			 *
+			 * @example true
+			 */
+			Success: boolean;
+			/**
+			 * @description Код ошибки. `0` в случае успеха.
+			 *
+			 * @example 0
+			 */
+			ErrorCode: string;
+			/**
+			 * @description Статус привязки карты:
+			 *     * `NEW` — новая сессия привязки карты;
+			 *     * `FORM_SHOWED` — показ формы привязки карты;
+			 *     * `THREE_DS_CHECKING` — отправка клиента на проверку 3DS;
+			 *     * `THREE_DS_CHECKED` — клиент успешно прошел проверку 3DS;
+			 *     * `AUTHORIZING` — отправка платежа на 0 руб;
+			 *     * `AUTHORIZED` — платеж на 0 руб прошел успешно;
+			 *     * `COMPLETED` — карта успешно привязана;
+			 *     * `REJECTED` — привязать карту не удалось.
+			 *
+			 * @enum {string}
+			 */
+			Status?:
+				| "NEW"
+				| "FORM_SHOWED"
+				| "THREE_DS_CHECKING"
+				| "THREE_DS_CHECKED"
+				| "AUTHORIZING"
+				| "AUTHORIZED"
+				| "COMPLETED"
+				| "REJECTED";
+			/**
+			 * @description Идентификатор рекуррентного платежа.
+			 *
+			 * @example 130799909
+			 */
+			RebillId?: string;
+			/**
+			 * @description Краткое описание ошибки.
+			 *
+			 * @example Неверные параметры
+			 */
+			Message?: string;
+			/** @description Подробное описание ошибки.
+			 *      */
+			Details?: string;
+			/**
+			 * Format: uri
+			 * @description Адрес сервера управления доступом для проверки 3DS —
+			 *     возвращается в ответе на статус `3DS_CHECKING`.
+			 *
+			 * @example https://secure.tcsbank.ru/acs/auth/start.do
+			 */
+			ACSUrl?: string;
+			/**
+			 * @description Уникальный идентификатор транзакции в системе
+			 *     Т‑Кассы — возвращается в ответе на статус `3DS_CHECKING`.
+			 *
+			 * @example ACQT-563587431
+			 */
+			MD?: string;
+			/**
+			 * @description Результат аутентификации 3-D Secure — возвращается в ответе на статус `3DS_CHECKING`.
+			 *
+			 * @example eJxVUl1TwjAQ/CtM30s+KLTDHGHQwsiogFh09C2kp1RpC2nLh7/eBAtqnnYvN3ubvUD/kK4bO9RFkmc9hzWp08BM5XGSvfecRT RyA6cvIFppxPARVaVRwD0WhXzHRhL3HMUU73itwKVtyl1Pcs8Nli3pymUQK+z2Sww6joDZYI5bAfUgYeY0OZAzNYparWRWCpBqe zWeiDZnLe3BqSmkqMeh4PRy2p02BfJThkymKCIsSiAnCCqvslIfhXEG5Eyg0muxKstN0SVkv983yyT7zN/emroiQOwlkF8js8qiwogdk lg8rEfT5WK0jj6G7D4cepNo8TWNBmwSDXtAbAfEskTjkPk0oF6DeV3a6jLj8VQHmVoXglFTqTFs7IjBn4u/BTBZa7OK8yPODPCwyT M0HSbACwby6/f6xsaoSpNMMN89+uHdV/iUPz2nyat/uxrPXz5nuX/c2nBPTVYxMflwzthJ0hIgVobUeyP1yg469xW+AedOuuM=
+			 */
+			PaReq?: string;
+		};
+		/** Параметры запроса для 3DS v1.0 */
+		ACSUrl_V1: {
+			/** @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на Check3DSVersion) */
+			MD: string;
+			/** @description Результат аутентификации 3-D Secure (возвращается в ответе на Check3DSVersion) */
+			PaReq: string;
+			/** @description Адрес перенаправления после аутентификации 3-D Secure (URL обработчик на стороне Мерчанта, принимающий результаты прохождения 3-D Secure) */
+			TermUrl: string;
+		};
+		/** Параметры запроса для 3DS v2.1 */
+		ACSUrl_V2: {
+			/**
+			 * Challenge Request (CReq)
+			 * @description JSON с параметрами закодированный в форматe base-64
+			 */
+			creq: {
+				/** @description Идентификатор транзакции из ответа метода Check3DSVersion */
+				threeDSServerTransID: string;
+				/** @description Идентификатор транзакции, присвоенный ACS, полученный в ответе на Check3DSVersion */
+				acsTransID: string;
+				/** @description Размер экрана, на котором открыта страница ACS. <br>Допустимые значения <br>• 01 = 250 x 400, <br>• 02 = 390 x 400, <br>• 03 = 500 x 600, <br>• 04 = 600 x 400, <br>• 05 = Fullscreen. <br> */
+				challengeWindowSize: string;
+				/** @description Передается фиксированное значение «CReq» */
+				messageType: string;
+				/** @description Версия 3DS, полученная из ответа метода Check3dsVersion */
+				messageVersion: string;
+			};
+		};
+		/** Ответ на запрос 3DS v1.0 */
+		ACSUrlResponseV1: {
+			/**
+			 * @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на Check3DSVersion)
+			 * @example MD_TEST
+			 */
+			MD: string;
+			/**
+			 * @description Шифрованная строка, содержащая результаты 3-D Secure аутентификации (возвращается в ответе от ACS)
+			 * @example PaRes_TEST
+			 */
+			PaRes: string;
+			/** @description В случае невозможности прохождения аутентификации по 3DS v2.1, делается принудительный Fallback на 3DS v1.0 и данный атрибут выставляется в true, в противном случае не передается в ответе */
+			FallbackOnTdsV1?: string;
+		};
+		/** Ответ на запрос 3DS v2.1 */
+		ACSUrlResponseV2: {
+			/**
+			 * Challenge Request (CReq)
+			 * @description JSON/JWE object с параметрами закодированный в формат base-64. Ответ отправляется на URL, который был указан в методе Check3DSVersion. После получения на NotificationUrl Мерчанта ответа ACS(CRes) с результатами прохождения 3-D Secure v2 необходимо сформировать запрос к методу Submit3DSAuthorizationV2.
+			 */
+			cres: {
+				/** @description Идентификатор транзакции из ответа метода Check3DSVersion */
+				threeDSServerTransID: string;
+				/** @description Идентификатор транзакции, присвоенный ACS */
+				acsTransID: string;
+				/** @description Результат выполнения Challenge flow, возможны 2 значения — Y/N. <br> Y — аутентификация выполнена успешна,  <br> N — аутентификация не пройдена, клиент отказался или ввел неверные данные.  <br> */
+				transStatus: string;
+				/** @description Передается фиксированное значение «CRes» */
+				messageType: string;
+				/** @description Версия 3DS */
+				messageVersion: string;
+			};
+		};
 		Confirm: {
 			/**
 			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
@@ -3089,258 +3411,6 @@ export interface components {
 			/** @description Подробное описание ошибки.
 			 *      */
 			Details?: string;
-		};
-		AddCard_FULL: {
-			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
-			 *
-			 * @example 1111133333
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example testCustomer1234
-			 */
-			CustomerKey: string;
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example 30797e66108934dfa3d841b856fdad227c6b9c46d6a39296e02dc800d86d181e
-			 */
-			Token: string;
-			/**
-			 * @description Если `CheckType` не передается, автоматически проставляется значение `NO`.
-			 *      Возможные значения:
-			 *      * `NO` — сохранить карту без проверок. `RebillID` для рекуррентных платежей не возвращается.
-			 *      * `HOLD` — при сохранении сделать списание на 0 руб. `RebillID` возвращается для терминалов без
-			 *      поддержки 3DS.
-			 *      * `3DS` — при сохранении карты выполнить проверку 3DS и выполнить списание на 0 р. В этом случае `RebillID` будет только для
-			 *      3DS карт. Карты, не поддерживающие 3DS, привязаны не будут.
-			 *      * `3DSHOLD` – при привязке карты выполнить проверку, поддерживает карта 3DS или нет. Если карта не поддерживает 3DS, выполняется
-			 *      списание на 0 руб.
-			 *
-			 * @enum {string}
-			 */
-			CheckType?: "NO" | "HOLD" | "3DS" | "3DSHOLD";
-			/**
-			 * @description IP-адрес запроса.
-			 *
-			 * @example 10.100.10.10
-			 */
-			IP?: string;
-			/** @description Признак резидентности добавляемой карты:
-			 *     Возможные значения:
-			 *     * `true` — карта РФ,
-			 *     * `false` — карта не РФ,
-			 *     * `null` — не специфицируется, универсальная карта.
-			 *      */
-			ResidentState?: boolean;
-		};
-		AddCardResponse_FULL: {
-			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
-			 *
-			 * @example 6155312072
-			 */
-			PaymentId: number;
-			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
-			 *     при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example 906540
-			 */
-			CustomerKey: string;
-			/**
-			 * @description Идентификатор запроса на привязку карты.
-			 *
-			 * @example ed989549-d3be-4758-95c7-22647e03f9ec
-			 */
-			RequestKey: string;
-			/**
-			 * @description Код ошибки. `0` в случае успеха.
-			 *
-			 * @example 0
-			 */
-			ErrorCode: string;
-			/**
-			 * @description Успешность прохождения запроса — `true`/`false`.
-			 *
-			 * @example true
-			 */
-			Success: boolean;
-			/**
-			 * @description Краткое описание ошибки.
-			 *
-			 * @example Неверные параметры
-			 */
-			Message?: string;
-			/**
-			 * @description Подробное описание ошибки.
-			 *
-			 * @example Терминал не найден
-			 */
-			Details?: string;
-			/**
-			 * Format: uri
-			 * @description UUID, используется для работы без PCI DSS.
-			 *
-			 * @example 82a31a62-6067-4ad8-b379-04bf13e37642d
-			 */
-			PaymentURL: string;
-		};
-		AttachCard: {
-			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
-			 *     при заведении терминала.
-			 *
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * Format: uuid
-			 * @description Идентификатор запроса на привязку карты.
-			 *
-			 * @example 13021e10-a3ed-4f14-bcd1-823b5ac37390
-			 */
-			RequestKey: string;
-			/**
-			 * @description Зашифрованные данные карты в формате:
-			 *       ```
-			 *       PAN=4300000000000777;ExpDate=0519;CardHolder=IVAN PETROV;CVV=111
-			 *       ```
-			 *
-			 * @example U5jDbwqOVx+2vDApxe/rfACMt+rfWXzPdJ8ZXxNFVIiZaLZrOW72bGe9cKZdIDnekW0nqm88YxRD↵jyfa5Ru0kY5cQV alU+juS1u1zpamSDtaGFeb8sRZfhj72yGw+io+qHGSBeorcfgoKStyKGuBPWfG↵d0PLHuyBE6QgZyIAM1XfdmNlV0UAxOnkTGDsskL pIt3AWhw2e8KOar0vwbgCTDjznDB1/DLgOW01↵Aj/bXyLJoG1BkOrPBm9JURs+f+uyFae0hkRicNKNgXoN5pJTSQxOEauOi6ylsVJ B3WK5MNYXtj6x↵GlxcmTk/LD9kvHcjTeojcAlDzRZ87GdWeY8wgg==
-			 */
-			CardData: string;
-			/** @description В объекте передаются дополнительные параметры в формате `ключ:значение`.
-			 *     Например, меняем на JSON-объект, который содержит дополнительные параметры в виде `ключ:значение`.
-			 *
-			 *     Если ключи или значения содержат в себе специальные символы, получившееся значение должно быть закодировано
-			 *     функцией `urlencode`. Максимальная длина для каждого передаваемого параметра:
-			 *     * ключ — 20 знаков,
-			 *     * значение — 100 знаков.
-			 *
-			 *     Максимальное количество пар `ключ:значение` — не больше 20.
-			 *
-			 *     >**Важно** Для 3DS второй версии в `DATA` передаются параметры, описанные в объекте
-			 *     `3DSv2`. В `HttpHeaders` запроса обязательны заголовки `User-Agent` и `Accept`.
-			 *      */
-			DATA?:
-				| {
-						[key: string]: string | undefined;
-				  }
-				| components["schemas"]["3DSv2"];
-			/**
-			 * @description Подпись запроса.
-			 *
-			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
-			 */
-			Token: string;
-		};
-		AttachCardResponse: {
-			/**
-			 * @description Платежный ключ, выдается мерчанту при заведении
-			 *     терминала.
-			 *
-			 * @example testRegress
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Идентификатор клиента в системе мерчанта.
-			 *
-			 * @example testCustomerKey
-			 */
-			CustomerKey: string;
-			/**
-			 * Format: uuid
-			 * @description Идентификатор запроса на привязку карты.
-			 *
-			 * @example 8de92934-26c9-474c-a4ce-424f2021d24d
-			 */
-			RequestKey: string;
-			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
-			 *
-			 * @example 5555
-			 */
-			CardId: string;
-			/**
-			 * @description Успешность прохождения запроса — `true`/`false`.
-			 *
-			 * @example true
-			 */
-			Success: boolean;
-			/**
-			 * @description Код ошибки. `0` в случае успеха.
-			 *
-			 * @example 0
-			 */
-			ErrorCode: string;
-			/**
-			 * @description Статус привязки карты:
-			 *     * `NEW` — новая сессия привязки карты;
-			 *     * `FORM_SHOWED` — показ формы привязки карты;
-			 *     * `THREE_DS_CHECKING` — отправка клиента на проверку 3DS;
-			 *     * `THREE_DS_CHECKED` — клиент успешно прошел проверку 3DS;
-			 *     * `AUTHORIZING` — отправка платежа на 0 руб;
-			 *     * `AUTHORIZED` — платеж на 0 руб прошел успешно;
-			 *     * `COMPLETED` — карта успешно привязана;
-			 *     * `REJECTED` — привязать карту не удалось.
-			 *
-			 * @enum {string}
-			 */
-			Status?:
-				| "NEW"
-				| "FORM_SHOWED"
-				| "THREE_DS_CHECKING"
-				| "THREE_DS_CHECKED"
-				| "AUTHORIZING"
-				| "AUTHORIZED"
-				| "COMPLETED"
-				| "REJECTED";
-			/**
-			 * @description Идентификатор рекуррентного платежа.
-			 *
-			 * @example 130799909
-			 */
-			RebillId?: string;
-			/**
-			 * @description Краткое описание ошибки.
-			 *
-			 * @example Неверные параметры
-			 */
-			Message?: string;
-			/** @description Подробное описание ошибки.
-			 *      */
-			Details?: string;
-			/**
-			 * Format: uri
-			 * @description Адрес сервера управления доступом для проверки 3DS —
-			 *     возвращается в ответе на статус `3DS_CHECKING`.
-			 *
-			 * @example https://secure.tcsbank.ru/acs/auth/start.do
-			 */
-			ACSUrl?: string;
-			/**
-			 * @description Уникальный идентификатор транзакции в системе
-			 *     Т‑Кассы — возвращается в ответе на статус `3DS_CHECKING`.
-			 *
-			 * @example ACQT-563587431
-			 */
-			MD?: string;
-			/**
-			 * @description Результат аутентификации 3-D Secure — возвращается в ответе на статус `3DS_CHECKING`.
-			 *
-			 * @example eJxVUl1TwjAQ/CtM30s+KLTDHGHQwsiogFh09C2kp1RpC2nLh7/eBAtqnnYvN3ubvUD/kK4bO9RFkmc9hzWp08BM5XGSvfecRT RyA6cvIFppxPARVaVRwD0WhXzHRhL3HMUU73itwKVtyl1Pcs8Nli3pymUQK+z2Sww6joDZYI5bAfUgYeY0OZAzNYparWRWCpBqe zWeiDZnLe3BqSmkqMeh4PRy2p02BfJThkymKCIsSiAnCCqvslIfhXEG5Eyg0muxKstN0SVkv983yyT7zN/emroiQOwlkF8js8qiwogdk lg8rEfT5WK0jj6G7D4cepNo8TWNBmwSDXtAbAfEskTjkPk0oF6DeV3a6jLj8VQHmVoXglFTqTFs7IjBn4u/BTBZa7OK8yPODPCwyT M0HSbACwby6/f6xsaoSpNMMN89+uHdV/iUPz2nyat/uxrPXz5nuX/c2nBPTVYxMflwzthJ0hIgVobUeyP1yg469xW+AedOuuM=
-			 */
-			PaReq?: string;
 		};
 		GetAddCardState: {
 			/**
@@ -5180,6 +5250,64 @@ export interface operations {
 			};
 		};
 	};
+	AddCard: {
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["AddCard_FULL"];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["AddCardResponse_FULL"];
+				};
+			};
+		};
+	};
+	AttachCard: {
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["AttachCard"];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["AttachCardResponse"];
+				};
+			};
+		};
+	};
+	ACSUrl: {
+		requestBody?: {
+			content: {
+				"application/x-www-form-urlencoded":
+					| components["schemas"]["ACSUrl_V1"]
+					| components["schemas"]["ACSUrl_V2"];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json":
+						| components["schemas"]["ACSUrlResponseV1"]
+						| components["schemas"]["ACSUrlResponseV2"];
+				};
+			};
+		};
+	};
 	Confirm: {
 		requestBody: {
 			content: {
@@ -5386,42 +5514,6 @@ export interface operations {
 				};
 				content: {
 					"application/json": components["schemas"]["RemoveCustomerResponse"];
-				};
-			};
-		};
-	};
-	AddCard: {
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["AddCard_FULL"];
-			};
-		};
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": components["schemas"]["AddCardResponse_FULL"];
-				};
-			};
-		};
-	};
-	AttachCard: {
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["AttachCard"];
-			};
-		};
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": components["schemas"]["AttachCardResponse"];
 				};
 			};
 		};
