@@ -2736,11 +2736,12 @@ export interface components {
 			 */
 			RequestKey: string;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Кассы. <br>
+			 *     При сценарии 3-D Secure Authentication Challenge — `CardId` можно получить после успешного прохождения 3DS.
 			 *
 			 * @example 5555
 			 */
-			CardId: string;
+			CardId?: string;
 			/**
 			 * @description Успешность прохождения запроса — `true`/`false`.
 			 *
