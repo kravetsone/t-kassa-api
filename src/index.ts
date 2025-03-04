@@ -179,7 +179,14 @@ export class TKassa<
 		requestOptions.mimeType = undefined;
 		const response = await fetch(this.options.server + path, requestOptions);
 
-		if (!response.ok) throw new Error(`error${await response.text()}`);
+		if (!response.ok) {
+			if (response.status === 403 && this.options.server === servers[1].url)
+				throw new Error(
+					"Вы используете тестовую среду, но ваш IP не добавлен в список разрешенных (подробнее - https://www.tbank.ru/kassa/dev/payments/#tag/Testovye-karty )",
+				);
+
+			throw new Error(`${response.status} ${await response.text()}`);
+		}
 
 		return response.json() as T;
 	}
