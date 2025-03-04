@@ -14,7 +14,7 @@ import {
 	type Modify,
 	type RequestOptions,
 	type RequiredFields,
-	type Servers,
+	type SoftServers,
 	type WebhookBody,
 	generateSignature,
 	servers,
@@ -38,7 +38,7 @@ export interface TKassaOptions {
 	 *
 	 * @default "https://securepay.tinkoff.ru"
 	 */
-	server?: Servers;
+	server?: SoftServers;
 
 	x509Key?: string;
 

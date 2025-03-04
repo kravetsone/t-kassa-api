@@ -82,7 +82,12 @@ export interface ThreeDsPrepareDataV1 {
 	TermURL: string;
 }
 
+type SoftString<T extends string> = T | (string & {});
+
 export type Servers = (typeof servers)[number]["url"];
+// Export SoftServers because we don't want to expose SoftString
+export type SoftServers = SoftString<Servers>;
+
 export type WebhookBody = NonNullable<
 	webhooks["Notification"]["post"]["requestBody"]
 >["content"]["application/json"];

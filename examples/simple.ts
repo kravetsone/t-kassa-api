@@ -23,7 +23,7 @@ const ткасса = new TKassa(
 	process.env.TERMINAL_KEY as string,
 	process.env.PASSWORD as string,
 	{
-		// server: "https://rest-api-test.tinkoff.ru",
+		server: "https://rest-api-test.tinkoff.ru",
 	},
 );
 

@@ -26,6 +26,9 @@ console.log(result);
 
 [API Reference](https://jsr.io/@kravets/t-kassa-api/doc)
 
+> [!IMPORTANT]
+> [Тестовая среда доступна только по запросу](https://www.tbank.ru/kassa/dev/payments/#tag/Testovye-karty) - иначе вы будете получать ответы с кодом `403`
+
 ### Фичи
 
 -   Генерируется исходя из **OpenAPI** спецификации
