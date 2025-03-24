@@ -4328,6 +4328,18 @@ export interface components {
 			 * @example None
 			 */
 			Message: string;
+			/**
+			 * @description Идентификатор платежа в СБП.
+			 *
+			 * @example A42631655397753A0000030011340501
+			 */
+			SbpPaymentId?: string;
+			/**
+			 * @description Хэшированный номер телефона покупателя.
+			 *
+			 * @example c4494ca1c0888b3fb0e2bfd0b83576aaae0d2c71161c5f472133ea9401473aee
+			 */
+			SbpCustomerId?: string;
 		};
 		"CheckOrder-2": {
 			/**
