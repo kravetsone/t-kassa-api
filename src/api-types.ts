@@ -832,7 +832,6 @@ export interface components {
 			 * @description `Тег ФФД: 1214`
 			 *
 			 *
-			 *     Признак способа расчета.
 			 *     Возможные значения:
 			 *     * `full_prepayment` — предоплата 100%,
 			 *     * `prepayment` — предоплата,
@@ -1376,7 +1375,6 @@ export interface components {
 			 * @description `Тег ФФД: 1214`
 			 *
 			 *
-			 *     Признак способа расчёта.
 			 *     Возможные значения:
 			 *      * `full_prepayment` — предоплата 100%,
 			 *      * `prepayment` — предоплата,
