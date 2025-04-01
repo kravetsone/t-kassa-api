@@ -7540,7 +7540,7 @@
 			"PaymentsCheckOrder": {
 				"type": "object",
 				"description": "Детали",
-				"required": ["PaymentId", "Status", "Success", "ErrorCode", "Message"],
+				"required": ["PaymentId", "Status", "Success"],
 				"properties": {
 					"PaymentId": {
 						"description": "Уникальный идентификатор транзакции в системе Т‑Кассы.\n",
@@ -7578,7 +7578,7 @@
 						}
 					},
 					"ErrorCode": {
-						"description": "Код ошибки. `0` в случае успеха.\n",
+						"description": "Код ошибки.\n",
 						"type": "number",
 						"examples": {
 							"default": 0

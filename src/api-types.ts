@@ -4315,17 +4315,17 @@ export interface components {
 			 */
 			Success: string;
 			/**
-			 * @description Код ошибки. `0` в случае успеха.
+			 * @description Код ошибки.
 			 *
 			 * @example 0
 			 */
-			ErrorCode: number;
+			ErrorCode?: number;
 			/**
 			 * @description Краткое описание ошибки.
 			 *
 			 * @example None
 			 */
-			Message: string;
+			Message?: string;
 			/**
 			 * @description Идентификатор платежа в СБП.
 			 *
