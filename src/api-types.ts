@@ -1522,10 +1522,9 @@ export interface components {
 			 *
 			 *
 			 *     Единицы измерения.
-			 *     Передавать в соответствии с ОК 015-94 (МК 002-97).
 			 *
 			 *
-			 *     <a href="https://www.consultant.ru/document/cons_doc_LAW_362322/0060b1f1924347c03afbc57a8d4af63888f81c6c/">Возможные варианты</a>. Также возможна передача произвольных значений.
+			 *     Возможные варианты описаны в разделе<a href="https://www.tbank.ru/kassa/dev/payments/#tag/Opisanie-dopolnitelnyh-obuektov" target="_blank"> дополнительных объектов</a>. Также возможна передача произвольных значений.
 			 *
 			 *     `MeasurementUnit` обязателен, если версия ФД онлайн-кассы — 1.2.
 			 *
