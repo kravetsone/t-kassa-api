@@ -82,7 +82,7 @@ export interface paths {
 	"/v2/ACSUrl": {
 		/**
 		 * Запрос в банк-эмитент для прохождения 3DS
-		 * @description  `Для Мерчантов с PCI DSS` <br> **Для 3DS v1.0**: ACSUrl возвращается в ответе метода [Check3DSVersion](#tag/Standartnyj-platezh/operation/Check3dsVersion). Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /Check3DSVersion параметр ACSUrl)<br> **Для 3DS v2.1**: Если в ответе метода Check3DSVersion возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе параметр ACSUrl). <br> Компонент ACS использует пары сообщений CReq и CRes для выполнения Проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации <br> <br> **Формат ответа:** CRes, полученный по cresCallbackUrl из запроса Check3DSVersion <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода Check3DSVersion)
+		 * @description  `Для Мерчантов с PCI DSS` <br> **Для 3DS v1.0**: ACSUrl возвращается в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize). Если в ответе метода FinishAuthorize возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /FinishAuthorize параметр ACSUrl)<br> **Для 3DS v2.1**: Если в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize) возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /FinishAuthorize параметр ACSUrl). <br> Компонент ACS использует пары сообщений CReq и CRes для выполнения Проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации <br> <br> **Формат ответа:** Cres, полученный по NotificationUrl из запроса FinishAuthorize <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода FinishAuthorize)
 		 */
 		post: operations["ACSUrl"];
 	};
@@ -2812,9 +2812,9 @@ export interface components {
 		};
 		/** Параметры запроса для 3DS v1.0 */
 		ACSUrl_V1: {
-			/** @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на Check3DSVersion) */
+			/** @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на FinishAuthorize) */
 			MD: string;
-			/** @description Результат аутентификации 3-D Secure (возвращается в ответе на Check3DSVersion) */
+			/** @description Результат аутентификации 3-D Secure (возвращается в ответе на FinishAuthorize) */
 			PaReq: string;
 			/** @description Адрес перенаправления после аутентификации 3-D Secure (URL обработчик на стороне Мерчанта, принимающий результаты прохождения 3-D Secure) */
 			TermUrl: string;
@@ -2828,7 +2828,7 @@ export interface components {
 			creq: {
 				/** @description Идентификатор транзакции из ответа метода Check3DSVersion */
 				threeDSServerTransID: string;
-				/** @description Идентификатор транзакции, присвоенный ACS, полученный в ответе на Check3DSVersion */
+				/** @description Идентификатор транзакции, присвоенный ACS, полученный в ответе на FinishAuthorize */
 				acsTransID: string;
 				/** @description Размер экрана, на котором открыта страница ACS. <br>Допустимые значения <br>• 01 = 250 x 400, <br>• 02 = 390 x 400, <br>• 03 = 500 x 600, <br>• 04 = 600 x 400, <br>• 05 = Fullscreen. <br> */
 				challengeWindowSize: string;
@@ -2841,7 +2841,7 @@ export interface components {
 		/** Ответ на запрос 3DS v1.0 */
 		ACSUrlResponseV1: {
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на Check3DSVersion)
+			 * @description Уникальный идентификатор транзакции в системе Банка (возвращается в ответе на FinishAuthorize)
 			 * @example MD_TEST
 			 */
 			MD: string;
@@ -2857,12 +2857,12 @@ export interface components {
 		ACSUrlResponseV2: {
 			/**
 			 * Challenge Request (CReq)
-			 * @description JSON/JWE object с параметрами закодированный в формат base-64. Ответ отправляется на URL, который был указан в методе Check3DSVersion. После получения на NotificationUrl Мерчанта ответа ACS(CRes) с результатами прохождения 3-D Secure v2 необходимо сформировать запрос к методу Submit3DSAuthorizationV2.
+			 * @description JSON/JWE object с параметрами закодированный в формат base-64. Ответ отправляется на URL, который был указан в методе FinishAuthorize. После получения на NotificationUrl Мерчанта ответа ACS(CRes) с результатами прохождения 3-D Secure v2 необходимо сформировать запрос к методу Submit3DSAuthorizationV2.
 			 */
 			cres: {
 				/** @description Идентификатор транзакции из ответа метода Check3DSVersion */
 				threeDSServerTransID: string;
-				/** @description Идентификатор транзакции, присвоенный ACS */
+				/** @description Идентификатор транзакции, присвоенный ACS, полученный в ответе на FinishAuthorize */
 				acsTransID: string;
 				/** @description Результат выполнения Challenge flow, возможны 2 значения — Y/N. <br> Y — аутентификация выполнена успешна,  <br> N — аутентификация не пройдена, клиент отказался или ввел неверные данные.  <br> */
 				transStatus: string;
