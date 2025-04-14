@@ -1557,7 +1557,11 @@ export interface components {
 			 *      */
 			MarkCode?: components["schemas"]["MarkCode"];
 			MarkQuantity?: components["schemas"]["MarkQuantity"];
-			SectoralItemProps?: components["schemas"]["SectoralItemProps"];
+			/** @description Отраслевой реквизит предмета расчета. Указывается только для товаров подлежащих обязательной маркировке средством
+			 *     идентификации. Включение этого реквизита предусмотрено НПА отраслевого регулирования для
+			 *     соответствующей товарной группы.
+			 *      */
+			SectoralItemProps?: components["schemas"]["SectoralItemProps"][];
 		};
 		/** @description Объект с информацией о видах суммы платежа. Если объект не передан, автоматически указывается итоговая сумма чека с видом оплаты «Безналичная». */
 		Receipt_FFD_12: {
