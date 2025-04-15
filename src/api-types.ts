@@ -343,13 +343,6 @@ export interface paths {
 		 */
 		get: operations["SberPaylink"];
 	};
-	"/v2/TinkoffPayEvent": {
-		/**
-		 * Передать уведомление о событии
-		 * @description Передача уведомления о событии платежного виджета T‑Pay + T‑ID.
-		 */
-		post: operations["T-PayEvent"];
-	};
 	"/v2/QrMembersList": {
 		/**
 		 * Получить список банков-пользователей QR
@@ -3726,28 +3719,6 @@ export interface components {
 			 */
 			RequestKey: string;
 		};
-		EventData: {
-			/** @description Идентификатор сессии T‑Pay. */
-			SessionId?: string;
-			/** @description Тип события */
-			Type?: string;
-			/** @description Aвторизационный токен пользователя. */
-			AccessToken?: string;
-			/** @description Идентификатор счета оплаты. */
-			AccountId?: string;
-			/** @description Идентификатор события. */
-			EventSessionId?: string;
-		};
-		"T-PayEvent": {
-			/** @description Идентификатор терминала. Выдается мерчанту Т‑Кассой при заведении терминала. */
-			TerminalKey: string;
-			/** @description Данные события. Объект `EventData` собирается в виде списка `ключ=значение` (разделитель `;`), зашифровывается открытым ключом X509 RSA 2048. Получившееся бинарное значение кодируется в `Base64`. Открытый ключ генерируется банком и выдается при регистрации терминала. Все поля обязательны. */
-			EventData: components["schemas"]["EventData"];
-			/** @description Идентификатор платежа. */
-			PaymentId?: string;
-			/** @description Подпись запроса. */
-			Token: string;
-		};
 		Member: {
 			/**
 			 * @description Идентификатор участника.
@@ -6055,36 +6026,6 @@ export interface operations {
 						Message?: string;
 						/** @description Подробное описание ошибки.
 						 *      */
-						Details?: string;
-					};
-				};
-			};
-		};
-	};
-	"T-PayEvent": {
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["T-PayEvent"];
-			};
-		};
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": {
-						/**
-						 * @description Успешность прохождения запроса — `true`/`false`.
-						 * @enum {boolean}
-						 */
-						Success: true | false;
-						/** @description Код ошибки. `0` — если успешно. */
-						ErrorCode: string;
-						/** @description Краткое описание ошибки. */
-						Message?: string;
-						/** @description Подробное описание ошибки. */
 						Details?: string;
 					};
 				};

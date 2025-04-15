@@ -944,23 +944,6 @@ export class TKassa<
 		);
 	}
 	/**
-	 * Передача уведомления о событии платежного виджета T‑Pay + T‑ID.
-	 *
-	 * @tags T‑Pay
-	 * @summary Передать уведомление о событии
-	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/T-PayEvent)
-	 */
-	tPayEvent(
-		body: GetRequestBody<"/v2/TinkoffPayEvent", "post", TerminalKey>,
-		options?: RequestOptions,
-	): Promise<GetResponse<"/v2/TinkoffPayEvent", "post">> {
-		return this.request("/v2/TinkoffPayEvent", body as any, {
-			method: "POST",
-			...options,
-		});
-	}
-	/**
 	 * Метод возвращает список участников куда может быть осуществлен возврат платежа, совершенного
 	 * по QR.
 	 *
