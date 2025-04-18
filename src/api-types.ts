@@ -24,13 +24,9 @@ export interface paths {
 		/**
 		 * Проверить версию 3DS
 		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *      <br><br> Проверяет поддерживаемую версию 3DS-протокола по карточным данным из входящих
-		 *      параметров.
+		 *      <br><br> Метод возвращает версию протокола 3DS, по которому может аутентифицироваться карта.
 		 *
-		 *      При использовании второй версии можно получить данные для дополнительного метода `3DS Method`, который позволяет
-		 *      эмитенту собрать данные браузера
-		 *      клиента. Это может быть полезно при принятии решения в пользу **Frictionless Flow** —
-		 *      аутентификации клиента без редиректа на страницу ACS.
+		 *      При определении 3DS v2.1 возможно получение данных для прохождения дополнительного метода `3DS Method`. Он позволяет эмитенту собрать данные браузера клиента, что может быть полезно при принятии решения в пользу Frictionless Flow (аутентификация клиента без редиректа на страницу ACS).
 		 *
 		 */
 		post: operations["Check3dsVersion"];
@@ -38,7 +34,7 @@ export interface paths {
 	"/v2/3DSMethod": {
 		/**
 		 * Прохождение этапа “3DS Method”
-		 * @description   `Для Мерчантов с PCI DSS` <br> Если в ответе метода был получен параметр ThreeDSMethodURL, то необходимо отправить запрос на стороне браузера по полученному ThreeDSMethodURL. Это необходимо для сбора информации ACS-ом о девайсе клиента. Отправка запроса 3DS Method в браузере должна происходить в скрытом frame. <br> Время ожидания выполнения метода не более 10 секунд
+		 * @description   `Для Мерчантов с PCI DSS` <br> Метод используется для сбора информации ACS-ом о девайсе. Обязателен, если для 3DSv2.1 в ответе метода `Check3dsVersion` был получен параметр ThreeDSMethodURL.<br><br>Условия выполнения:<br>• В скрытом iframe на стороне браузера<br>• С таймаутом ожидания ответа на запрос - 10 секунд
 		 */
 		post: operations["3DSMethod"];
 	};
@@ -82,7 +78,7 @@ export interface paths {
 	"/v2/ACSUrl": {
 		/**
 		 * Запрос в банк-эмитент для прохождения 3DS
-		 * @description  `Для Мерчантов с PCI DSS` <br> **Для 3DS v1.0**: ACSUrl возвращается в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize). Если в ответе метода FinishAuthorize возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /FinishAuthorize параметр ACSUrl)<br> **Для 3DS v2.1**: Если в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize) возвращается статус 3DS_CHECKING, Мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (в ответе метода /FinishAuthorize параметр ACSUrl). <br> Компонент ACS использует пары сообщений CReq и CRes для выполнения Проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации <br> <br> **Формат ответа:** Cres, полученный по NotificationUrl из запроса FinishAuthorize <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода FinishAuthorize)
+		 * @description  `Для Мерчантов с PCI DSS` <br>ACSUrl возвращается в ответе метода FinishAuthorize.<br>Если в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize) возвращается статус 3DS_CHECKING, то мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (параметр ACSUrl).<br> **Для 3DS v2.1**: Компонент ACS использует пары сообщений CReq и CRes для выполнения проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации. <br> <br> **Формат ответа:** Cres, полученный по NotificationUrl из запроса FinishAuthorize <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода FinishAuthorize)
 		 */
 		post: operations["ACSUrl"];
 	};
@@ -428,7 +424,7 @@ export interface paths {
 		 */
 		post: operations["SendClosingReceipt"];
 	};
-	"/v2/GetDeepLink": {
+	"/v2/MirPay/GetDeepLink": {
 		/**
 		 * Получить DeepLink
 		 * @description Получение deeplink с включенным подписанным JWT-токеном. Предназначен для запроса по API
