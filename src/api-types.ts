@@ -56,7 +56,7 @@ export interface paths {
 		 *      <br><br> Метод инициирует привязку карты к клиенту.
 		 *      При успешной привязке переадресует клиента на `Success Add Card URL`,
 		 *      при неуспешной — на `Fail Add Card URL`.
-		 *      Можно использовать форму Т‑Кассы или заменить её на кастомную.
+		 *      Можно использовать форму Т‑Бизнес или заменить её на кастомную.
 		 *
 		 */
 		post: operations["AddCard"];
@@ -461,7 +461,7 @@ export interface webhooks {
 		 *
 		 *
 		 *     Уведомления магазину о статусе выполнения метода привязки карты — **AttachCard**.
-		 *     После успешного выполнения метода **AttachCard** Т‑Касса отправляет POST-запрос с информацией о привязке карты.
+		 *     После успешного выполнения метода **AttachCard** Т‑Бизнес отправляет POST-запрос с информацией о привязке карты.
 		 *     Уведомление отправляется на ресурс мерчанта на адрес `Notification URL` синхронно и ожидает ответа в течение 10 секунд.
 		 *     После получения ответа или не получения его за заданное время сервис переадресует клиента на `Success AddCard URL`
 		 *     или `Fail AddCard URL` — в зависимости от результата привязки карты.
@@ -1678,7 +1678,7 @@ export interface components {
 		Init_FULL: {
 			/**
 			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
+			 *     Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
 			 */
@@ -1953,7 +1953,7 @@ export interface components {
 		};
 		Response: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -1984,7 +1984,7 @@ export interface components {
 			 */
 			Status: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -2018,7 +2018,7 @@ export interface components {
 		/** @description Информация о платеже. */
 		PaymentData: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -2203,14 +2203,14 @@ export interface components {
 		FinishAuthorize_FULL: {
 			/**
 			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
+			 *     Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы.
+			 *     системе Т‑Бизнес.
 			 *
 			 * @example 700001702044
 			 */
@@ -2297,7 +2297,7 @@ export interface components {
 			/**
 			 * @description Объект `CardData` собирается в виде списка `ключ`=`значение` c разделителем `;`.
 			 *     Объект зашифровывается открытым ключом (X509 RSA 2048), и получившееся бинарное значение кодируется в `Base64`.
-			 *     Открытый ключ генерируется Т‑Кассой и выдается при регистрации терминала.
+			 *     Открытый ключ генерируется в Т‑Бизнес и выдается при регистрации терминала.
 			 *     Доступен в личном кабинете Интернет-эквайринга в разделе **Магазины** при изменении типа подключения на «Мобильное».
 			 *
 			 *     |Наименование|Тип данных| Обязательность | Описание                                                                                                                                           |
@@ -2363,7 +2363,7 @@ export interface components {
 		};
 		FinishAuthorize: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -2552,7 +2552,7 @@ export interface components {
 			};
 		AddCard_FULL: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example 1111133333
 			 */
@@ -2599,13 +2599,13 @@ export interface components {
 		};
 		AddCardResponse_FULL: {
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 6155312072
 			 */
 			PaymentId: number;
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -2657,7 +2657,7 @@ export interface components {
 		};
 		AttachCard: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -2726,7 +2726,7 @@ export interface components {
 			 */
 			RequestKey: string;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы. <br>
+			 * @description Идентификатор карты в системе Т‑Бизнес. <br>
 			 *     При сценарии 3-D Secure Authentication Challenge — `CardId` можно получить после успешного прохождения 3DS.
 			 *
 			 * @example 5555
@@ -2791,7 +2791,7 @@ export interface components {
 			ACSUrl?: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в системе
-			 *     Т‑Кассы — возвращается в ответе на статус `3DS_CHECKING`.
+			 *     Т‑Бизнес — возвращается в ответе на статус `3DS_CHECKING`.
 			 *
 			 * @example ACQT-563587431
 			 */
@@ -2867,12 +2867,12 @@ export interface components {
 		};
 		Confirm: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -2947,7 +2947,7 @@ export interface components {
 		};
 		"Confirm-2": {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3039,12 +3039,12 @@ export interface components {
 		};
 		Cancel: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -3107,7 +3107,7 @@ export interface components {
 		};
 		"Cancel-2": {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой..
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3137,7 +3137,7 @@ export interface components {
 			 */
 			NewAmount: number;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 			 * @example 2304882
 			 */
 			PaymentId: number;
@@ -3165,14 +3165,14 @@ export interface components {
 		Charge_FULL: {
 			/**
 			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
+			 *     Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы.
+			 *     системе Т‑Бизнес.
 			 *
 			 * @example 700001702044
 			 */
@@ -3215,13 +3215,13 @@ export interface components {
 		GetState_FULL: {
 			/**
 			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
+			 *     Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -3241,7 +3241,7 @@ export interface components {
 		};
 		AddCustomer: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3275,7 +3275,7 @@ export interface components {
 		};
 		AddCustomerResponse: {
 			/**
-			 * @description Идентификатор терминала, выдается продавцу Т‑Кассой.
+			 * @description Идентификатор терминала, выдается продавцу Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3311,7 +3311,7 @@ export interface components {
 		};
 		GetOrRemoveCustomer: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3327,7 +3327,7 @@ export interface components {
 		};
 		GetCustomerResponse: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3375,7 +3375,7 @@ export interface components {
 		};
 		RemoveCustomerResponse: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -3405,7 +3405,7 @@ export interface components {
 		};
 		GetAddCardState: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example testRegressBank
 			 */
@@ -3425,7 +3425,7 @@ export interface components {
 		};
 		GetAddCardStateResponse: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -3504,7 +3504,7 @@ export interface components {
 		};
 		GetCardList_FULL: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example testRegressBank
 			 */
@@ -3536,7 +3536,7 @@ export interface components {
 		};
 		RemoveCard: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example testRegressBank
 			 */
@@ -3548,7 +3548,7 @@ export interface components {
 			 */
 			CustomerKey: string;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Бизнес.
 			 *
 			 * @example 156516516
 			 */
@@ -3568,7 +3568,7 @@ export interface components {
 		};
 		RemoveCardResponse: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -3587,7 +3587,7 @@ export interface components {
 			 */
 			CustomerKey: string;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Бизнес.
 			 *
 			 * @example 156516516
 			 */
@@ -3629,13 +3629,13 @@ export interface components {
 		};
 		GetQr: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы. Запрос будет работать, даже если указать значение в формате `string`.
+			 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес. Запрос будет работать, даже если указать значение в формате `string`.
 			 *
 			 * @example 10063
 			 */
@@ -3658,7 +3658,7 @@ export interface components {
 		};
 		QrResponse_FULL: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -3685,7 +3685,7 @@ export interface components {
 			 */
 			Data: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 			 *
 			 * @example 10063
 			 */
@@ -3739,7 +3739,7 @@ export interface components {
 		};
 		AddAccountQr: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example TinkoffBankTest
 			 */
@@ -3795,7 +3795,7 @@ export interface components {
 		};
 		AddAccountQrResponse: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example TinkoffBankTest
 			 */
@@ -3842,7 +3842,7 @@ export interface components {
 			 */
 			RequestKey: string;
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -3921,7 +3921,7 @@ export interface components {
 		};
 		GetAccountQrList: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -4005,14 +4005,14 @@ export interface components {
 		ChargeQr: {
 			/**
 			 * @description Идентификатор терминала. <br>
-			 *     Выдается мерчанту Т‑Кассой при заведении терминала.
+			 *     Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
 			 * @description Уникальный идентификатор транзакции в
-			 *     системе Т‑Кассы.
+			 *     системе Т‑Бизнес.
 			 *
 			 * @example 700001702044
 			 */
@@ -4050,7 +4050,7 @@ export interface components {
 		};
 		ChargeQrResponse: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -4120,13 +4120,13 @@ export interface components {
 		};
 		SbpPayTest: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -4234,7 +4234,7 @@ export interface components {
 		};
 		CheckOrder: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -4255,7 +4255,7 @@ export interface components {
 		/** @description Детали */
 		PaymentsCheckOrder: {
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 			 *
 			 * @example 124671934
 			 */
@@ -4311,7 +4311,7 @@ export interface components {
 		};
 		"CheckOrder-2": {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -4344,12 +4344,12 @@ export interface components {
 		};
 		SendClosingReceipt: {
 			/**
-			 * @description Идентификатор терминала выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -4404,7 +4404,7 @@ export interface components {
 		 *      */
 		NotificationPayment: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -4432,7 +4432,7 @@ export interface components {
 			 *      */
 			Status?: string;
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -4455,7 +4455,7 @@ export interface components {
 			 */
 			RebillId?: number;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Бизнес.
 			 *
 			 * @example 10452089
 			 */
@@ -4471,7 +4471,7 @@ export interface components {
 			ExpDate?: string;
 			/**
 			 * @description Подпись запроса. Формируется по такому же принципу, как и в случае
-			 *     запросов в Т‑Кассу.
+			 *     запросов в Т‑Бизнес.
 			 *
 			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
 			 */
@@ -4481,7 +4481,7 @@ export interface components {
 		/** @description **Уведомления о привязке**
 		 *
 		 *     Уведомления магазину о статусе выполнения метода привязки карты — **AttachCard**.
-		 *     После успешного выполнения метода **AttachCard** Т‑Касса отправляет POST-запрос с информацией о привязке карты.
+		 *     После успешного выполнения метода **AttachCard** Т‑Бизнес отправляет POST-запрос с информацией о привязке карты.
 		 *     Уведомление отправляется на ресурс мерчанта на адрес `Notification URL` синхронно и ожидает ответа в течение 10 секунд.
 		 *     После получения ответа или не получения его за заданное время сервис переадресует клиента на `Success AddCard URL`
 		 *     или `Fail AddCard URL` — в зависимости от результата привязки карты.
@@ -4492,7 +4492,7 @@ export interface components {
 		 *      */
 		NotificationAddCard: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -4527,7 +4527,7 @@ export interface components {
 			 */
 			Status?: "COMPLETED" | "REJECTED";
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -4544,7 +4544,7 @@ export interface components {
 			 */
 			RebillId?: string;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Бизнес.
 			 *
 			 * @example 10452089
 			 */
@@ -4560,7 +4560,7 @@ export interface components {
 			ExpDate?: string;
 			/**
 			 * @description Подпись запроса. Формируется по такому же принципу, как и в случае
-			 *     запросов в Т‑Кассу.
+			 *     запросов в Т‑Бизнес.
 			 *
 			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
 			 */
@@ -4689,7 +4689,7 @@ export interface components {
 		 *      */
 		NotificationFiscalization: {
 			/**
-			 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
 			 *
 			 * @example TinkoffBankTest
@@ -4714,7 +4714,7 @@ export interface components {
 			 */
 			Status: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -4758,7 +4758,7 @@ export interface components {
 			Type?: string;
 			/**
 			 * @description Подпись запроса. Формируется по такому же принципу, как и в случае
-			 *     запросов в Т‑Кассу.
+			 *     запросов в Т‑Бизнес.
 			 *
 			 * @example 7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96
 			 */
@@ -4783,7 +4783,7 @@ export interface components {
 		 *      */
 		NotificationQr: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой..
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 *
 			 * @example TinkoffBankTest
 			 */
@@ -4835,7 +4835,7 @@ export interface components {
 			Message?: string;
 			/**
 			 * @description Подпись запроса. Формируется по такому же
-			 *     принципу, как и в случае запросов в Т‑Кассу.
+			 *     принципу, как и в случае запросов в Т‑Бизнес.
 			 *
 			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
 			 */
@@ -4848,7 +4848,7 @@ export interface components {
 		};
 		GetDeepLink: {
 			/**
-			 * @description Идентификатор терминала. <br> Выдается мерчанту Т‑Кассой при заведении терминала.
+			 * @description Идентификатор терминала. <br> Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 * @example bestforu
 			 */
 			TerminalKey: string;
@@ -4887,7 +4887,7 @@ export interface components {
 		};
 		GetTerminalPayMethods: {
 			/**
-			 * @description Идентификатор терминала. <br> Выдается мерчанту Т‑Кассой при заведении терминала.
+			 * @description Идентификатор терминала. <br> Выдается мерчанту в Т‑Бизнес при заведении терминала.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -4966,7 +4966,7 @@ export interface components {
 		/** URL */
 		by_url: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
@@ -4976,7 +4976,7 @@ export interface components {
 			 */
 			CallbackUrl: string;
 			/**
-			 * @description JSON-массив, содержащий в себе перечень `paymentID` (уникальных идентификаторов в системе Т‑Кассы) c типом `Number`.
+			 * @description JSON-массив, содержащий в себе перечень `paymentID` (уникальных идентификаторов в системе Т‑Бизнес) c типом `Number`.
 			 * @example [
 			 *       1201206437,
 			 *       1201206442
@@ -4992,12 +4992,12 @@ export interface components {
 		/** Email */
 		by_email: {
 			/**
-			 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 			 * @example TinkoffBankTest
 			 */
 			TerminalKey: string;
 			/**
-			 * @description JSON-массив, содержащий в себе перечень `paymentID` (уникальных идентификаторов в системе Т‑Кассы) c типом `Number`.
+			 * @description JSON-массив, содержащий в себе перечень `paymentID` (уникальных идентификаторов в системе Т‑Бизнес) c типом `Number`.
 			 * @example [
 			 *       1201206437,
 			 *       1201206442
@@ -5126,10 +5126,10 @@ export interface operations {
 		requestBody: {
 			content: {
 				"application/json": {
-					/** @description Идентификатор платежа в системе Т‑Кассы.
+					/** @description Идентификатор платежа в системе Т‑Бизнес.
 					 *      */
 					PaymentId: string;
-					/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					/** @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 					 *      */
 					TerminalKey: string;
 					/** @description Зашифрованные данные карты в формате:
@@ -5340,7 +5340,7 @@ export interface operations {
 				content: {
 					"application/json": {
 						/**
-						 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+						 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 						 *     при заведении терминала.
 						 *
 						 * @example TinkoffBankTest
@@ -5373,7 +5373,7 @@ export interface operations {
 						 */
 						Status: string;
 						/**
-						 * @description Идентификатор платежа в системе Т‑Кассы.
+						 * @description Идентификатор платежа в системе Т‑Бизнес.
 						 *
 						 * @example 13660
 						 */
@@ -5409,7 +5409,7 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/** @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+						/** @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 						 *     при заведении терминала.
 						 *      */
 						TerminalKey: string;
@@ -5425,7 +5425,7 @@ export interface operations {
 						/** @description Статус платежа. Подробнее — в разделе [Статусная модель платежа](#tag/Scenarii-oplaty-po-karte/Statusnaya-model-platezha).
 						 *      */
 						Status: string;
-						/** @description Идентификатор платежа в системе Т‑Кассы.
+						/** @description Идентификатор платежа в системе Т‑Бизнес.
 						 *      */
 						PaymentId: string;
 						/** @description Код ошибки. `0` в случае успеха.
@@ -5531,7 +5531,7 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/** @description Идентификатор карты в системе Т‑Кассы
+						/** @description Идентификатор карты в системе Т‑Бизнес
 						 *      */
 						CardId: string;
 						/** @description Номер карты
@@ -5606,7 +5606,7 @@ export interface operations {
 			content: {
 				"application/json": {
 					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 					 *
 					 * @example testRegressBank
 					 */
@@ -5641,7 +5641,7 @@ export interface operations {
 				content: {
 					"application/json": {
 						/**
-						 * @description Идентификатор терминала. Выдается мерчанту Т‑Кассой
+						 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 						 *     при заведении терминала.
 						 *
 						 * @example TinkoffBankTest
@@ -5663,7 +5663,7 @@ export interface operations {
 						 *      */
 						RebillId?: string;
 						/**
-						 * @description Идентификатор карты в системе Т‑Кассы.
+						 * @description Идентификатор карты в системе Т‑Бизнес.
 						 *
 						 * @example 156516516
 						 */
@@ -5714,13 +5714,13 @@ export interface operations {
 					 */
 					PaRes: string;
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+					 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 					 *
 					 * @example 10063
 					 */
 					PaymentId?: string;
 					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 					 *
 					 * @example testRegressBank
 					 */
@@ -5742,7 +5742,7 @@ export interface operations {
 				};
 				content: {
 					"application/json": {
-						/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+						/** @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 						 *      */
 						TerminalKey: string;
 						/** @description Номер заказа в системе мерчанта.
@@ -5757,7 +5757,7 @@ export interface operations {
 						 *     - `REJECTED` — при неуспешном сценарии.
 						 *      */
 						Status: string;
-						/** @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+						/** @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 						 *      */
 						PaymentId: string;
 						/** @description Код ошибки. `0` в случае успеха.
@@ -5779,13 +5779,13 @@ export interface operations {
 			content: {
 				"application/x-www-form-urlencoded": {
 					/**
-					 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+					 * @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 					 *
 					 * @example 10063
 					 */
 					PaymentId: string;
 					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 					 *
 					 * @example testRegressBank
 					 */
@@ -5810,13 +5810,13 @@ export interface operations {
 						/** @description Номер заказа в системе мерчанта.
 						 *      */
 						OrderId: string;
-						/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+						/** @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 						 *      */
 						TerminalKey: string;
 						/** @description Статус транзакции
 						 *      */
 						Status: string;
-						/** @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+						/** @description Уникальный идентификатор транзакции в системе Т‑Бизнес.
 						 *      */
 						PaymentId: string;
 						/** @description Успешность прохождения запроса — `true`/`false`.
@@ -5887,7 +5887,7 @@ export interface operations {
 	Link: {
 		parameters: {
 			path: {
-				/** @description Идентификатор платежа в системе Т‑Кассы
+				/** @description Идентификатор платежа в системе Т‑Бизнес
 				 *      */
 				paymentId: number;
 				/** @description Версия T‑Pay, доступная на терминале:
@@ -5943,7 +5943,7 @@ export interface operations {
 		parameters: {
 			path: {
 				/** @description Уникальный идентификатор транзакции в
-				 *     системе Т‑Кассы.
+				 *     системе Т‑Бизнес.
 				 *      */
 				paymentId: number;
 			};
@@ -5965,7 +5965,7 @@ export interface operations {
 		parameters: {
 			path: {
 				/** @description Уникальный идентификатор транзакции в
-				 *     системе Т‑Кассы.
+				 *     системе Т‑Бизнес.
 				 *      */
 				paymentId: string;
 			};
@@ -5987,7 +5987,7 @@ export interface operations {
 		parameters: {
 			path: {
 				/** @description Уникальный идентификатор транзакции в
-				 *     системе Т‑Кассы.
+				 *     системе Т‑Бизнес.
 				 *      */
 				paymentId: number;
 			};
@@ -6032,11 +6032,11 @@ export interface operations {
 		requestBody: {
 			content: {
 				"application/json": {
-					/** @description Идентификатор терминала, выдается мерчанту Т‑Кассой.
+					/** @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
 					 *      */
 					TerminalKey: string;
-					/** @description Уникальный идентификатор транзакции в системе.
-					 *     Т‑Кассы
+					/** @description Уникальный идентификатор транзакции в системе
+					 *     Т‑Бизнес
 					 *      */
 					PaymentId: string;
 					/** @description Подпись запроса. */
@@ -6168,14 +6168,14 @@ export interface operations {
 			content: {
 				"application/json": {
 					/**
-					 * @description Идентификатор терминала, выдается мерчанту Т‑Кассой
+					 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес
 					 *
 					 * @example TinkoffBankTest
 					 */
 					TerminalKey: string;
 					/**
 					 * @description Уникальный идентификатор транзакции в системе
-					 *     Т‑Кассы, полученный в ответе на вызов метода Init
+					 *     Т‑Бизнес, полученный в ответе на вызов метода Init
 					 *
 					 * @example 700031849
 					 */

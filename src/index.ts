@@ -395,7 +395,7 @@ export class TKassa<
 	 *  <br><br> Метод инициирует привязку карты к клиенту.
 	 *  При успешной привязке переадресует клиента на `Success Add Card URL`,
 	 *  при неуспешной — на `Fail Add Card URL`.
-	 *  Можно использовать форму Т‑Кассы или заменить её на кастомную.
+	 *  Можно использовать форму Т‑Бизнес или заменить её на кастомную.
 	 *
 	 *
 	 * @tags Методы работы с картами
@@ -860,7 +860,7 @@ export class TKassa<
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/Link)
 	 */
 	link(
-		/** Идентификатор платежа в системе Т‑Кассы
+		/** Идентификатор платежа в системе Т‑Бизнес
 		 */ paymentId: paths["/v2/TinkoffPay/transactions/{paymentId}/versions/{version}/link"]["get"]["parameters"]["path"]["paymentId"],
 		/** Версия T‑Pay, доступная на терминале:
 		 * 2.0 (T‑Pay)
@@ -889,7 +889,7 @@ export class TKassa<
 	 */
 	qR(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы.
+   системе Т‑Бизнес.
     */ paymentId: paths["/v2/TinkoffPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/TinkoffPay/{paymentId}/QR", "get">> {
@@ -909,7 +909,7 @@ export class TKassa<
 	 */
 	sberPayQR(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы.
+   системе Т‑Бизнес.
     */ paymentId: paths["/v2/SberPay/{paymentId}/QR"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SberPay/{paymentId}/QR", "get">> {
@@ -929,7 +929,7 @@ export class TKassa<
 	 */
 	sberPaylink(
 		/** Уникальный идентификатор транзакции в
-   системе Т‑Кассы.
+   системе Т‑Бизнес.
     */ paymentId: paths["/v2/SberPay/transactions/{paymentId}/link"]["get"]["parameters"]["path"]["paymentId"],
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/SberPay/transactions/{paymentId}/link", "get">> {
