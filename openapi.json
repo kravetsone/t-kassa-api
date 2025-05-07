@@ -3407,7 +3407,6 @@
 		"/v2/GetTerminalPayMethods": {
 			"get": {
 				"operationId": "GetTerminalPayMethods",
-				"tags": ["MirPay"],
 				"summary": "Проверить доступность методов на SDK",
 				"description": "Метод определяет доступность методов оплаты на терминале для SDK и API. Запрос не шифруется токеном",
 				"requestBody": {

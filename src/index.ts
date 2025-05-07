@@ -1134,10 +1134,10 @@ export class TKassa<
 	/**
 	 * Метод определяет доступность методов оплаты на терминале для SDK и API. Запрос не шифруется токеном
 	 *
-	 * @tags MirPay
+	 * @tags undefined
 	 * @summary Проверить доступность методов на SDK
 	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/MirPay/operation/GetTerminalPayMethods)
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag//operation/GetTerminalPayMethods)
 	 */
 	getTerminalPayMethods(
 		body: GetRequestBody<"/v2/GetTerminalPayMethods", "get", TerminalKey>,
