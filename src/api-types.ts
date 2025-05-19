@@ -16,10 +16,6 @@ export interface paths {
 		 */
 		post: operations["Init"];
 	};
-	"/v2/InitPayments": {
-		/** Инициировать платеж в виджете */
-		post: operations["InitPayments"];
-	};
 	"/v2/Check3dsVersion": {
 		/**
 		 * Проверить версию 3DS
@@ -2014,80 +2010,6 @@ export interface components {
 			 * @example 0
 			 */
 			Details?: string;
-		};
-		/** @description Информация о платеже. */
-		PaymentData: {
-			/**
-			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
-			 * @example TinkoffBankTest
-			 */
-			TerminalKey: string;
-			/**
-			 * @description Сумма в копейках. Параметр `Amount` должен быть равен сумме всех параметров `Amount`, переданных в объекте `Items`.
-			 * @example 1751
-			 */
-			Amount: number;
-			/**
-			 * @description Уникальный номер заказа в системе мерчанта.
-			 * @example autoOrd1615285401068DELb
-			 */
-			OrderId?: string;
-			/** @description Краткое описание. */
-			Description?: string;
-			/** @description JSON-объект, содержащий дополнительные параметры в виде `ключ — значение`.
-			 *     Эти параметры будут переданы на страницу оплаты, если она кастомизирована.
-			 *
-			 *     Максимальная длина для каждого передаваемого параметра:
-			 *     - ключ — 20 знаков;
-			 *     - значение — 100 знаков.
-			 *
-			 *     Максимальное количество пар `ключ — значение` — не больше 20. */
-			DATA?: Record<string, never>;
-			Receipt?: components["schemas"]["Receipt_FFD_105"];
-		};
-		/** @description Информация о платеже. */
-		PaymentInfos: {
-			/** @description Адрес электронной почты покупателя. */
-			InfoEmail?: string;
-			/** @description Идентификатор вашего магазина. */
-			PaymentData: components["schemas"]["PaymentData"];
-		};
-		PaymentItem: {
-			container: string;
-			paymentInfo: components["schemas"]["PaymentInfos"];
-		};
-		/** @description Объект с информацией о платежных системах. */
-		"T-Payweb": {
-			/** @description Объект с информацией о T‑Pay. */
-			TinkoffPay?: Record<string, never>;
-		};
-		/** @description Объект с информацией о платежных системах. */
-		TbankFps: {
-			/** @description Объект с информацией о СБП. */
-			TinkoffPay?: Record<string, never>;
-		};
-		InitPayments: {
-			/** @description ID элемента или элемент, в который вставляются кнопки. */
-			container?: string;
-			/** @description Идентификатор вашего магазина. */
-			TerminalKey: string;
-			/** @description Информация о платеже. */
-			paymentInfo?: components["schemas"]["PaymentInfos"];
-			/** @description Список объектов с информацией о размещаемых кнопках. */
-			paymentItems?: [components["schemas"]["PaymentItem"]];
-			/** @description Объект с информацией о платежных системах. */
-			paymentSystems?:
-				| components["schemas"]["T-Payweb"]
-				| components["schemas"]["TbankFps"];
-		};
-		/** Пример ответа */
-		InitPaymentsResponse: {
-			/**
-			 * @description Успешность прохождения запроса.
-			 * @example true
-			 * @enum {boolean}
-			 */
-			Success?: true | false;
 		};
 		/** Запрос */
 		"3DSMethod": {
@@ -5100,24 +5022,6 @@ export interface operations {
 				};
 				content: {
 					"application/json": components["schemas"]["Response"];
-				};
-			};
-		};
-	};
-	InitPayments: {
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["InitPayments"];
-			};
-		};
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": components["schemas"]["InitPaymentsResponse"];
 				};
 			};
 		};

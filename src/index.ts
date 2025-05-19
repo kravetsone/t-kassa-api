@@ -309,23 +309,6 @@ export class TKassa<
 		});
 	}
 	/**
-	 *
-	 *
-	 * @tags T‑Pay, СБП
-	 * @summary Инициировать платеж в виджете
-	 *
-	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/TPay/operation/InitPayments)
-	 */
-	initPayments(
-		body: GetRequestBody<"/v2/InitPayments", "post", TerminalKey>,
-		options?: RequestOptions,
-	): Promise<GetResponse<"/v2/InitPayments", "post">> {
-		return this.request("/v2/InitPayments", body as any, {
-			method: "POST",
-			...options,
-		});
-	}
-	/**
 	 * `Для мерчантов, использующих собственную платежную форму`
 	 *  <br><br> Метод возвращает версию протокола 3DS, по которому может аутентифицироваться карта.
 	 *
