@@ -2321,7 +2321,7 @@ export interface components {
 			 */
 			Status: string;
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
@@ -2349,18 +2349,18 @@ export interface components {
 			 * @example 21813157
 			 */
 			RebillId?: string;
-			/** @description Идентификатор карты в системе Т‑Кассы. Передается только для cохраненной карты. */
+			/** @description Идентификатор карты в системе Т‑Бизнес. Передается только для cохраненной карты. */
 			CardId?: string;
 		};
 		Without3DS: components["schemas"]["FinishAuthorize"] & {
-			/** @description Идентификатор карты в системе Т‑Кассы.
+			/** @description Идентификатор карты в системе Т‑Бизнес.
 			 *     Передается только для сохраненной карты.
 			 *      */
 			CardId?: string;
 		};
 		With3DS: components["schemas"]["FinishAuthorize"] & {
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Идентификатор транзакции в системе Т‑Бизнес.
 			 *
 			 * @example ACQT-563587431
 			 */
@@ -2914,7 +2914,7 @@ export interface components {
 				| "REJECTED"
 				| "UNKNOWN";
 			/**
-			 * @description Уникальный идентификатор транзакции в системе Т‑Кассы.
+			 * @description Идентификатор транзакции в системе Т‑Бизнес.
 			 * @example 2304882
 			 */
 			PaymentId: string;
@@ -3388,7 +3388,7 @@ export interface components {
 			 */
 			Success: boolean;
 			/**
-			 * @description Идентификатор карты в системе Т‑Кассы.
+			 * @description Идентификатор карты в системе Т‑Бизнес.
 			 *
 			 * @example 156516516
 			 */
@@ -4006,7 +4006,7 @@ export interface components {
 			 */
 			Status?: "CONFIRMED" | "REJECTED";
 			/**
-			 * @description Идентификатор платежа в системе Т‑Кассы.
+			 * @description Идентификатор платежа в системе Т‑Бизнес.
 			 *
 			 * @example 13660
 			 */
