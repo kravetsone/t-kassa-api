@@ -19,10 +19,10 @@ export interface paths {
 	"/v2/Check3dsVersion": {
 		/**
 		 * Проверить версию 3DS
-		 * @description `Для мерчантов, использующих собственную платежную форму`
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
 		 *      <br><br> Метод возвращает версию протокола 3DS, по которому может аутентифицироваться карта.
 		 *
-		 *      При определении 3DS v2.1 возможно получение данных для прохождения дополнительного метода `3DS Method`. Он позволяет эмитенту собрать данные браузера клиента, что может быть полезно при принятии решения в пользу Frictionless Flow (аутентификация клиента без редиректа на страницу ACS).
+		 *      При определении 3DS v2.1 возможно получение данных для прохождения дополнительного метода [3DS Method](#tag/Standartnyj-platezh/operation/3DSMethod). Он позволяет эмитенту собрать данные браузера клиента, что может быть полезно при принятии решения в пользу Frictionless Flow (аутентификация клиента без редиректа на страницу ACS).
 		 *
 		 */
 		post: operations["Check3dsVersion"];
@@ -30,17 +30,20 @@ export interface paths {
 	"/v2/3DSMethod": {
 		/**
 		 * Прохождение этапа “3DS Method”
-		 * @description   `Для Мерчантов с PCI DSS` <br> Метод используется для сбора информации ACS-ом о девайсе. Обязателен, если для 3DSv2.1 в ответе метода `Check3dsVersion` был получен параметр ThreeDSMethodURL.<br><br>Условия выполнения:<br>• В скрытом iframe на стороне браузера<br>• С таймаутом ожидания ответа на запрос - 10 секунд
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
+		 *
+		 *     <br>Метод используется для сбора информации ACS-ом о девайсе. Обязателен, если для 3DSv2.1 в ответе метода [Check3dsVersion](#tag/Standartnyj-platezh/operation/Check3dsVersion) был получен параметр `ThreeDSMethodURL`.<br><br>Условия выполнения:<br>• В скрытом iframe на стороне браузера<br>• С таймаутом ожидания ответа на запрос - 10 секунд"
+		 *
 		 */
 		post: operations["3DSMethod"];
 	};
 	"/v2/FinishAuthorize": {
 		/**
 		 * Подтвердить платеж
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *      <br><br> Метод подтверждает платеж передачей реквизитов. При одностадийной оплате — списывает средства
-		 *      с карты клиента, при двухстадийной — блокирует указанную сумму. Используется, если у площадки есть сертификация PCI DSS и
-		 *      собственная платежная форма.
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
+		 *     <br><br> Метод подтверждает платеж передачей реквизитов. При одностадийной оплате — списывает средства
+		 *     с карты клиента, при двухстадийной — блокирует указанную сумму. Используется, если у площадки есть сертификация PCI DSS и
+		 *     собственная платежная форма.
 		 *
 		 */
 		post: operations["FinishAuthorize"];
@@ -60,12 +63,13 @@ export interface paths {
 	"/v2/AttachCard": {
 		/**
 		 * Привязать карту
-		 * @description `Для мерчантов, использующих собственную платежную форму`
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
+		 *
 		 *      <br> Завершает привязку карты к клиенту.
 		 *      В случае успешной привязки переадресует клиента на **Success Add Card URL**
 		 *      в противном случае на **Fail Add Card URL**.
-		 *      Для прохождения 3DS второй версии перед вызовом метода должен быть вызван **\/v2/check3dsVersion**
-		 *      и выполнен **3DS Method**, который является обязательным при прохождении **3DS** по протоколу версии
+		 *      Для прохождения 3DS второй версии перед вызовом метода должен быть вызван [Check3dsVersion](#tag/Standartnyj-platezh/operation/Check3dsVersion)
+		 *      и выполнен [3DS Method](#tag/Standartnyj-platezh/operation/3DSMethod), который является обязательным при прохождении 3DS по протоколу версии
 		 *      2.0.
 		 *
 		 */
@@ -74,7 +78,13 @@ export interface paths {
 	"/v2/ACSUrl": {
 		/**
 		 * Запрос в банк-эмитент для прохождения 3DS
-		 * @description  `Для Мерчантов с PCI DSS` <br>ACSUrl возвращается в ответе метода FinishAuthorize.<br>Если в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize) возвращается статус 3DS_CHECKING, то мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (параметр ACSUrl).<br> **Для 3DS v2.1**: Компонент ACS использует пары сообщений CReq и CRes для выполнения проверки (Challenge). В ответ на полученное сообщение CReq компонент ACS формирует сообщение CRes, которое запрашивает держателя карты ввести данные для аутентификации. <br> <br> **Формат ответа:** Cres, полученный по NotificationUrl из запроса FinishAuthorize <br> При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов Submit3DSAuthorization или Submit3DSAuthorizationV2 в зависимости от версии 3DS<br> **URL**: ACSUrl (возвращается в ответе метода FinishAuthorize)
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
+		 *
+		 *     <br>`ACSUrl` возвращается в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize).<br>Если в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize) возвращается статус `3DS_CHECKING`, то мерчанту необходимо сформировать запрос на URL ACS банка, выпустившего карту (параметр `ACSUrl`).<br>
+		 *     **Для 3DS v2.1**: Компонент ACS использует пары сообщений `CReq` и `CRes` для выполнения проверки (Challenge). В ответ на полученное сообщение `CReq` компонент ACS формирует сообщение `CRes`, которое запрашивает держателя карты ввести данные для аутентификации. <br> <br> **Формат ответа:** `Cres`, полученный по `NotificationUrl` из запроса [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize). <br>
+		 *     При успешном результате прохождения 3-D Secure подтверждается инициированный платеж с помощью методов [Submit3DSAuthorization](#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorization) или [Submit3DSAuthorizationV2](#tag/Prohozhdenie-3DS/operation/Submit3DSAuthorizationV2) в зависимости от версии 3DS<br>
+		 *     **URL**: `ACSUrl` (возвращается в ответе метода [FinishAuthorize](#tag/Standartnyj-platezh/operation/FinishAuthorize)).
+		 *
 		 */
 		post: operations["ACSUrl"];
 	};
@@ -213,8 +223,9 @@ export interface paths {
 	"/v2/GetAddCardState": {
 		/**
 		 * Получить статус привязки карты
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *      <br> Метод возвращает статус привязки карты
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
+		 *
+		 *     <br> Метод возвращает статус привязки карты
 		 *
 		 */
 		post: operations["GetAddCardState"];
@@ -255,8 +266,7 @@ export interface paths {
 	"/v2/Submit3DSAuthorization": {
 		/**
 		 * Подтвердить прохождение 3DS v1.0
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
 		 *
 		 *      Проверяет результаты прохождения 3-D Secure и при успешном прохождении
 		 *      подтверждает инициированный платеж.
@@ -277,8 +287,7 @@ export interface paths {
 	"/v2/Submit3DSAuthorizationV2": {
 		/**
 		 * Подтвердить прохождение 3DS v2.1
-		 * @description `Для мерчантов, использующих собственную платежную форму`
-		 *
+		 * @description `Для мерчантов c PCI DSS и собственной платежной формой`
 		 *
 		 *      Проверяет результаты прохождения 3-D Secure и при успешном прохождении
 		 *      подтверждает инициированный платеж.
@@ -453,8 +462,7 @@ export interface webhooks {
 		 *
 		 *     **Уведомление о привязке (NotificationAddCard)**
 		 *
-		 *     `Для мерчантов, использующих собственную платежную форму`
-		 *
+		 *     `Для мерчантов c PCI DSS и собственной платежной формой`
 		 *
 		 *     Уведомления магазину о статусе выполнения метода привязки карты — **AttachCard**.
 		 *     После успешного выполнения метода **AttachCard** Т‑Бизнес отправляет POST-запрос с информацией о привязке карты.
@@ -1067,20 +1075,13 @@ export interface components {
 			 *     * `osn` — общая СН;
 			 *     * `usn_income` — упрощенная СН (доходы);
 			 *     * `usn_income_outcome` — упрощенная СН (доходы минус расходы);
-			 *     * `envd` — единый налог на вмененный доход;
 			 *     * `esn` — единый сельскохозяйственный налог;
 			 *     * `patent` — патентная СН.
 			 *
 			 * @example osn
 			 * @enum {string}
 			 */
-			Taxation:
-				| "osn"
-				| "usn_income"
-				| "usn_income_outcome"
-				| "envd"
-				| "esn"
-				| "patent";
+			Taxation: "osn" | "usn_income" | "usn_income_outcome" | "esn" | "patent";
 			/** @description Объект c информацией о видах суммы платежа.
 			 *     Смотрите структуру объекта `Payments`.
 			 *     - Если объект не передан, автоматически указывается итоговая
@@ -1565,20 +1566,13 @@ export interface components {
 			 *     * `osn` — общая СН,
 			 *     * `usn_income` — упрощенная СН (доходы),
 			 *     * `usn_income_outcome` — упрощенная СН (доходы минус расходы),
-			 *     * `envd` — единый налог на вмененный доход,
 			 *     * `esn` — единый сельскохозяйственный налог,
 			 *     * `patent` — патентная СН.
 			 *
 			 * @example osn
 			 * @enum {string}
 			 */
-			Taxation:
-				| "osn"
-				| "usn_income"
-				| "usn_income_outcome"
-				| "envd"
-				| "esn"
-				| "patent";
+			Taxation: "osn" | "usn_income" | "usn_income_outcome" | "esn" | "patent";
 			/**
 			 * Format: email
 			 * @description `Тег ФФД: 1008`
