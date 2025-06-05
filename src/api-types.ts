@@ -3884,7 +3884,7 @@ export interface components {
 				 *
 				 * @example 8de92934-26c9-474c-a4ce-424f2021d24d
 				 */
-				RequestKey?: string;
+				RequestKey: string;
 				/**
 				 * @description Статус привязки карты:
 				 *     * `NEW` — получен запрос на привязку счета;
@@ -3894,13 +3894,13 @@ export interface components {
 				 *
 				 * @enum {string}
 				 */
-				Status?: "NEW" | "PROCESSING" | "ACTIVE" | "INACTIVE";
+				Status: "NEW" | "PROCESSING" | "ACTIVE" | "INACTIVE";
 				/**
 				 * @description Идентификатор привязки счета, назначаемый банком плательщика.
 				 *
 				 * @example 0b67f2cae19b41809f85d5674de30a1a
 				 */
-				AccountToken?: string;
+				AccountToken?: Record<string, never>;
 				/**
 				 * @description Идентификатор банка клиента (эмитент), который будет
 				 *     совершать оплату по привязанному счету —
@@ -3915,7 +3915,7 @@ export interface components {
 				 * @example T-Банк
 				 */
 				BankMemberName?: string;
-			};
+			}[];
 		};
 		ChargeQr: {
 			/**

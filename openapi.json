@@ -2647,13 +2647,26 @@
 											"Success": true,
 											"ErrorCode": "0",
 											"Message": "OK",
-											"AccountTokens": {
-												"RequestKey": "8de92934-26c9-474c-a4ce-424f2021d24d",
-												"Status": "NEW",
-												"AccountToken": "0b67f2cae19b41809f85d5674de30a1a",
-												"BankMemberId": "5555",
-												"BankMemberName": "T-Банк"
-											}
+											"AccountTokens": [
+												{
+													"RequestKey": "77520",
+													"Status": "ACTIVE",
+													"AccountToken": "0b67f2cae19b41809f85d5674de30a1a",
+													"BankMemberId": "100000000004",
+													"BankMemberName": "T-Банк"
+												},
+												{
+													"RequestKey": "77563",
+													"Status": "ACTIVE",
+													"AccountToken": "14ac4445811e8225db8ed312j4433a68",
+													"BankMemberId": "100000000004",
+													"BankMemberName": "T-Банк"
+												},
+												{
+													"RequestKey": "77644",
+													"Status": "PROCCESING"
+												}
+											]
 										}
 									}
 								}
@@ -6271,34 +6284,38 @@
 					},
 					"AccountTokens": {
 						"description": "Список привязанных счетов покупателя по магазину.\n",
-						"type": "object",
-						"properties": {
-							"RequestKey": {
-								"description": "Идентификатор запроса на привязку карты.\n",
-								"type": "string",
-								"format": "uuid",
-								"example": "8de92934-26c9-474c-a4ce-424f2021d24d"
-							},
-							"Status": {
-								"description": "Статус привязки карты:\n* `NEW` — получен запрос на привязку счета;\n* `PROCESSING` — запрос в обработке,\n* `ACTIVE` — привязка счета успешна,\n* `INACTIVE` — привязка счета неуспешна или деактивирована.\n",
-								"enum": ["NEW", "PROCESSING", "ACTIVE", "INACTIVE"],
-								"type": "string",
-								"maxLength": 20
-							},
-							"AccountToken": {
-								"description": "Идентификатор привязки счета, назначаемый банком плательщика.\n",
-								"type": "string",
-								"example": "0b67f2cae19b41809f85d5674de30a1a"
-							},
-							"BankMemberId": {
-								"description": "Идентификатор банка клиента (эмитент), который будет\nсовершать оплату по привязанному счету —\nзаполнен, если статус `ACTIVE` или `INACTIVE`.\n",
-								"type": "string",
-								"example": "5555"
-							},
-							"BankMemberName": {
-								"description": "Наименование банка-эмитента — заполнен если передан `BankMemberId`.\n",
-								"type": "string",
-								"example": "T-Банк"
+						"type": "array",
+						"items": {
+							"required": ["RequestKey", "Status"],
+							"type": "object",
+							"properties": {
+								"RequestKey": {
+									"description": "Идентификатор запроса на привязку карты.\n",
+									"type": "string",
+									"format": "uuid",
+									"example": "8de92934-26c9-474c-a4ce-424f2021d24d"
+								},
+								"Status": {
+									"description": "Статус привязки карты:\n* `NEW` — получен запрос на привязку счета;\n* `PROCESSING` — запрос в обработке,\n* `ACTIVE` — привязка счета успешна,\n* `INACTIVE` — привязка счета неуспешна или деактивирована.\n",
+									"enum": ["NEW", "PROCESSING", "ACTIVE", "INACTIVE"],
+									"type": "string",
+									"maxLength": 20
+								},
+								"AccountToken": {
+									"description": "Идентификатор привязки счета, назначаемый банком плательщика.\n",
+									"type": "object",
+									"example": "0b67f2cae19b41809f85d5674de30a1a"
+								},
+								"BankMemberId": {
+									"description": "Идентификатор банка клиента (эмитент), который будет\nсовершать оплату по привязанному счету —\nзаполнен, если статус `ACTIVE` или `INACTIVE`.\n",
+									"type": "string",
+									"example": "5555"
+								},
+								"BankMemberName": {
+									"description": "Наименование банка-эмитента — заполнен если передан `BankMemberId`.\n",
+									"type": "string",
+									"example": "T-Банк"
+								}
 							}
 						}
 					}
