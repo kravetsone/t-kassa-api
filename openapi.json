@@ -3414,10 +3414,10 @@
 				"type": "object",
 				"properties": {
 					"Device": {
-						"description": "Тип устройства:\n* `SDK` — вызов из мобильных приложений;\n* `Desktop` — вызов из браузера с десктопа;\n* `MobileWeb` — вызов из браузера с мобильных устройств.\n",
+						"description": "Тип устройства:\n* `SDK` — вызов из мобильных приложений;\n* `Desktop` — вызов из браузера с десктопа;\n* `Mobile` — вызов из браузера с мобильных устройств.\n",
 						"type": "string",
 						"example": "Desktop",
-						"enum": ["SDK", "Desktop", "MobileWeb"]
+						"enum": ["SDK", "Desktop", "Mobile"]
 					},
 					"DeviceOs": {
 						"description": "ОС устройства.",

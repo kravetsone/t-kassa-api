@@ -521,12 +521,12 @@ export interface components {
 			 * @description Тип устройства:
 			 *     * `SDK` — вызов из мобильных приложений;
 			 *     * `Desktop` — вызов из браузера с десктопа;
-			 *     * `MobileWeb` — вызов из браузера с мобильных устройств.
+			 *     * `Mobile` — вызов из браузера с мобильных устройств.
 			 *
 			 * @example Desktop
 			 * @enum {string}
 			 */
-			Device?: "SDK" | "Desktop" | "MobileWeb";
+			Device?: "SDK" | "Desktop" | "Mobile";
 			/**
 			 * @description ОС устройства.
 			 * @example iOS
