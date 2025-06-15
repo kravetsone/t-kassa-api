@@ -1,7 +1,6 @@
 import type { Buffer } from "node:buffer";
 import type { TKassa } from "./index";
 import type { MaybePromise, WebhookBody } from "./utils";
-const responseOK = new Response("OK");
 
 interface FrameworkHandler {
 	body: MaybePromise<WebhookBody>;
@@ -22,7 +21,7 @@ const frameworks: Record<
 	| "koa",
 	FrameworkAdapter
 > = {
-	elysia: ({ body }) => ({ body, response: () => responseOK }),
+	elysia: ({ body }) => ({ body, response: () => new Response("OK") }),
 	fastify: (request, reply) => ({
 		body: request.body,
 		response: () => reply.send("OK"),
@@ -47,8 +46,8 @@ const frameworks: Record<
 		}),
 		response: () => res.writeHead(200).end("OK"),
 	}),
-	"std/http": (req) => ({ body: req.json(), response: () => responseOK }),
-	"Bun.serve": (req) => ({ body: req.json(), response: () => responseOK }),
+	"std/http": (req) => ({ body: req.json(), response: () => new Response("OK") }),
+	"Bun.serve": (req) => ({ body: req.json(), response: () => new Response("OK") }),
 } satisfies Record<string, FrameworkAdapter>;
 
 /**
