@@ -46,8 +46,14 @@ const frameworks: Record<
 		}),
 		response: () => res.writeHead(200).end("OK"),
 	}),
-	"std/http": (req) => ({ body: req.json(), response: () => new Response("OK") }),
-	"Bun.serve": (req) => ({ body: req.json(), response: () => new Response("OK") }),
+	"std/http": (req) => ({
+		body: req.json(),
+		response: () => new Response("OK"),
+	}),
+	"Bun.serve": (req) => ({
+		body: req.json(),
+		response: () => new Response("OK"),
+	}),
 } satisfies Record<string, FrameworkAdapter>;
 
 /**
