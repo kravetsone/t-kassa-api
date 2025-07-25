@@ -445,7 +445,7 @@ export interface paths {
 	"/v2/getConfirmOperation": {
 		/**
 		 * Получить справку по операции
-		 * @description Справку по конкретной операции можно получить на: <br><ul><li> URL-сервиса, который развернут на вашей стороне;</li><li> электронную почту.</li></ul> Чтобы сформировать токен, нужно использовать только <code>PASSWORD</code> и <code>TERMINAL_KEY</code>.
+		 * @description Справку по конкретной операции можно получить на: <br><ul><li> URL-сервиса, который развернут на вашей стороне в формате `base64`;</li><li> электронную почту.</li></ul> Чтобы сформировать токен, нужно использовать только <code>PASSWORD</code> и <code>TERMINAL_KEY</code>.
 		 */
 		post: operations["GetConfirmOperation"];
 	};
