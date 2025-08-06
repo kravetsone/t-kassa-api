@@ -936,7 +936,7 @@ export class TKassa<
 	 *
 	 *
 	 * @tags СБП
-	 * @summary Получить список банков-пользователей QR
+	 * @summary Получить список банков-пользователей QR для возврата
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/QrMembersList)
 	 */
@@ -1059,6 +1059,24 @@ export class TKassa<
 		options?: RequestOptions,
 	): Promise<GetResponse<"/v2/GetQrState", "post">> {
 		return this.request("/v2/GetQrState", body as any, {
+			method: "POST",
+			...options,
+		});
+	}
+	/**
+	 * Возвращает список банков-участников СБП.
+	 *
+	 *
+	 * @tags СБП
+	 * @summary Получить список банков-участников СБП для платежа
+	 *
+	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/SBP/operation/GetQrBankList)
+	 */
+	getQrBankList(
+		body: GetRequestBody<"/v2/GetQrBankList", "post", TerminalKey>,
+		options?: RequestOptions,
+	): Promise<GetResponse<"/v2/GetQrBankList", "post">> {
+		return this.request("/v2/GetQrBankList", body as any, {
 			method: "POST",
 			...options,
 		});

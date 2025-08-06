@@ -345,7 +345,7 @@ export interface paths {
 	};
 	"/v2/QrMembersList": {
 		/**
-		 * Получить список банков-пользователей QR
+		 * Получить список банков-пользователей QR для возврата
 		 * @description Метод возвращает список участников куда может быть осуществлен возврат платежа, совершенного
 		 *     по QR.
 		 *
@@ -405,6 +405,14 @@ export interface paths {
 		 *
 		 */
 		post: operations["GetQrState"];
+	};
+	"/v2/GetQrBankList": {
+		/**
+		 * Получить список банков-участников СБП для платежа
+		 * @description Возвращает список банков-участников СБП.
+		 *
+		 */
+		post: operations["GetQrBankList"];
 	};
 	"/v2/CheckOrder": {
 		/**
@@ -1138,7 +1146,7 @@ export interface components {
 			 *
 			 * @example 21
 			 */
-			"Document\u0421ode"?: string;
+			DocumentCode?: string;
 			/** @description `Тег ФФД: 1246`
 			 *
 			 *
@@ -3564,6 +3572,12 @@ export interface components {
 			 */
 			DataType: "PAYLOAD" | "IMAGE";
 			/**
+			 * @description Внутренний идентификатор банка, выбранного для оплаты. Cписок доступных `BankId` запрашивается методом - /v2/GetQrBankList. При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для DataType = 'PAYLOAD' или null. Формат - uuid
+			 *
+			 * @example bank100000000004
+			 */
+			BankId?: string;
+			/**
 			 * @description Подпись запроса.
 			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
 			 */
@@ -3669,6 +3683,12 @@ export interface components {
 			 * @enum {string}
 			 */
 			DataType: "PAYLOAD" | "IMAGE";
+			/**
+			 * @description Внутренний идентификатор банка, выбранного для оплаты. Cписок доступных `BankId` запрашивается методом - /v2/GetQrBankList. При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для DataType = 'PAYLOAD' или null. Формат - uuid
+			 *
+			 * @example bank100000000004
+			 */
+			BankId?: string;
 			/** @description JSON-объект, содержащий
 			 *     дополнительные параметры в виде `ключ`:`значение`. Эти параметры будут
 			 *     переданы на страницу оплаты, если она
@@ -4144,6 +4164,91 @@ export interface components {
 			 * @example OK
 			 */
 			Message?: string;
+		};
+		GetQrBankList: {
+			/**
+			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
+			 *
+			 * @example TinkoffBankTest
+			 */
+			TerminalKey: string;
+			/**
+			 * @description Тип сценария оплаты.
+			 *     * `qr` - сценарий привязка с оплатой
+			 *     * `sub` - сценарий только привязки
+			 *
+			 * @example qr
+			 * @enum {string}
+			 */
+			ScenarioType?: "qr" | "sub";
+			Device: {
+				/**
+				 * @description Тип устройства
+				 * @example Desktop
+				 * @enum {string}
+				 */
+				Type?: "Desktop" | "Mobile";
+				/**
+				 * @description ОС устройства
+				 * @example IOS
+				 */
+				Os?: string;
+			};
+			/**
+			 * @description Подпись запроса.
+			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
+			 */
+			Token: string;
+		};
+		GetQrBankListResponse: {
+			/**
+			 * @description Успешность прохождения запроса — `true`/`false`.
+			 *
+			 * @example true
+			 * @enum {boolean}
+			 */
+			Success: true | false;
+			/**
+			 * @description Код ошибки. `0` в случае успеха.
+			 *
+			 * @example 0
+			 */
+			ErrorCode: string;
+			/**
+			 * @description Краткое описание ошибки, произошедшей при запросе статуса.
+			 *
+			 * @example OK
+			 */
+			Message?: string;
+			/** @description Список банков от НСПК
+			 *      */
+			BankList: {
+				/**
+				 * @description Внутренний идентификатор банка
+				 * @example 3fa85f64-5717-4562-b3fc-2c963f66afa6
+				 */
+				BankId?: string;
+				/**
+				 * @description Идентификатор банка в системе НСПК
+				 * @example 100000000004
+				 */
+				NspkBankId?: string;
+				/**
+				 * @description Наименование банка
+				 * @example Т-Банк
+				 */
+				BankName?: string;
+				/**
+				 * @description Ссылка на логотип банка
+				 * @example https://qr.nspk.ru/proxyapp/logo/bank100000000004.png
+				 */
+				BankLogo?: string;
+				/**
+				 * @description Порядок для сортировки
+				 * @example 1
+				 */
+				BankOrder?: number;
+			};
 		};
 		CheckOrder: {
 			/**
@@ -6092,6 +6197,24 @@ export interface operations {
 				};
 				content: {
 					"application/json": components["schemas"]["GetQRStateResponse_FULL"];
+				};
+			};
+		};
+	};
+	GetQrBankList: {
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["GetQrBankList"];
+			};
+		};
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["GetQrBankListResponse"];
 				};
 			};
 		};
