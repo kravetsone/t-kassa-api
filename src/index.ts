@@ -711,7 +711,7 @@ export class TKassa<
 	}
 	/**
 	 * Метод регистрирует QR и возвращает информацию о нем.
-	 * Вызывается после метода **Init**.
+	 * Вызывается после метода [Init](#tag\/Standartnyj-platezh\/operation\/Init).
 	 *
 	 *
 	 * @tags СБП

@@ -249,7 +249,7 @@ export interface paths {
 		/**
 		 * Сформировать QR
 		 * @description Метод регистрирует QR и возвращает информацию о нем.
-		 *     Вызывается после метода **Init**.
+		 *     Вызывается после метода [Init](#tag/Standartnyj-platezh/operation/Init).
 		 *
 		 */
 		post: operations["GetQr"];
@@ -3572,7 +3572,8 @@ export interface components {
 			 */
 			DataType: "PAYLOAD" | "IMAGE";
 			/**
-			 * @description Внутренний идентификатор банка, выбранного для оплаты. Cписок доступных `BankId` запрашивается методом - /v2/GetQrBankList. При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для DataType = 'PAYLOAD' или null. Формат - uuid
+			 * Format: uuid
+			 * @description Внутренний идентификатор банка, который выбран для оплаты. Cписок доступных `BankId` запрашивается методом - [GetQrBankList](#tag/SBP/operation/GetQrBankList). При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для `DataType = 'PAYLOAD'` или `null`.
 			 *
 			 * @example bank100000000004
 			 */
@@ -3684,7 +3685,8 @@ export interface components {
 			 */
 			DataType: "PAYLOAD" | "IMAGE";
 			/**
-			 * @description Внутренний идентификатор банка, выбранного для оплаты. Cписок доступных `BankId` запрашивается методом - /v2/GetQrBankList. При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для DataType = 'PAYLOAD' или null. Формат - uuid
+			 * Format: uuid
+			 * @description Внутренний идентификатор банка, который выбран для оплаты. Cписок доступных `BankId` запрашивается методом - [GetQrBankList](#tag/SBP/operation/GetQrBankList). При передаче `BankId`, в ответе в параметре `Data` будет возвращен deeplink вместо функциональной платежной ссылки (payload).  Следует передавать `BankId` только для `DataType = 'PAYLOAD'` или `null`.
 			 *
 			 * @example bank100000000004
 			 */
@@ -4165,6 +4167,21 @@ export interface components {
 			 */
 			Message?: string;
 		};
+		Device: {
+			/**
+			 * @description Тип устройства.
+			 *
+			 * @example Mobile
+			 * @enum {string}
+			 */
+			Type: "Desktop" | "Mobile";
+			/**
+			 * @description ОС устройства.
+			 *
+			 * @example iOS
+			 */
+			Os?: string;
+		};
 		GetQrBankList: {
 			/**
 			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
@@ -4174,31 +4191,50 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Тип сценария оплаты.
-			 *     * `qr` - сценарий привязка с оплатой
-			 *     * `sub` - сценарий только привязки
+			 *     * `qr` - привязка с оплатой;
+			 *     * `sub` - только привязки.
+			 *
+			 *     Значение по умолчанию — `qr`.
 			 *
 			 * @example qr
 			 * @enum {string}
 			 */
 			ScenarioType?: "qr" | "sub";
-			Device: {
-				/**
-				 * @description Тип устройства
-				 * @example Desktop
-				 * @enum {string}
-				 */
-				Type?: "Desktop" | "Mobile";
-				/**
-				 * @description ОС устройства
-				 * @example IOS
-				 */
-				Os?: string;
-			};
+			/** @description Тип и ОС устройства. */
+			Device: components["schemas"]["Device"][];
 			/**
 			 * @description Подпись запроса.
 			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
 			 */
 			Token: string;
+		};
+		BankList: {
+			/**
+			 * Format: uuid
+			 * @description Внутренний идентификатор банка.
+			 * @example 3fa85f64-5717-4562-b3fc-2c963f66afa6
+			 */
+			BankId: string;
+			/**
+			 * @description Идентификатор банка в системе НСПК.
+			 * @example 100000000004
+			 */
+			NspkBankId: string;
+			/**
+			 * @description Наименование банка.
+			 * @example Т-Банк
+			 */
+			BankName: string;
+			/**
+			 * @description Ссылка на логотип банка.
+			 * @example https://qr.nspk.ru/proxyapp/logo/bank100000000004.png
+			 */
+			BankLogo: string;
+			/**
+			 * @description Порядок для сортировки.
+			 * @example 1
+			 */
+			BankOrder: number;
 		};
 		GetQrBankListResponse: {
 			/**
@@ -4220,35 +4256,9 @@ export interface components {
 			 * @example OK
 			 */
 			Message?: string;
-			/** @description Список банков от НСПК
+			/** @description Список банков от НСПК.
 			 *      */
-			BankList: {
-				/**
-				 * @description Внутренний идентификатор банка
-				 * @example 3fa85f64-5717-4562-b3fc-2c963f66afa6
-				 */
-				BankId?: string;
-				/**
-				 * @description Идентификатор банка в системе НСПК
-				 * @example 100000000004
-				 */
-				NspkBankId?: string;
-				/**
-				 * @description Наименование банка
-				 * @example Т-Банк
-				 */
-				BankName?: string;
-				/**
-				 * @description Ссылка на логотип банка
-				 * @example https://qr.nspk.ru/proxyapp/logo/bank100000000004.png
-				 */
-				BankLogo?: string;
-				/**
-				 * @description Порядок для сортировки
-				 * @example 1
-				 */
-				BankOrder?: number;
-			};
+			BankList: components["schemas"]["BankList"][];
 		};
 		CheckOrder: {
 			/**
