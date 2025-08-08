@@ -5467,7 +5467,7 @@
 					"Source": {
 						"type": "string",
 						"description": "Источник платежа.\n",
-						"enum": ["installment", "BNPL"],
+						"enum": ["Installment", "BNPL"],
 						"examples": {
 							"default": "BNPL"
 						}
@@ -7599,7 +7599,7 @@
 						}
 					},
 					"CreditAmount": {
-						"description": "Сумма выданного кредита в копейках.\n",
+						"description": "Сумма выданного кредита в копейках. Возвращается только для платежей в рассрочку, если в запросе [Confirm](https://www.tbank.ru/kassa/dev/payments/#tag/Dvuhstadijnyj-platezh/operation/Confirm) был передан параметр `Source` в значении `Installment`.\n",
 						"type": "number",
 						"examples": {
 							"default": 10000

@@ -2831,7 +2831,7 @@ export interface components {
 			 * @example BNPL
 			 * @enum {string}
 			 */
-			Source?: "installment" | "BNPL";
+			Source?: "Installment" | "BNPL";
 		};
 		/** @description Информация по способу оплаты или деталям для платежей в рассрочку. */
 		Items_Params: {
@@ -4422,7 +4422,7 @@ export interface components {
 			 */
 			Source?: "Installment";
 			/**
-			 * @description Сумма выданного кредита в копейках.
+			 * @description Сумма выданного кредита в копейках. Возвращается только для платежей в рассрочку, если в запросе [Confirm](https://www.tbank.ru/kassa/dev/payments/#tag/Dvuhstadijnyj-platezh/operation/Confirm) был передан параметр `Source` в значении `Installment`.
 			 *
 			 * @example 10000
 			 */
