@@ -2889,7 +2889,7 @@
 								"TerminalKey": "TinkoffBankTest",
 								"ScenarioType": "qr",
 								"Device": {
-									"Type": "Mobile",
+									"Type": "mobile",
 									"Os": "iOS"
 								},
 								"Token": "l43kb4hyi6lknb23bv4gdfskjn238fsllsdf8"
@@ -6634,24 +6634,6 @@
 					}
 				}
 			},
-			"Device": {
-				"type": "object",
-				"required": ["Type"],
-				"properties": {
-					"Type": {
-						"type": "string",
-						"description": "Тип устройства.\n",
-						"example": "Mobile",
-						"enum": ["Desktop", "Mobile"]
-					},
-					"Os": {
-						"type": "string",
-						"maxLength": 255,
-						"description": "ОС устройства.\n",
-						"example": "iOS"
-					}
-				}
-			},
 			"GetQrBankList": {
 				"type": "object",
 				"required": ["TerminalKey", "Token", "Device"],
@@ -6659,21 +6641,33 @@
 					"TerminalKey": {
 						"type": "string",
 						"maxLength": 64,
-						"description": "Идентификатор терминала, выдается мерчанту в Т‑Бизнес.\n",
+						"description": "Идентификатор терминала, выдается мерчанту в Т‑Бизнес. \n",
 						"example": "TinkoffBankTest"
 					},
 					"ScenarioType": {
 						"type": "string",
-						"description": "Тип сценария оплаты.\n* `qr` - привязка с оплатой;    \n* `sub` - только привязки.\n\nЗначение по умолчанию — `qr`.\n",
+						"description": "Тип сценария оплаты.\n* `qr` - оплата;    \n* `sub` - привязка счета.\n\nЗначение по умолчанию — `qr`.\n",
 						"example": "qr",
 						"enum": ["qr", "sub"]
 					},
 					"Device": {
-						"type": "array",
+						"type": "object",
 						"description": "Тип и ОС устройства.",
-						"items": {
-							"$ref": "#/components/schemas/Device"
-						}
+						"properties": {
+							"Type": {
+								"type": "string",
+								"description": "Тип устройства.\n",
+								"example": "mobile",
+								"enum": ["desktop", "mobile"]
+							},
+							"Os": {
+								"type": "string",
+								"maxLength": 255,
+								"description": "ОС устройства.\n",
+								"example": "iOS"
+							}
+						},
+						"required": ["Type"]
 					},
 					"Token": {
 						"type": "string",

@@ -4167,21 +4167,6 @@ export interface components {
 			 */
 			Message?: string;
 		};
-		Device: {
-			/**
-			 * @description Тип устройства.
-			 *
-			 * @example Mobile
-			 * @enum {string}
-			 */
-			Type: "Desktop" | "Mobile";
-			/**
-			 * @description ОС устройства.
-			 *
-			 * @example iOS
-			 */
-			Os?: string;
-		};
 		GetQrBankList: {
 			/**
 			 * @description Идентификатор терминала, выдается мерчанту в Т‑Бизнес.
@@ -4191,8 +4176,8 @@ export interface components {
 			TerminalKey: string;
 			/**
 			 * @description Тип сценария оплаты.
-			 *     * `qr` - привязка с оплатой;
-			 *     * `sub` - только привязки.
+			 *     * `qr` - оплата;
+			 *     * `sub` - привязка счета.
 			 *
 			 *     Значение по умолчанию — `qr`.
 			 *
@@ -4201,7 +4186,21 @@ export interface components {
 			 */
 			ScenarioType?: "qr" | "sub";
 			/** @description Тип и ОС устройства. */
-			Device: components["schemas"]["Device"][];
+			Device: {
+				/**
+				 * @description Тип устройства.
+				 *
+				 * @example mobile
+				 * @enum {string}
+				 */
+				Type: "desktop" | "mobile";
+				/**
+				 * @description ОС устройства.
+				 *
+				 * @example iOS
+				 */
+				Os?: string;
+			};
 			/**
 			 * @description Подпись запроса.
 			 * @example 871199b37f207f0c4f721a37cdcc71dfcea880b4a4b85e3cf852c5dc1e99a8d6
