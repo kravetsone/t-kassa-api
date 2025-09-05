@@ -294,7 +294,7 @@ export class TKassa<
 	 * Метод инициирует платежную сессию.
 	 *
 	 *
-	 * @tags Стандартный платеж, Методы использующиеся в webview
+	 * @tags Стандартный платеж, Методы, которые используются в WebView
 	 * @summary Инициировать платеж
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/Init)
@@ -585,7 +585,7 @@ export class TKassa<
 	 * Метод возвращает статус платежа.
 	 *
 	 *
-	 * @tags Стандартный платеж, Методы использующиеся в webview
+	 * @tags Стандартный платеж, Методы, которые используются в WebView
 	 * @summary Получить статуса платежа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/GetState)
@@ -1088,7 +1088,7 @@ export class TKassa<
 	 * Метод возвращает статус заказа.
 	 *
 	 *
-	 * @tags Стандартный платеж, Методы использующиеся в webview
+	 * @tags Стандартный платеж, Методы, которые используются в WebView
 	 * @summary Получить статус заказа
 	 *
 	 * [Documentation](https://www.tbank.ru/kassa/dev/payments/index.html#tag/Standartnyj-platezh/operation/CheckOrder)

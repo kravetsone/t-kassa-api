@@ -1,7 +1,7 @@
 {
 	"openapi": "3.1.0",
 	"info": {
-		"version": "1.77",
+		"version": "1.80",
 		"title": "Прием платежей",
 		"contact": {
 			"url": "https://www.tbank.ru/kassa/"
@@ -124,7 +124,10 @@
 		"/v2/Init": {
 			"post": {
 				"operationId": "Init",
-				"tags": ["Стандартный платеж", "Методы использующиеся в webview"],
+				"tags": [
+					"Стандартный платеж",
+					"Методы, которые используются в WebView"
+				],
 				"summary": "Инициировать платеж",
 				"description": "Метод инициирует платежную сессию.\n",
 				"requestBody": {
@@ -1187,7 +1190,10 @@
 		"/v2/GetState": {
 			"post": {
 				"operationId": "GetState",
-				"tags": ["Стандартный платеж", "Методы использующиеся в webview"],
+				"tags": [
+					"Стандартный платеж",
+					"Методы, которые используются в WebView"
+				],
 				"summary": "Получить статуса платежа",
 				"description": "Метод возвращает статус платежа.\n",
 				"requestBody": {
@@ -3045,7 +3051,10 @@
 		"/v2/CheckOrder": {
 			"post": {
 				"operationId": "CheckOrder",
-				"tags": ["Стандартный платеж", "Методы использующиеся в webview"],
+				"tags": [
+					"Стандартный платеж",
+					"Методы, которые используются в WebView"
+				],
 				"summary": "Получить статус заказа",
 				"description": "Метод возвращает статус заказа.\n",
 				"requestBody": {
