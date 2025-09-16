@@ -1705,7 +1705,7 @@
 											"ErrorCode": "0",
 											"Message": "Неверные параметры",
 											"Details": "Подробное описание ошибки",
-											"RequestKey": "Идентификатор запроса"
+											"RequestKey": 211258
 										}
 									}
 								}
@@ -2533,7 +2533,7 @@
 											"Description": "string",
 											"DataType": "PAYLOAD",
 											"Data": "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2?type=01&bank=100000000001&sum=10000&cur=RUB&crc=C08B",
-											"RequestKey": "ed989549-d3be-4758-95c7-22647e03f9ec",
+											"RequestKey": 211258,
 											"ErrorCode\"": "0",
 											"Success": true,
 											"Message": "OK"
@@ -2568,7 +2568,7 @@
 								"GetAddAccountQrStateRequest": {
 									"summary": "Пример запроса",
 									"value": {
-										"RequestKey": "13021e10-a3ed-4f14-bcd1-823b5ac37390",
+										"RequestKey": 211258,
 										"TerminalKey": "TinkoffBankTest",
 										"Token": "7241ac8307f349afb7bb9dda760717721bbb45950b97c67289f23d8c69cc7b96"
 									}
@@ -6134,8 +6134,8 @@
 					},
 					"RequestKey": {
 						"description": "Идентификатор запроса на привязку счета. Передается в случае привязки и одновременной оплаты по CБП.\n",
-						"type": "string",
-						"example": "Идентификатор запроса"
+						"type": "number",
+						"example": "211258"
 					}
 				}
 			},
@@ -6228,7 +6228,7 @@
 					},
 					"RequestKey": {
 						"description": "Идентификатор запроса на привязку счета.\n",
-						"type": "string",
+						"type": "number",
 						"example": "ed989549-d3be-4758-95c7-22647e03f9ec"
 					},
 					"ErrorCode": {
@@ -6256,9 +6256,8 @@
 				"properties": {
 					"RequestKey": {
 						"description": "Идентификатор запроса на привязку счета.\n",
-						"type": "string",
-						"format": "uuid",
-						"example": "13021e10-a3ed-4f14-bcd1-823b5ac37390"
+						"type": "number",
+						"example": "211258"
 					},
 					"TerminalKey": {
 						"description": "Идентификатор терминала. Выдается мерчанту в Т‑Бизнес\nпри заведении терминала.\n",

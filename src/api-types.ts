@@ -3645,9 +3645,9 @@ export interface components {
 			/**
 			 * @description Идентификатор запроса на привязку счета. Передается в случае привязки и одновременной оплаты по CБП.
 			 *
-			 * @example Идентификатор запроса
+			 * @example 211258
 			 */
-			RequestKey: string;
+			RequestKey: number;
 		};
 		Member: {
 			/**
@@ -3754,7 +3754,7 @@ export interface components {
 			 *
 			 * @example ed989549-d3be-4758-95c7-22647e03f9ec
 			 */
-			RequestKey: string;
+			RequestKey: number;
 			/**
 			 * @description Код ошибки. `0` в случае успеха.
 			 *
@@ -3776,12 +3776,11 @@ export interface components {
 		};
 		GetAddAccountQrState: {
 			/**
-			 * Format: uuid
 			 * @description Идентификатор запроса на привязку счета.
 			 *
-			 * @example 13021e10-a3ed-4f14-bcd1-823b5ac37390
+			 * @example 211258
 			 */
-			RequestKey: string;
+			RequestKey: number;
 			/**
 			 * @description Идентификатор терминала. Выдается мерчанту в Т‑Бизнес
 			 *     при заведении терминала.
